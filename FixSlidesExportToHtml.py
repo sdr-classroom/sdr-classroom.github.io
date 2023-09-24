@@ -34,6 +34,9 @@ with open(filename, "r+") as f:
 
     # Where "plugins: [ RevealHighlight ]" is in the contents, insert ", RevealNotes" after "RevealHighlight"
     contents = re.sub(r"plugins: \[ *RevealHighlight *\]", r"plugins: [ RevealHighlight, RevealNotes ]", contents)
+
+    # Remove ": Slides" at the end of the <title> tag, if it is there
+    contents = re.sub(r"<title>(.*) *: Slides</title>", r"<title>\1</title>", contents)
     
     # Replace file contents with new contents
     f.seek(0)
