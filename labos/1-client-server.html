@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Labo 1 - Gestionnaire de dettes</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #cccccc; background-color: #303030; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ffcfaf; } /* Alert */
+    code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+    code span.at { } /* Attribute */
+    code span.bn { color: #dca3a3; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #f0dfaf; } /* ControlFlow */
+    code span.ch { color: #dca3a3; } /* Char */
+    code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+    code span.co { color: #7f9f7f; } /* Comment */
+    code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+    code span.do { color: #7f9f7f; } /* Documentation */
+    code span.dt { color: #dfdfbf; } /* DataType */
+    code span.dv { color: #dcdccc; } /* DecVal */
+    code span.er { color: #c3bf9f; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #c0bed1; } /* Float */
+    code span.fu { color: #efef8f; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+    code span.kw { color: #f0dfaf; } /* Keyword */
+    code span.op { color: #f0efd0; } /* Operator */
+    code span.ot { color: #efef8f; } /* Other */
+    code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+    code span.sc { color: #dca3a3; } /* SpecialChar */
+    code span.ss { color: #cc9393; } /* SpecialString */
+    code span.st { color: #cc9393; } /* String */
+    code span.va { } /* Variable */
+    code span.vs { color: #cc9393; } /* VerbatimString */
+    code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/labos/style.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+    <main>
+<header id="title-block-header">
+    <nav>
+        <a href="javascript:history.back()"><i class="fa fa-angle-left"></i> Back</a>
+      </nav>
+<h1 class="title">Labo 1 - Gestionnaire de dettes</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#informations-générales"
+id="toc-informations-générales">Informations Générales</a></li>
+<li><a href="#debt-manager" id="toc-debt-manager">Debt Manager</a></li>
+<li><a href="#spécification-fonctionnelle"
+id="toc-spécification-fonctionnelle">Spécification fonctionnelle</a>
+<ul>
+<li><a href="#utilisateur.trice"
+id="toc-utilisateur.trice">Utilisateur.trice</a></li>
+<li><a href="#client" id="toc-client">Client</a>
+<ul>
+<li><a href="#commandes" id="toc-commandes">Commandes</a></li>
+</ul></li>
+<li><a href="#serveur" id="toc-serveur">Serveur</a>
+<ul>
+<li><a href="#configuration"
+id="toc-configuration">Configuration</a></li>
+<li><a href="#simplification-des-dettes"
+id="toc-simplification-des-dettes">Simplification des dettes</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#tests" id="toc-tests">Tests</a></li>
+<li><a href="#rendu" id="toc-rendu">Rendu</a></li>
+<li><a href="#contraintes-supplémentaires"
+id="toc-contraintes-supplémentaires">Contraintes
+supplémentaires</a></li>
+<li><a href="#appendice" id="toc-appendice">Appendice</a></li>
+</ul>
+</nav>
+<h2 id="informations-générales">Informations Générales</h2>
+<ul>
+<li><strong>Date du rendu</strong> : Lundi 16 octobre, 13:15 CEST</li>
+<li><strong>Groupes</strong> : à réaliser seul ou à deux</li>
+<li><strong>Plagiat</strong> : en cas de copie manifeste, vous y serez
+confrontés, vous obtiendrez la note de 1, et l’incident sera reporté au
+responsable de la filière, avec un risque d’échec critique immédiat au
+cours. Ne trichez pas. <em>(Notez que les IAs génératives se trouvent
+aujourd’hui dans une zone qui est encore juridiquement floue pour ce qui
+est du plagiat, mais des arguments se valent à en considérer
+l’utilisation comme tel. Quoiqu’il en soit, nous vous proposons une
+autre vision sur la question : votre ambition est d’apprendre et
+d’acquérir des compétences, et votre utilisation éventuelle de cet outil
+doit refléter ceci. Tout comme Stackoverflow peut être à la fois un
+outil d’enrichissement et une banque de copy-paste, faites un choix
+intentionnel et réfléchi, vos propres intérêts en tête, de l’outil que
+vous ferez de l’IA générative)</em></li>
+</ul>
+<h1 id="debt-manager">Debt Manager</h1>
+<p>Nous vous demandons d’implémenter un gestionnaire de dettes entre
+amis. Ce service sera constitué d’un groupe de personnes, pouvant
+chacune se connecter à un même serveur à l’aide d’un client en ligne de
+commande, et lui communiquer les paiements qu’elle aura fait au nom d’un
+(sous-)ensemble du groupe. Le serveur sera responsable de maintenir à
+jour les dettes dues entre les différents membres du groupe, et les
+simplifier afin d’éviter un trop grand nombre de dépendances.</p>
+<p>Notez que ce premier labo sera par la suite modifié et enrichi par
+les suivants. Par conséquent, assurez-vous d’avoir des bases saines,
+notamment avec une bonne <a
+href="https://en.wikipedia.org/wiki/Separation_of_concerns">seperation
+of concerns</a>.</p>
+<h1 id="spécification-fonctionnelle">Spécification fonctionnelle</h1>
+<h2 id="utilisateur.trice">Utilisateur.trice</h2>
+<p>Chaque utilisateur ou utilisatrice est identifiée par un pseudonyme
+ne contenant pas d’espace.</p>
+<h2 id="client">Client</h2>
+<p>Le client prend en argument, à son lancement, les informations
+suivantes, et dans cet ordre :</p>
+<ul>
+<li>le pseudo identifiant l’utilisateur ou l’utilisatrice au nom de
+laquelle il effectuera les commandes qui lui seront données,</li>
+<li>l’url complet (port inclu) sur lequel il trouvera le serveur.</li>
+</ul>
+<h3 id="commandes">Commandes</h3>
+<p>Un certain nombre de commandes sont disponibles à travers le
+client :</p>
+<ul>
+<li><code>pay &lt;sum&gt; for &lt;pseudo&gt;[, &lt;pseudo&gt;[, ...]]</code>
+permet à l’utilisateur ou l’utilisatrice actuelle d’informer le serveur
+qu’elle a effectué un paiement de <code>&lt;sum&gt;</code> au nom d’un
+certain ensemble de personnes du groupe, listées par leur pseudo,
+séparés par des virgules. Le client doit afficher <code>Success</code> à
+l’utilisateur lorsque le serveur a confirmé la réussite de la commande,
+ou un message d’erreur s’il y en a une.</li>
+<li><code>get debts [&lt;pseudo&gt;]</code> permet de lister les
+personnes à qui une somme est due, ainsi que cette somme, par la
+personne identifiée par le pseudo fourni, ou par l’utilisateur ou
+l’utilisatrice actuelle si aucun pseudo n’est fourni. Le client doit
+afficher une ligne par dette sous la forme
+<code>&lt;pseudo&gt;: &lt;somme&gt;</code> suivi de la somme totale des
+dettes, ou un message d’erreur s’il y en a une.</li>
+<li><code>get credit [&lt;pseudo&gt;]</code> permet de lister les
+personnes qui doivent une somme, ainsi que cette somme, à la personne
+identifiée par le pseudo fourni, ou à l’utilisateur ou l’utilisatrice
+actuelle si aucun pseudo n’est fourni. Le client doit afficher une ligne
+par dette sous la forme <code>&lt;pseudo&gt;: &lt;somme&gt;</code> suivi
+de la somme totale des dettes, ou un message d’erreur s’il y en a
+une.</li>
+<li><code>exit</code> permet de quitter le programme, et toute
+potentielle connexion encore ouverte avec le serveur.</li>
+</ul>
+<p>Parce que certains tests seront automatisés, assurez-vous de bien
+suivre le format de ces commandes. Aucun input ne doit être attendu de
+la part de l’utilisateur outre les commandes ci-dessus.</p>
+<details open>
+<summary>
+Example d’exécution du client
+</summary>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ./client jessie localhost:3333</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> pay <span class="ex">32</span> for jessie, blake</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Success</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> get <span class="ex">debts</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">ollie:</span> 4.95</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">blake:</span> 25</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">29.95</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> get <span class="ex">credit</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ex">parker:</span> 12.45</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ex">12.45</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> exit</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span></span></code></pre></div>
+</details>
+<h2 id="serveur">Serveur</h2>
+<h3 id="configuration">Configuration</h3>
+<p>Le serveur prend en argument, à son lancement, le chemin d’un fichier
+de configuration, contenant les informations suivantes, au format
+JSON :</p>
+<ul>
+<li>Un booléen indiquant si le serveur doit être lancé en mode “debug”,
+dans lequel le serveur pourra afficher sur <code>stdout</code>, de
+manière lisible, autant d’informations que souhaité sur ses
+actions.</li>
+<li>Le port sur lequel il doit recevoir les nouvelles connections des
+clients.</li>
+<li>La liste des pseudos existants (un pseudo ne pourra pas, pour
+l’instant, être ajouté une fois le serveur lancé).</li>
+<li>Pour chaque pseudo, toutes les dettes, décrites par le pseudo de la
+personne créancière ainsi que la somme due.</li>
+</ul>
+<p>Notez que cette configuration décrit l’état du serveur à son
+lancement, et n’a pas pour vocation d’être modifié par le serveur. Cela
+signifie que tout changement (notamment dû à un nouveau paiement) ne
+sera reflété qu’en mémoire, et sera perdu une fois le serveur clos. Ceci
+est dans un soucis de simplicité et de facilitation des tests.</p>
+<p>Parce qu’elle sera utilisée pour l’automatisation de tests,
+assurez-vous de bien suivre le format de ce fichier.</p>
+<details open>
+<summary>
+Example de fichier de configuration
+</summary>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;debug&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;port&quot;</span><span class="fu">:</span> <span class="dv">3333</span><span class="fu">,</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;users&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">{</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&quot;username&quot;</span><span class="fu">:</span> <span class="st">&quot;blake&quot;</span><span class="fu">,</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&quot;debts&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                <span class="fu">{</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">&quot;username&quot;</span><span class="fu">:</span> <span class="st">&quot;jessie&quot;</span><span class="fu">,</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">&quot;amount&quot;</span><span class="fu">:</span> <span class="fl">32.45</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                <span class="fu">{</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">&quot;username&quot;</span><span class="fu">:</span> <span class="st">&quot;ollie&quot;</span><span class="fu">,</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">&quot;amount&quot;</span><span class="fu">:</span> <span class="fl">12.50</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>                <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>            <span class="ot">]</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        <span class="fu">{</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&quot;username&quot;</span><span class="fu">:</span> <span class="st">&quot;jessie&quot;</span><span class="fu">,</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&quot;debts&quot;</span><span class="fu">:</span> <span class="ot">[]</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>        <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        <span class="fu">{</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&quot;username&quot;</span><span class="fu">:</span> <span class="st">&quot;ollie&quot;</span><span class="fu">,</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&quot;debts&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>                <span class="fu">{</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">&quot;username&quot;</span><span class="fu">:</span> <span class="st">&quot;blake&quot;</span><span class="fu">,</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>                    <span class="dt">&quot;amount&quot;</span><span class="fu">:</span> <span class="dv">4</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>                <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>            <span class="ot">]</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>        <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+</details>
+<h3 id="simplification-des-dettes">Simplification des dettes</h3>
+<p>Les dettes forment un graphe dirigé, où chaque noeud représente une
+personne, et chaque arête une dette due par une personne à une autre. Ce
+graphe doit être maintenu dans une état simplifié. Nous considérerons ce
+graphe comme “simplifié” si le nombre total d’arêtes est inférieur au
+nombre de membres du groupe, et si aucune somme n’est due à une personne
+qui doit de l’argent. Voir <a href="#appendice">l’appendice</a> pour une
+preuve par construction de l’existence d’une telle simplification du
+graphe.</p>
+<h1 id="tests">Tests</h1>
+<p>Nous vous demandons d’écrire des tests unitaires et d’intégration
+automatisés. Nous vous recommandons de tirer profit des fonctionnalités
+de Go telles que les interfaces afin de faciliter l’implémentation de
+tests, notamment l’utilisation de mocks. Vos tests devront passer avec
+le <a href="https://go.dev/doc/articles/race_detector">Data Race
+Detector</a> de Go.</p>
+<h1 id="rendu">Rendu</h1>
+<p>Votre repository contiendra notamment les fichiers suivants, que nous
+pourrons utiliser pour tester votre code.</p>
+<ul>
+<li>Un fichier <code>test.sh</code> exécutable permettant de lancer tous
+les tests, et prenant en argument un booléen indiquant si les tests
+doivent être lancés avec le flag <code>-race</code> pour utiliser le <a
+href="https://go.dev/doc/articles/race_detector">Data Race Detector</a>
+de Go.</li>
+<li>Un fichier <code>compile_client.sh</code> compilant le client et
+prenant en argument le chemin à donner à l’exécutable.</li>
+<li>Un fichier <code>compile_server.sh</code> compilant le serveur et
+prenant en argument le chemin à donner à l’exécutable.</li>
+<li>Un fichier <code>README.md</code> décrivant dans les grandes lignes
+la structure de votre solution (ses différents packages, goroutines, et
+leurs dépendances et communications).</li>
+</ul>
+<h1 id="contraintes-supplémentaires">Contraintes supplémentaires</h1>
+<p>Votre code sera évalué pour sa qualité. Nous attendons donc notamment
+des noms de variable et de fonction clairs, des commentaires pertinents
+et un README utile.</p>
+<p>Toute synchronisation doit être faite à l’aide des goroutines et des
+channels. Tout autre moyen de synchronisation est interdit.</p>
+<p>Pour finir, nous réitérons ici l’importance de vous conformer aux
+spécifications ci-dessus sur les formats d’input et d’output, puisqu’ils
+seront utilisés pour automatiser certains tests.</p>
+<h1 id="appendice">Appendice</h1>
+<p><strong>Claim</strong>: There exists a graph <span
+class="math inline"><em>G</em>(<em>V</em>,<em>E</em>)</span> such that
+<span class="math inline"><em>E</em> ≤ <em>V</em></span>, which
+represents any debt situation within a group of people.</p>
+<blockquote>
+<p><em>Proof</em></p>
+<p>Let us present an algorithm that finds a simplification of any debt
+graph, such that it satisfies the inequality in the proof.</p>
+<p>In an initial phase, the algorithm computes the total amount of money
+owed by each vertex, allowing for negative values if that vertex is owed
+more money than it owes. Let <span
+class="math inline"><em>d</em>(<em>v</em>)</span> represent this value,
+for every <span class="math inline"><em>v</em> ∈ <em>V</em></span>. Note
+that <span
+class="math inline">∑<sub><em>v</em> ∈ <em>V</em></sub><em>d</em>(<em>v</em>) = 0</span>.
+This can be done trivially by computing the sum of the amounts of money
+attached to each in- and out-going edges of every vertex. Note that this
+partitions vertices into those that owe, those that are owed, and those
+that are neither – in other words, no vertex can both owe and be
+owed.</p>
+<p>Consider now the following greedy algorithm that describes new edges,
+assuming old edges are now obsolete and removed. For each vertex <span
+class="math inline"><em>v</em> ∈ <em>V</em></span> such that <span
+class="math inline"><em>d</em>(<em>v</em>) &gt; 0</span>, i.e. <span
+class="math inline"><em>v</em></span> owes money, iterate through each
+vertex <span class="math inline"><em>w</em> ∈ <em>V</em></span> that is
+owed money and do the following: letting <span
+class="math inline"><em>d</em>′(<em>w</em>)</span> be the sum of ingoing
+edges of <span class="math inline"><em>w</em></span>, if <span
+class="math inline"><em>d</em>′(<em>w</em>)</span> is not <span
+class="math inline"><em>d</em>(<em>w</em>)</span>, create an edge
+between <span class="math inline"><em>v</em></span> and <span
+class="math inline"><em>w</em></span> with value equal to <span
+class="math inline"><em>d</em>(<em>v</em>,<em>w</em>) = <em>m</em><em>i</em><em>n</em>(<em>d</em>(<em>v</em>),<em>d</em>′(<em>w</em>))</span>,
+letting <span class="math inline"><em>d</em>′(<em>v</em>)</span> be
+<span
+class="math inline"><em>d</em>(<em>v</em>) − <em>d</em>(<em>v</em>−<em>w</em>)</span>.
+To state this in a simple manner, let <span
+class="math inline"><em>v</em></span> give as much money to <span
+class="math inline"><em>w</em></span> until either <span
+class="math inline"><em>w</em></span> is no longer owed any money, or
+<span class="math inline"><em>v</em></span> has given all the money it
+owes to the group.</p>
+<p>Note that, because the sum of <span
+class="math inline"><em>d</em>(<em>v</em>)</span> for all <span
+class="math inline"><em>v</em> ∈ <em>V</em></span> is <span
+class="math inline">0</span>, each vertex that owes money, once iterated
+over, will have given all its owed money, and consequently each vertex
+that is owed money will be paid back.</p>
+<p>Let us now count the number of edges. To this end, let us show that
+the creation of an edge always results in the satisfaction of at least
+one vertex, where by satisfaction we mean that that vertex has paid or
+been paid everything it owed or was owed. Indeed, there are exactly two
+situations in which an edge can be created: - the vertex that owed money
+was able to give the whole amount of money it owed to the target vertex,
+and it is now satisfied, or - the vertex that owed money was not able to
+give all the money it owed because the target vertex was not owed as
+much, and the target vertex is satisfied. Because a vertex cannot be
+satisfied more than once, this proves that the number of edges cannot be
+larger than the number of vertices, which concludes the proof.</p>
+</blockquote>
+<p>As a corollary, note that such a simplified debt graph is
+bipartite.</p>
+</main>
+</body>
+</html>
