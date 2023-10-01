@@ -144,14 +144,14 @@ Pour finir, nous réitérons ici l'importance de vous conformer aux spécificati
 > 
 > In an initial phase, the algorithm computes the total amount of money owed by each vertex, allowing for negative values if that vertex is owed more money than it owes. Let $d(v)$ represent this value, for every $v\in V$. Note that $\sum_{v\in V} d(v) = 0$. This can be done trivially by computing the sum of the amounts of money attached to each in- and out-going edges of every vertex. Note that this partitions vertices into those that owe, those that are owed, and those that are neither -- in other words, no vertex can both owe and be owed.
 > 
-> Consider now the following greedy algorithm that describes new edges, assuming old edges are now obsolete and removed. For each vertex $v\in V$ such that $d(v) > 0$, i.e. $v$ owes money, iterate through each vertex $w\in V$ that is owed money and do the following: letting $d'(w)$ be the sum of ingoing edges of $w$, if $d'(w)$ is not $d(w)$, create an edge between $v$ and $w$ with value equal to $d(v, w)=min(d(v), d'(w))$, letting $d'(v)$ be $d(v)-d(v-w)$. To state this in a simple manner, let $v$ give as much money to $w$ until either $w$ is no longer owed any money, or $v$ has given all the money it owes to the group.
+> Consider now the following greedy algorithm that describes new edges, assuming old edges are now obsolete and removed.
+> For each vertex $v\in V$ such that $d(v) > 0$, i.e. $v$ owes money, iterate through each vertex $w\in V$ such that $d(w) < 0$, and create an edge between $v$ and $w$ with value equal to $d(v, w)=min(d(v), d(w))$. Then remove $d(v, w)$ from $d(v)$ and add it to $d(w)$. We have essentially let $v$ give as much money to $w$ until either $w$ is no longer owed any money, or $v$ has given all the money it owes to the group, and created an edge to describe this transaction. Naturally, this transaction is not executed and can then be considered a debt between $v$ and $w$, making it a sematically valid edge of the graph.
 >
-> Note that, because the sum of $d(v)$ for all $v\in V$ is $0$, each vertex that owes money, once iterated over, will have given all its owed money, and consequently each vertex that is owed money will be paid back.
+> Note that any vertex that owes money, once iterated over, will have given all the money it owes, as it would otherwise imply that the sum of $d(v)$ for all $v\in V$ does not equal $0$. This further implies that once all owing vertices are iterated over, all owed vertices will be fully paid back. Therefore, once the algorithm has completed, the value of $d(v)$ for all $v\in V$ is 0, and we have obtained a new debt graph. Furthermore, because no transformation on the graph modified the amout owed by or to any vertex, this new graph is equivalent to the original one in terms of amounts owed by or to each vertex. This proves correctness of the algorithm.
 > 
 > Let us now count the number of edges. To this end, let us show that the creation of an edge always results in the satisfaction of at least one vertex, where by satisfaction we mean that that vertex has paid or been paid everything it owed or was owed. Indeed, there are exactly two situations in which an edge can be created:
+> 
 > - the vertex that owed money was able to give the whole amount of money it owed to the target vertex, and it is now satisfied, or
 > - the vertex that owed money was not able to give all the money it owed because the target vertex was not owed as much, and the target vertex is satisfied.
+> 
 > Because a vertex cannot be satisfied more than once, this proves that the number of edges cannot be larger than the number of vertices, which concludes the proof.
-
-As a corollary, note that such a simplified debt graph is bipartite.
-

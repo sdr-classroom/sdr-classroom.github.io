@@ -300,6 +300,8 @@ tests, notamment l’utilisation de mocks. Vos tests devront passer avec
 le <a href="https://go.dev/doc/articles/race_detector">Data Race
 Detector</a> de Go.</p>
 <h1 id="rendu">Rendu</h1>
+<p>Utilisez Github Classroom pour créer un repo pour ce labo en cliquant
+<a href="https://classroom.github.com/a/ub5s_ooD">ici</a>.</p>
 <p>Votre repository contiendra notamment les fichiers suivants, que nous
 pourrons utiliser pour tester votre code.</p>
 <ul>
@@ -351,44 +353,53 @@ assuming old edges are now obsolete and removed. For each vertex <span
 class="math inline"><em>v</em> ∈ <em>V</em></span> such that <span
 class="math inline"><em>d</em>(<em>v</em>) &gt; 0</span>, i.e. <span
 class="math inline"><em>v</em></span> owes money, iterate through each
-vertex <span class="math inline"><em>w</em> ∈ <em>V</em></span> that is
-owed money and do the following: letting <span
-class="math inline"><em>d</em>′(<em>w</em>)</span> be the sum of ingoing
-edges of <span class="math inline"><em>w</em></span>, if <span
-class="math inline"><em>d</em>′(<em>w</em>)</span> is not <span
-class="math inline"><em>d</em>(<em>w</em>)</span>, create an edge
-between <span class="math inline"><em>v</em></span> and <span
-class="math inline"><em>w</em></span> with value equal to <span
-class="math inline"><em>d</em>(<em>v</em>,<em>w</em>) = <em>m</em><em>i</em><em>n</em>(<em>d</em>(<em>v</em>),<em>d</em>′(<em>w</em>))</span>,
-letting <span class="math inline"><em>d</em>′(<em>v</em>)</span> be
-<span
-class="math inline"><em>d</em>(<em>v</em>) − <em>d</em>(<em>v</em>−<em>w</em>)</span>.
-To state this in a simple manner, let <span
-class="math inline"><em>v</em></span> give as much money to <span
-class="math inline"><em>w</em></span> until either <span
+vertex <span class="math inline"><em>w</em> ∈ <em>V</em></span> such
+that <span class="math inline"><em>d</em>(<em>w</em>) &lt; 0</span>, and
+create an edge between <span class="math inline"><em>v</em></span> and
+<span class="math inline"><em>w</em></span> with value equal to <span
+class="math inline"><em>d</em>(<em>v</em>,<em>w</em>) = <em>m</em><em>i</em><em>n</em>(<em>d</em>(<em>v</em>),<em>d</em>(<em>w</em>))</span>.
+Then remove <span
+class="math inline"><em>d</em>(<em>v</em>,<em>w</em>)</span> from <span
+class="math inline"><em>d</em>(<em>v</em>)</span> and add it to <span
+class="math inline"><em>d</em>(<em>w</em>)</span>. We have essentially
+let <span class="math inline"><em>v</em></span> give as much money to
+<span class="math inline"><em>w</em></span> until either <span
 class="math inline"><em>w</em></span> is no longer owed any money, or
 <span class="math inline"><em>v</em></span> has given all the money it
-owes to the group.</p>
-<p>Note that, because the sum of <span
+owes to the group, and created an edge to describe this transaction.
+Naturally, this transaction is not executed and can then be considered a
+debt between <span class="math inline"><em>v</em></span> and <span
+class="math inline"><em>w</em></span>, making it a sematically valid
+edge of the graph.</p>
+<p>Note that any vertex that owes money, once iterated over, will have
+given all the money it owes, as it would otherwise imply that the sum of
+<span class="math inline"><em>d</em>(<em>v</em>)</span> for all <span
+class="math inline"><em>v</em> ∈ <em>V</em></span> does not equal <span
+class="math inline">0</span>. This further implies that once all owing
+vertices are iterated over, all owed vertices will be fully paid back.
+Therefore, once the algorithm has completed, the value of <span
 class="math inline"><em>d</em>(<em>v</em>)</span> for all <span
-class="math inline"><em>v</em> ∈ <em>V</em></span> is <span
-class="math inline">0</span>, each vertex that owes money, once iterated
-over, will have given all its owed money, and consequently each vertex
-that is owed money will be paid back.</p>
+class="math inline"><em>v</em> ∈ <em>V</em></span> is 0, and we have
+obtained a new debt graph. Furthermore, because no transformation on the
+graph modified the amout owed by or to any vertex, this new graph is
+equivalent to the original one in terms of amounts owed by or to each
+vertex. This proves correctness of the algorithm.</p>
 <p>Let us now count the number of edges. To this end, let us show that
 the creation of an edge always results in the satisfaction of at least
 one vertex, where by satisfaction we mean that that vertex has paid or
 been paid everything it owed or was owed. Indeed, there are exactly two
-situations in which an edge can be created: - the vertex that owed money
-was able to give the whole amount of money it owed to the target vertex,
-and it is now satisfied, or - the vertex that owed money was not able to
-give all the money it owed because the target vertex was not owed as
-much, and the target vertex is satisfied. Because a vertex cannot be
-satisfied more than once, this proves that the number of edges cannot be
-larger than the number of vertices, which concludes the proof.</p>
+situations in which an edge can be created:</p>
+<ul>
+<li>the vertex that owed money was able to give the whole amount of
+money it owed to the target vertex, and it is now satisfied, or</li>
+<li>the vertex that owed money was not able to give all the money it
+owed because the target vertex was not owed as much, and the target
+vertex is satisfied.</li>
+</ul>
+<p>Because a vertex cannot be satisfied more than once, this proves that
+the number of edges cannot be larger than the number of vertices, which
+concludes the proof.</p>
 </blockquote>
-<p>As a corollary, note that such a simplified debt graph is
-bipartite.</p>
 </main>
 </body>
 </html>
