@@ -9,6 +9,7 @@ css:
 | Date  | Changement                                            |
 | ----- | ----------------------------------------------------- |
 | 02.10 | Fix exemple d'exécution : graphe doit être simplifié. |
+| 02.10 | Ajout section [Gestion des erreurs](#gestion-des-erreurs) pour le serveur. |
 
 ## Informations Générales
 - **Date du rendu** : Lundi 16 octobre, 13:15 CEST
@@ -16,7 +17,7 @@ css:
 - **Plagiat** : en cas de copie manifeste, vous y serez confrontés, vous obtiendrez la note de 1, et l'incident sera reporté au responsable de la filière, avec un risque d'échec critique immédiat au cours. Ne trichez pas. *(Notez que les IAs génératives se trouvent aujourd'hui dans une zone qui est encore juridiquement floue pour ce qui est du plagiat, mais des arguments se valent à en considérer l'utilisation comme tel. Quoiqu'il en soit, nous vous proposons une autre vision sur la question : votre ambition est d'apprendre et d'acquérir des compétences, et votre utilisation éventuelle de cet outil doit refléter ceci. Tout comme Stackoverflow peut être à la fois un outil d'enrichissement et une banque de copy-paste, faites un choix intentionnel et réfléchi, vos propres intérêts en tête, de l'outil que vous ferez de l'IA générative)*
 
 # Debt Manager
-Nous vous demandons d'implémenter un gestionnaire de dettes entre amis. Ce service sera constitué d'un groupe de personnes, pouvant chacune se connecter à un même serveur à l'aide d'un client en ligne de commande, et lui communiquer les paiements qu'elle aura fait au nom d'un (sous-)ensemble du groupe. Le serveur sera responsable de maintenir à jour les dettes dues entre les différents membres du groupe, et les simplifier afin d'éviter un trop grand nombre de dépendances.
+Nous vous demandons d'implémenter un gestionnaire de dettes entre amis. Ce service sera constitué d'un groupe de personnes, pouvant chacune se connecter à un même serveur à l'aide d'un client en ligne de commande, et lui communiquer les paiements qu'elle aura fait *au nom* d'un (sous-)ensemble du groupe. Le serveur sera responsable de maintenir à jour les dettes dues entre les différents membres du groupe, et les simplifier afin d'éviter un trop grand nombre de dépendances.
 
 Notez que ce premier labo sera par la suite modifié et enrichi par les suivants. Par conséquent, assurez-vous d'avoir des bases saines, notamment avec une bonne [seperation of concerns](https://en.wikipedia.org/wiki/Separation_of_concerns).
 
@@ -117,6 +118,9 @@ Parce qu'il sera utilisé pour l'automatisation de tests, assurez-vous de bien s
 
 ### Simplification des dettes
 Les dettes forment un graphe dirigé, où chaque noeud représente une personne, et chaque arête une dette due par une personne à une autre. Ce graphe doit être maintenu dans une état simplifié. Nous considérerons ce graphe comme "simplifié" si le nombre total d'arêtes est inférieur au nombre de membres du groupe, et si aucune somme n'est due à une personne qui doit de l'argent. Voir [l'appendice](#appendice) pour une preuve par construction de l'existence d'une telle simplification du graphe.
+
+### Gestion des erreurs
+Si un client tente d'effectuer une action avec des arguments incorrects, par exemple un utilisateur non référencé dans le fichier de configuration, ou une somme négative, le serveur doit échouer et renvoyer un message d'erreur explicitant la source du problème. Comme décrit plus haut, le client affichera alors ce message d'erreur.
 
 # Tests
 Nous vous demandons d'écrire des tests unitaires et d'intégration automatisés. Nous vous recommandons de tirer profit des fonctionnalités de Go telles que les interfaces et les struct embeddings afin de faciliter l'implémentation de tests, notamment l'utilisation de mocks.

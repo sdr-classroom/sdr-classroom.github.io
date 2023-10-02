@@ -121,6 +121,8 @@ id="toc-utilisateur.trice">Utilisateur.trice</a></li>
 id="toc-configuration">Configuration</a></li>
 <li><a href="#simplification-des-dettes"
 id="toc-simplification-des-dettes">Simplification des dettes</a></li>
+<li><a href="#gestion-des-erreurs" id="toc-gestion-des-erreurs">Gestion
+des erreurs</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#tests" id="toc-tests">Tests</a></li>
@@ -133,6 +135,10 @@ supplémentaires</a></li>
 </nav>
 <h2 id="changelog">Changelog</h2>
 <table>
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 91%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th>Date</th>
@@ -143,6 +149,11 @@ supplémentaires</a></li>
 <tr class="odd">
 <td>02.10</td>
 <td>Fix exemple d’exécution : graphe doit être simplifié.</td>
+</tr>
+<tr class="even">
+<td>02.10</td>
+<td>Ajout section <a href="#gestion-des-erreurs">Gestion des erreurs</a>
+pour le serveur.</td>
 </tr>
 </tbody>
 </table>
@@ -168,10 +179,10 @@ vous ferez de l’IA générative)</em></li>
 <p>Nous vous demandons d’implémenter un gestionnaire de dettes entre
 amis. Ce service sera constitué d’un groupe de personnes, pouvant
 chacune se connecter à un même serveur à l’aide d’un client en ligne de
-commande, et lui communiquer les paiements qu’elle aura fait au nom d’un
-(sous-)ensemble du groupe. Le serveur sera responsable de maintenir à
-jour les dettes dues entre les différents membres du groupe, et les
-simplifier afin d’éviter un trop grand nombre de dépendances.</p>
+commande, et lui communiquer les paiements qu’elle aura fait <em>au
+nom</em> d’un (sous-)ensemble du groupe. Le serveur sera responsable de
+maintenir à jour les dettes dues entre les différents membres du groupe,
+et les simplifier afin d’éviter un trop grand nombre de dépendances.</p>
 <p>Notez que ce premier labo sera par la suite modifié et enrichi par
 les suivants. Par conséquent, assurez-vous d’avoir des bases saines,
 notamment avec une bonne <a
@@ -309,6 +320,12 @@ nombre de membres du groupe, et si aucune somme n’est due à une personne
 qui doit de l’argent. Voir <a href="#appendice">l’appendice</a> pour une
 preuve par construction de l’existence d’une telle simplification du
 graphe.</p>
+<h3 id="gestion-des-erreurs">Gestion des erreurs</h3>
+<p>Si un client tente d’effectuer une action avec des arguments
+incorrects, par exemple un utilisateur non référencé dans le fichier de
+configuration, ou une somme négative, le serveur doit échouer et
+renvoyer un message d’erreur explicitant la source du problème. Comme
+décrit plus haut, le client affichera alors ce message d’erreur.</p>
 <h1 id="tests">Tests</h1>
 <p>Nous vous demandons d’écrire des tests unitaires et d’intégration
 automatisés. Nous vous recommandons de tirer profit des fonctionnalités
