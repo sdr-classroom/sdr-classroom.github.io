@@ -4,6 +4,12 @@ css:
     - "/labos/style.css"
 ---
 
+## Changelog
+
+| Date  | Changement                                            |
+| ----- | ----------------------------------------------------- |
+| 02.10 | Fix exemple d'exécution : graphe doit être simplifié. |
+
 ## Informations Générales
 - **Date du rendu** : Lundi 16 octobre, 13:15 CEST
 - **Groupes** : à réaliser seul ou à deux
@@ -47,7 +53,7 @@ Success
 ollie: 4.95
 blake: 25
 29.95
-> get credit
+> get credit blake
 parker: 12.45
 12.45
 > exit

@@ -102,6 +102,7 @@
 </header>
 <nav id="TOC" role="doc-toc">
 <ul>
+<li><a href="#changelog" id="toc-changelog">Changelog</a></li>
 <li><a href="#informations-générales"
 id="toc-informations-générales">Informations Générales</a></li>
 <li><a href="#debt-manager" id="toc-debt-manager">Debt Manager</a></li>
@@ -130,6 +131,21 @@ supplémentaires</a></li>
 <li><a href="#appendice" id="toc-appendice">Appendice</a></li>
 </ul>
 </nav>
+<h2 id="changelog">Changelog</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Date</th>
+<th>Changement</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>02.10</td>
+<td>Fix exemple d’exécution : graphe doit être simplifié.</td>
+</tr>
+</tbody>
+</table>
 <h2 id="informations-générales">Informations Générales</h2>
 <ul>
 <li><strong>Date du rendu</strong> : Lundi 16 octobre, 13:15 CEST</li>
@@ -216,7 +232,7 @@ Example d’exécution du client
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">ollie:</span> 4.95</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">blake:</span> 25</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">29.95</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> get <span class="ex">credit</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> get <span class="ex">credit</span> blake</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ex">parker:</span> 12.45</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ex">12.45</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> exit</span>
@@ -350,7 +366,7 @@ for every <span class="math inline"><em>v</em> ∈ <em>V</em></span>. Note
 that <span
 class="math inline">∑<sub><em>v</em> ∈ <em>V</em></sub><em>d</em>(<em>v</em>) = 0</span>.
 This can be done trivially by computing the sum of the amounts of money
-attached to each in- and out-going edges of every vertex. Note that this
+attached to each in- and out-going edge of every vertex. Note that this
 partitions vertices into those that owe, those that are owed, and those
 that are neither – in other words, no vertex can both owe and be
 owed.</p>
