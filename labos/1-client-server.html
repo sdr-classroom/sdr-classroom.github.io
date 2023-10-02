@@ -202,8 +202,9 @@ une.</li>
 potentielle connexion encore ouverte avec le serveur.</li>
 </ul>
 <p>Parce que certains tests seront automatisés, assurez-vous de bien
-suivre le format de ces commandes. Aucun input ne doit être attendu de
-la part de l’utilisateur outre les commandes ci-dessus.</p>
+suivre le format de ces commandes et de leur output. Aucun input ne doit
+être attendu de la part de l’utilisateur outre les commandes
+ci-dessus.</p>
 <details open>
 <summary>
 Example d’exécution du client
@@ -239,12 +240,12 @@ l’instant, être ajouté une fois le serveur lancé).</li>
 personne créancière ainsi que la somme due.</li>
 </ul>
 <p>Notez que cette configuration décrit l’état du serveur à son
-lancement, et n’a pas pour vocation d’être modifié par le serveur. Cela
+lancement, et n’a pas pour vocation d’être modifiée par le serveur. Cela
 signifie que tout changement (notamment dû à un nouveau paiement) ne
 sera reflété qu’en mémoire, et sera perdu une fois le serveur clos. Ceci
 est dans un soucis de simplicité et de facilitation des tests.</p>
-<p>Parce qu’elle sera utilisée pour l’automatisation de tests,
-assurez-vous de bien suivre le format de ce fichier.</p>
+<p>Parce qu’il sera utilisé pour l’automatisation de tests, assurez-vous
+de bien suivre le format de ce fichier.</p>
 <details open>
 <summary>
 Example de fichier de configuration
@@ -295,15 +296,16 @@ graphe.</p>
 <h1 id="tests">Tests</h1>
 <p>Nous vous demandons d’écrire des tests unitaires et d’intégration
 automatisés. Nous vous recommandons de tirer profit des fonctionnalités
-de Go telles que les interfaces afin de faciliter l’implémentation de
-tests, notamment l’utilisation de mocks. Vos tests devront passer avec
-le <a href="https://go.dev/doc/articles/race_detector">Data Race
-Detector</a> de Go.</p>
+de Go telles que les interfaces et les struct embeddings afin de
+faciliter l’implémentation de tests, notamment l’utilisation de mocks.
+Vos tests devront passer avec le <a
+href="https://go.dev/doc/articles/race_detector">Data Race Detector</a>
+de Go.</p>
 <h1 id="rendu">Rendu</h1>
 <p>Utilisez Github Classroom pour créer un repo pour ce labo en cliquant
 <a href="https://classroom.github.com/a/ub5s_ooD">ici</a>.</p>
 <p>Votre repository contiendra notamment les fichiers suivants, que nous
-pourrons utiliser pour tester votre code.</p>
+utiliserons pour tester votre code.</p>
 <ul>
 <li>Un fichier <code>test.sh</code> exécutable permettant de lancer tous
 les tests, et prenant en argument un booléen indiquant si les tests
@@ -315,8 +317,8 @@ prenant en argument le chemin à donner à l’exécutable.</li>
 <li>Un fichier <code>compile_server.sh</code> compilant le serveur et
 prenant en argument le chemin à donner à l’exécutable.</li>
 <li>Un fichier <code>README.md</code> décrivant dans les grandes lignes
-la structure de votre solution (ses différents packages, goroutines, et
-leurs dépendances et communications).</li>
+la structure de votre solution (ses différents packages, goroutines,
+channels, et leurs dépendances et communications).</li>
 </ul>
 <h1 id="contraintes-supplémentaires">Contraintes supplémentaires</h1>
 <p>Votre code sera évalué pour sa qualité. Nous attendons donc notamment
@@ -324,6 +326,10 @@ des noms de variable et de fonction clairs, des commentaires pertinents
 et un README utile.</p>
 <p>Toute synchronisation doit être faite à l’aide des goroutines et des
 channels. Tout autre moyen de synchronisation est interdit.</p>
+<p>Le client ne doit pas simplement transmettre les entrées de
+l’utilisateur ou l’utilisatrice telles quelles au serveur, mais doit les
+parser et gérer la sérialisation des messages, puis le formattage des
+réponses reçues de la part du serveur.</p>
 <p>Pour finir, nous réitérons ici l’importance de vous conformer aux
 spécifications ci-dessus sur les formats d’input et d’output, puisqu’ils
 seront utilisés pour automatiser certains tests.</p>
@@ -335,7 +341,7 @@ represents any debt situation within a group of people.</p>
 <blockquote>
 <p><em>Proof</em></p>
 <p>Let us present an algorithm that finds a simplification of any debt
-graph, such that it satisfies the inequality in the proof.</p>
+graph, such that it satisfies the inequality in the claim.</p>
 <p>In an initial phase, the algorithm computes the total amount of money
 owed by each vertex, allowing for negative values if that vertex is owed
 more money than it owes. Let <span

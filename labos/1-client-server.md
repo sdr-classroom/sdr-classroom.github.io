@@ -34,7 +34,7 @@ Un certain nombre de commandes sont disponibles à travers le client :
 - `get credit [<pseudo>]` permet de lister les personnes qui doivent une somme, ainsi que cette somme, à la personne identifiée par le pseudo fourni, ou à l'utilisateur ou l'utilisatrice actuelle si aucun pseudo n'est fourni. Le client doit afficher une ligne par dette sous la forme `<pseudo>: <somme>` suivi de la somme totale des dettes, ou un message d'erreur s'il y en a une.
 - `exit` permet de quitter le programme, et toute potentielle connexion encore ouverte avec le serveur.
 
-Parce que certains tests seront automatisés, assurez-vous de bien suivre le format de ces commandes. Aucun input ne doit être attendu de la part de l'utilisateur outre les commandes ci-dessus.
+Parce que certains tests seront automatisés, assurez-vous de bien suivre le format de ces commandes et de leur output. Aucun input ne doit être attendu de la part de l'utilisateur outre les commandes ci-dessus.
 
 <details open>
 <summary>Example d'exécution du client</summary>
@@ -65,9 +65,9 @@ Le serveur prend en argument, à son lancement, le chemin d'un fichier de config
 - La liste des pseudos existants (un pseudo ne pourra pas, pour l'instant, être ajouté une fois le serveur lancé).
 - Pour chaque pseudo, toutes les dettes, décrites par le pseudo de la personne créancière ainsi que la somme due.
 
-Notez que cette configuration décrit l'état du serveur à son lancement, et n'a pas pour vocation d'être modifié par le serveur. Cela signifie que tout changement (notamment dû à un nouveau paiement) ne sera reflété qu'en mémoire, et sera perdu une fois le serveur clos. Ceci est dans un soucis de simplicité et de facilitation des tests.
+Notez que cette configuration décrit l'état du serveur à son lancement, et n'a pas pour vocation d'être modifiée par le serveur. Cela signifie que tout changement (notamment dû à un nouveau paiement) ne sera reflété qu'en mémoire, et sera perdu une fois le serveur clos. Ceci est dans un soucis de simplicité et de facilitation des tests.
 
-Parce qu'elle sera utilisée pour l'automatisation de tests, assurez-vous de bien suivre le format de ce fichier.
+Parce qu'il sera utilisé pour l'automatisation de tests, assurez-vous de bien suivre le format de ce fichier.
 
 <details open>
 <summary>Example de fichier de configuration</summary>
@@ -113,24 +113,26 @@ Parce qu'elle sera utilisée pour l'automatisation de tests, assurez-vous de bie
 Les dettes forment un graphe dirigé, où chaque noeud représente une personne, et chaque arête une dette due par une personne à une autre. Ce graphe doit être maintenu dans une état simplifié. Nous considérerons ce graphe comme "simplifié" si le nombre total d'arêtes est inférieur au nombre de membres du groupe, et si aucune somme n'est due à une personne qui doit de l'argent. Voir [l'appendice](#appendice) pour une preuve par construction de l'existence d'une telle simplification du graphe.
 
 # Tests
-Nous vous demandons d'écrire des tests unitaires et d'intégration automatisés. Nous vous recommandons de tirer profit des fonctionnalités de Go telles que les interfaces afin de faciliter l'implémentation de tests, notamment l'utilisation de mocks.
+Nous vous demandons d'écrire des tests unitaires et d'intégration automatisés. Nous vous recommandons de tirer profit des fonctionnalités de Go telles que les interfaces et les struct embeddings afin de faciliter l'implémentation de tests, notamment l'utilisation de mocks.
 Vos tests devront passer avec le [Data Race Detector](https://go.dev/doc/articles/race_detector) de Go.
 
 # Rendu
 
 Utilisez Github Classroom pour créer un repo pour ce labo en cliquant [ici](https://classroom.github.com/a/ub5s_ooD).
 
-Votre repository contiendra notamment les fichiers suivants, que nous pourrons utiliser pour tester votre code.
+Votre repository contiendra notamment les fichiers suivants, que nous utiliserons pour tester votre code.
 
 - Un fichier `test.sh` exécutable permettant de lancer tous les tests, et prenant en argument un booléen indiquant si les tests doivent être lancés avec le flag `-race` pour utiliser le [Data Race Detector](https://go.dev/doc/articles/race_detector) de Go.
 - Un fichier `compile_client.sh` compilant le client et prenant en argument le chemin à donner à l'exécutable.
 - Un fichier `compile_server.sh` compilant le serveur et prenant en argument le chemin à donner à l'exécutable.
-- Un fichier `README.md` décrivant dans les grandes lignes la structure de votre solution (ses différents packages, goroutines, et leurs dépendances et communications).
+- Un fichier `README.md` décrivant dans les grandes lignes la structure de votre solution (ses différents packages, goroutines, channels, et leurs dépendances et communications).
 
 # Contraintes supplémentaires
 Votre code sera évalué pour sa qualité. Nous attendons donc notamment des noms de variable et de fonction clairs, des commentaires pertinents et un README utile.
 
 Toute synchronisation doit être faite à l'aide des goroutines et des channels. Tout autre moyen de synchronisation est interdit.
+
+Le client ne doit pas simplement transmettre les entrées de l'utilisateur ou l'utilisatrice telles quelles au serveur, mais doit les parser et gérer la sérialisation des messages, puis le formattage des réponses reçues de la part du serveur.
 
 Pour finir, nous réitérons ici l'importance de vous conformer aux spécifications ci-dessus sur les formats d'input et d'output, puisqu'ils seront utilisés pour automatiser certains tests.
 
@@ -140,9 +142,9 @@ Pour finir, nous réitérons ici l'importance de vous conformer aux spécificati
 
 > *Proof*
 > 
-> Let us present an algorithm that finds a simplification of any debt graph, such that it satisfies the inequality in the proof.
+> Let us present an algorithm that finds a simplification of any debt graph, such that it satisfies the inequality in the claim.
 > 
-> In an initial phase, the algorithm computes the total amount of money owed by each vertex, allowing for negative values if that vertex is owed more money than it owes. Let $d(v)$ represent this value, for every $v\in V$. Note that $\sum_{v\in V} d(v) = 0$. This can be done trivially by computing the sum of the amounts of money attached to each in- and out-going edges of every vertex. Note that this partitions vertices into those that owe, those that are owed, and those that are neither -- in other words, no vertex can both owe and be owed.
+> In an initial phase, the algorithm computes the total amount of money owed by each vertex, allowing for negative values if that vertex is owed more money than it owes. Let $d(v)$ represent this value, for every $v\in V$. Note that $\sum_{v\in V} d(v) = 0$. This can be done trivially by computing the sum of the amounts of money attached to each in- and out-going edge of every vertex. Note that this partitions vertices into those that owe, those that are owed, and those that are neither -- in other words, no vertex can both owe and be owed.
 > 
 > Consider now the following greedy algorithm that describes new edges, assuming old edges are now obsolete and removed.
 > For each vertex $v\in V$ such that $d(v) > 0$, i.e. $v$ owes money, iterate through each vertex $w\in V$ such that $d(w) < 0$, and create an edge between $v$ and $w$ with value equal to $d(v, w)=min(d(v), d(w))$. Then remove $d(v, w)$ from $d(v)$ and add it to $d(w)$. We have essentially let $v$ give as much money to $w$ until either $w$ is no longer owed any money, or $v$ has given all the money it owes to the group, and created an edge to describe this transaction. Naturally, this transaction is not executed and can then be considered a debt between $v$ and $w$, making it a sematically valid edge of the graph.
