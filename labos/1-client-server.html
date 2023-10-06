@@ -155,6 +155,11 @@ supplémentaires</a></li>
 <td>Ajout section <a href="#gestion-des-erreurs">Gestion des erreurs</a>
 pour le serveur.</td>
 </tr>
+<tr class="odd">
+<td>06.10</td>
+<td><a href="#change3">Ajout précision</a> : Les commandes d’un même
+client apparaissent séquentielles.</td>
+</tr>
 </tbody>
 </table>
 <h2 id="informations-générales">Informations Générales</h2>
@@ -249,6 +254,13 @@ Example d’exécution du client
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> exit</span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span></span></code></pre></div>
 </details>
+<p><span id="change3"></p>
+<p>Un même client, une fois une commande insérée par l’utilisateur ou
+l’utilisatrice, doit attendre la bonne réception de la réponse de la
+part du serveur et son affichage avant de pouvoir recevoir et traiter
+une nouvelle commande. En revanche, plusieurs clients peuvent envoyer
+des commandes différentes au serveur de manière concurrente. Il revient
+alors au serveur de gérer ces requêtes sans conflit.</p>
 <h2 id="serveur">Serveur</h2>
 <h3 id="configuration">Configuration</h3>
 <p>Le serveur prend en argument, à son lancement, le chemin d’un fichier
