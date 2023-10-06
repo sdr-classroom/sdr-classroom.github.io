@@ -10,7 +10,7 @@ css:
 | ----- | ----------------------------------------------------- |
 | 02.10 | Fix exemple d'exécution : graphe doit être simplifié. |
 | 02.10 | Ajout section [Gestion des erreurs](#gestion-des-erreurs) pour le serveur. |
-| 06.10 | [Ajout précision](#change3) : Les commandes d'un même client apparaissent séquentielles. |
+| 06.10 | [Ajout précision](#change_sequential_commands) : Les commandes d'un même client apparaissent séquentielles. |
 
 ## Informations Générales
 - **Date du rendu** : Lundi 16 octobre, 13:15 CEST
@@ -64,8 +64,7 @@ $
 
 </details>
 
-<span id="change3">
-
+<span id="change_sequential_commands"></span>
 Un même client, une fois une commande insérée par l'utilisateur ou l'utilisatrice, doit attendre la bonne réception de la réponse de la part du serveur et son affichage avant de pouvoir recevoir et traiter une nouvelle commande. En revanche, plusieurs clients peuvent envoyer des commandes différentes au serveur de manière concurrente. Il revient alors au serveur de gérer ces requêtes sans conflit.
 
 ## Serveur
