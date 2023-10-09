@@ -11,9 +11,10 @@ css:
 | 02.10 | Fix exemple d'exécution : graphe doit être simplifié. |
 | 02.10 | Ajout section [Gestion des erreurs](#gestion-des-erreurs) pour le serveur. |
 | 06.10 | [Ajout précision](#change_sequential_commands) : Les commandes d'un même client apparaissent séquentielles. |
+| 09.10 | Modification de la deadline : Rendu le 22 octobre. |
 
 ## Informations Générales
-- **Date du rendu** : Lundi 16 octobre, 13:15 CEST
+- **Date du rendu** : Dimanche 22 octobre, 23:59 CEST. L'énoncé du second labo sera déjà donné le lundi 16 octobre.
 - **Groupes** : à réaliser seul ou à deux
 - **Plagiat** : en cas de copie manifeste, vous y serez confrontés, vous obtiendrez la note de 1, et l'incident sera reporté au responsable de la filière, avec un risque d'échec critique immédiat au cours. Ne trichez pas. *(Notez que les IAs génératives se trouvent aujourd'hui dans une zone qui est encore juridiquement floue pour ce qui est du plagiat, mais des arguments se valent à en considérer l'utilisation comme tel. Quoiqu'il en soit, nous vous proposons une autre vision sur la question : votre ambition est d'apprendre et d'acquérir des compétences, et votre utilisation éventuelle de cet outil doit refléter ceci. Tout comme Stackoverflow peut être à la fois un outil d'enrichissement et une banque de copy-paste, faites un choix intentionnel et réfléchi, vos propres intérêts en tête, de l'outil que vous ferez de l'IA générative)*
 
