@@ -12,6 +12,7 @@ css:
 | 02.10 | Ajout section [Gestion des erreurs](#gestion-des-erreurs) pour le serveur. |
 | 06.10 | [Ajout précision](#change_sequential_commands) : Les commandes d'un même client apparaissent séquentielles. |
 | 09.10 | Modification de la deadline : Rendu le 22 octobre. |
+| 16.10 | Fix typo dans preuve : nouvelle dette vaut $d(v, w)=min(d(v), -d(w))$. |
 
 ## Informations Générales
 - **Date du rendu** : Dimanche 22 octobre, 23:59 CEST. L'énoncé du second labo sera déjà donné le lundi 16 octobre.
@@ -162,7 +163,7 @@ Pour finir, nous réitérons ici l'importance de vous conformer aux spécificati
 > In an initial phase, the algorithm computes the total amount of money owed by each vertex, allowing for negative values if that vertex is owed more money than it owes. Let $d(v)$ represent this value, for every $v\in V$. Note that $\sum_{v\in V} d(v) = 0$. This can be done trivially by computing the sum of the amounts of money attached to each in- and out-going edge of every vertex. Note that this partitions vertices into those that owe, those that are owed, and those that are neither -- in other words, no vertex can both owe and be owed.
 > 
 > Consider now the following greedy algorithm that describes new edges, assuming old edges are now obsolete and removed.
-> For each vertex $v\in V$ such that $d(v) > 0$, i.e. $v$ owes money, iterate through each vertex $w\in V$ such that $d(w) < 0$, and create an edge between $v$ and $w$ with value equal to $d(v, w)=min(d(v), d(w))$. Then remove $d(v, w)$ from $d(v)$ and add it to $d(w)$. We have essentially let $v$ give as much money to $w$ until either $w$ is no longer owed any money, or $v$ has given all the money it owes to the group, and created an edge to describe this transaction. Naturally, this transaction is not executed and can then be considered a debt between $v$ and $w$, making it a sematically valid edge of the graph.
+> For each vertex $v\in V$ such that $d(v) > 0$, i.e. $v$ owes money, iterate through each vertex $w\in V$ such that $d(w) < 0$, and create an edge between $v$ and $w$ with value equal to $d(v, w)=min(d(v), -d(w))$. Then remove $d(v, w)$ from $d(v)$ and add it to $d(w)$. We have essentially let $v$ give as much money to $w$ until either $w$ is no longer owed any money, or $v$ has given all the money it owes to the group, and created an edge to describe this transaction. Naturally, this transaction is not executed and can then be considered a debt between $v$ and $w$, making it a sematically valid edge of the graph.
 >
 > Note that any vertex that owes money, once iterated over, will have given all the money it owes, as it would otherwise imply that the sum of $d(v)$ for all $v\in V$ does not equal $0$. This further implies that once all owing vertices are iterated over, all owed vertices will be fully paid back. Therefore, once the algorithm has completed, the value of $d(v)$ for all $v\in V$ is 0, and we have obtained a new debt graph. Furthermore, because no transformation on the graph modified the amout owed by or to any vertex, this new graph is equivalent to the original one in terms of amounts owed by or to each vertex. This proves correctness of the algorithm.
 > 
