@@ -8,7 +8,7 @@ css:
 
 | Date  | Changement                                            |
 | ----- | ----------------------------------------------------- |
-| |
+| 30.10 | Ajout lien vers tests automatisés du labo 1 dans section [Tests](#tests) |
 
 ## Informations Générales
 - **Date du rendu** : Lundi 13 Novembre, 13:15 CEST.
@@ -103,7 +103,9 @@ Aucune autre modification n'est nécessaire sur le client. Il continue de prendr
 
 # Tests
 
-Comme pour le labo précédent, nous vous demandons d'implémenter des tests pour ces nouvelles fonctionnalités et pour vérifier le bon fonctionnement de l'algorithme de Lamport. Nous vous recommandons par ailleurs de garder vos tests actuels et de les compléter si nécessaire.
+Nous vous fournissons les tests automatisés qui étaient pensés pour le labo 1 [ici](https://github.com/sdr-classroom/1-tests). Assurez-vous que votre solution passe ces tests, afin de vérifier que vous respectez bien les contraintes du labo précédent. Ceci sera nécessaire pour l'automatisation des tests de ce labo-ci, que nous ne pourrons, cette fois-ci, pas remplacer par des tests manuels.
+
+Vous êtes libres, et il vous est même recommandé, d'implémenter des tests supplémentaires, que ce soit end-to-end en utilisant par exemple le framework que nous avons mis en place pour les tests que nous vous fournissons, ou unitaires pour les nouvelles fonctionnalités de ce labo-ci.
 
 # Rendu
 
