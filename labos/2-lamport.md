@@ -9,9 +9,11 @@ css:
 | Date  | Changement                                            |
 | ----- | ----------------------------------------------------- |
 | 30.10 | Ajout lien vers tests automatisés du labo 1 dans section [Tests](#tests) |
+| 06.11 | Changement de deadline : à rendre le 22 novembre, 23:59 CEST. |
+| 06.11 | Possibilité de partir du code de solution [ici](https://github.com/sdr-classroom/lab1-solution). |
 
 ## Informations Générales
-- **Date du rendu** : Lundi 13 Novembre, 13:15 CEST.
+- **Date du rendu** : ~~Lundi 13 Novembre, 13:15 CEST~~ Mercredi 22 novembre, 23:59 CEST.
 - **Groupes** : à réaliser seul ou à deux. Vous pouvez réutiliser les groupes du précédent labo.
 - **Plagiat** : en cas de copie manifeste, vous y serez confrontés, vous obtiendrez la note de 1, et l'incident sera reporté au responsable de la filière, avec un risque d'échec critique immédiat au cours. Ne trichez pas. *(Notez que les IAs génératives se trouvent aujourd'hui dans une zone qui est encore juridiquement floue pour ce qui est du plagiat, mais des arguments se valent à en considérer l'utilisation comme tel. Quoiqu'il en soit, nous vous proposons une autre vision sur la question : votre ambition est d'apprendre et d'acquérir des compétences, et votre utilisation éventuelle de cet outil doit refléter ceci. Tout comme Stackoverflow peut être à la fois un outil d'enrichissement et une banque de copy-paste, faites un choix intentionnel et réfléchi, vos propres intérêts en tête, de l'outil que vous ferez de l'IA générative)*
 
@@ -19,7 +21,7 @@ css:
 
 Ce labo a pour but de modifier le précédent pour le rendre non plus centralisé mais distribué. La forme de distribution que nous avons choisie est celle dans laquelle chaque serveur du système aura une réplique locale de l'état actuel des dettes entre les membres du groupe. Il faudra donc s'assurer que ces copies locales sont synchronisés en tout temps.
 
-Vous devez repartir de votre code du labo 1. Si vous avez formé une nouvelle team, utilisez le code de l'un ou l'une des deux membres de la nouvelle team. Si la team à laquelle appartenait ce code contenait deux membres, et que l'autre membre réutilise aussi ce même code dans sa nouvelle équipe **ceci doit être précisé explicitement dans votre README, afin que cela n'apparaisse pas comme du plagiat.**
+Vous devez repartir de votre code du labo 1, ou utiliser celui que nous vous fournissons [ici](https://github.com/sdr-classroom/lab1-solution). Si vous avez formé une nouvelle team, utilisez le code de l'un ou l'une des deux membres de la nouvelle team. Si la team à laquelle appartenait ce code contenait deux membres, et que l'autre membre réutilise aussi ce même code dans sa nouvelle équipe **ceci doit être précisé explicitement dans votre README, afin que cela n'apparaisse pas comme du plagiat.**
 
 Puisque ce labo construit sur le premier, toutes les indications du premier énoncé qui ne sont pas rendues obsolètes par celui-ci restent valables et doivent donc continuer d'être vérifiées par votre solution à ce labo-ci.
 
