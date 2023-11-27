@@ -32,19 +32,22 @@ Dans ce labo, nous continuerons de supposer qu'aucun serveur ne peut tomber en p
 
 En revanche, nous supposerons qu'il est possible qu'un serveur tombe en panne durant une élection, ainsi que durant les "temps morts", c'est à dire les moments où aucun serveur n'est en train d'executer une quelconque action.
 
-Ces pannes ne seront pas nécessairement définitives, ce qui signifie qu'un processus tombé en panne peut à nouveau rejoindre le système plus tard. En revanche, nous supposerons qu'un processus étant tombé en panne ne gardera pas son étant d'avant-panne. Par exemple, si un processus était sur le point d'envoyer un message (par exemple un `ACK`) avant de tomber en panne, cet envoi ne sera pas repris et terminé une fois le processus à nouveau à jour.
+Ces pannes ne seront pas nécessairement définitives, ce qui signifie qu'un processus tombé en panne peut à nouveau rejoindre le système plus tard. En revanche, nous supposerons qu'un processus étant tombé en panne ne gardera pas son étant d'avant-panne. Par exemple, si un processus était sur le point d'envoyer un message (par exemple un `ACK`) avant de tomber en panne, cet envoi ne sera pas repris et terminé une fois le processus rétabli de sa.
 
 Nous ferons aussi la (forte) supposition que tout message sera reçu en moins de 5 secondes, et que les temps de traitement seront comparativement négligeables. Cela signifie qu'un message restant sans réponse durant plus de 10 secondes implique que son destinataire est tombé en panne.
 
 ## Serveur
 
-Nous vous proposons l'approche suivante pour permettre la distribution de charge. Vous êtes libres de choisir une autre solution, mais il vous faudra dans tous les cas utiliser l'algoritthme d'élection Chang et Roberts and gestion des pannes.
+Nous vous proposons l'approche suivante pour permettre la distribution de charge. Vous êtes libres de choisir une autre solution, mais il vous faudra dans tous les cas respecter l'expérience utilisateur que notre proposition implique, et utiliser l'algoritthme d'élection Chang et Roberts avec gestion des pannes.
 
 Au moment où un nouveau client tente de se connecter à un processus pour créer une session, deux cas de figure peuvent se présenter.
+
 - Si le processus contacté est l'élu, alors il peut directement commencer à le servir (par exemple à travers la connection déjà en place, ou bien une nouvelle, c'est à vous de décider en fonction de votre implémentation).
 - Si le processus contacté n'est pas l'élu, alors il répondra avec l'adresse de l'élu, et ne servira donc pas ce client lui-même.
 
 Une fois que l'élu a pris en charge un nouveau client, il doit immédiatement arrêter de se considérer élu, et demander une nouvelle élection.
+
+Vous êtes libres de choisir quel processus est initialement l'élu, et quelle règle est utilisée pour départager de manière uniforme les cas d'égalité d'aptitudes. La seule contrainte est évidemment qu'il n'y ait toujours qu'un seul élu à la fois.
 
 Si une requête de la part d'un client arrive en cours d'élection, alors celle-ci pourra être mise en attente jusqu'à ce que l'élu soit connu.
 
@@ -52,21 +55,22 @@ Si une requête de la part d'un client arrive en cours d'élection, alors celle-
 
 Lorsqu'un processus tombe en panne puis est relancé, son état a été perdu. En particulier, le graphe de dettes sera de nouveau à l'état initial donné par le fichier de configuration.
 
-Pour remédier à cela, nous pourrions persister l'état dans une base de données par exemple. Cependant, nous vous proposons une autre approche. Lorsqu'un serveur se lance et met en place une connection aux autres processus du système, ces derniers lui partagent l'état actuel de leur graphe de dettes. Le processus nouvellement connecté mettra ainsi à jour son état local pour qu'il coïncide à ceux reçus de la part des autres serveurs du système.
+Pour remédier à cela, nous pourrions persister l'état dans une base de données par exemple. Cependant, nous vous proposons une autre approche. Lorsqu'un serveur se lance et met en place une connection aux autres processus du système, ces derniers lui partagent l'état actuel de leur graphe de dettes. Le processus nouvellement connecté mettra ainsi à jour son état local pour qu'il coïncide avec ceux reçus de la part des autres serveurs du système.
 
 Notez que ceci ne posera pas de problème grâce à notre supposition d'absence de panne lors d'interractions sur le graphe de dettes.
 
-Nous avons préféré cette approche-ci à d'autres consistant à persister les données pour plusieurs raisons. Tout d'abord, le cout d'implémentation sera probablement plus faible ici. Ensuite, cela met en avant une considération importante des systèmes distribués : nous supposons ici qu'aucune panne n'a lieu durant une mutation de l'état global, mais ceci n'est pas réaliste. Dans un vrai système distribué, des algorithmes plus complexes que celui de Lamport sont utilisés, autorisant ainsi les pannes, et permettant au système de continuer d'évolution pendant qu'un processus n'est plus en ligne. Lorsque ce dernier se reconnecte au système, son état persisté sera certes utile, mais il lui faudra ensuite échanger avec ses voisins pour se mettre à jour sur les évenements qu'il aura raté le temps de son absence. Vous implémentez donc ici une version relativement simplifiée d'une telle phase de remise à jour.
+Nous avons préféré cette approche-ci à d'autres consistant à persister les données pour plusieurs raisons. Tout d'abord, le cout d'implémentation sera probablement plus faible ici. Ensuite, cela met en avant une considération importante des systèmes distribués : nous supposons ici qu'aucune panne n'a lieu durant une mutation de l'état global, mais ceci n'est pas réaliste. Dans un vrai système distribué, des algorithmes plus complexes que celui de Lamport sont utilisés, autorisant ainsi les pannes, et permettant au système de continuer d'évoluer pendant qu'un processus n'est plus en ligne. Lorsque ce dernier se reconnecte au système, son état persisté sera certes utile, mais il lui faudra ensuite échanger avec ses voisins pour se mettre à jour sur les évenements qu'il aura raté le temps de son absence. Vous implémentez donc ici une version relativement simplifiée d'une telle phase de remise à jour.
 
 ### Fichier de configuration
 
-Le fichier de configuration du serveur ne prend aucune modification syntaxique. En revanche, la liste des serveurs spécifiée dans la propriété `servers` est maintenant ordonnancée de manière à ce que deux processus consécutifs dans cette liste sont voisins dans l'anneau utilisé par l'algorithme de Chang et Roberts, et de même pour le dernier et le premier, voisins également dans cet anneau.
+Le fichier de configuration du serveur ne prend aucune modification syntaxique. En revanche, la liste des serveurs spécifiée dans la propriété `servers` est maintenant ordonnancée de manière à ce que deux processus consécutifs dans cette liste sont voisins dans l'anneau utilisé par l'algorithme de Chang et Roberts, et de même pour le dernier et le premier, voisins également dans l'anneau.
 
 ## Client
 
-Du point de vue de l'utilisateur•rice, aucun changement ne doit être visible, si ce n'est un léger délai au moment de lancer le client, le temps qu'il trouve le bon serveur auquel se connecter.
+Du point de vue de l'utilisateur•rice, aucun changement ne doit être visible, si ce n'est un léger délai au moment de lancer le client, le temps qu'il trouve le bon serveur auquel se connecter. En particulier, **le client ne doit rien afficher pendant qu'il attend de pouvoir se connecter à l'élu**.
 
 Au lancement du client, celui-ci entre donc dans la boucle suivante pour obtenir l'adresse d'un serveur acceptant de le prendre en charge :
+
 1. Il contacte le processus dont l'adreesse lui est donnée en argument (comme il le fait déjà dans le labo précédent), pour lui demander s'il est prêt à le prendre en charge (en d'autres termes, s'il est l'élu)
 2. Ce processus peut répondre de deux manières différentes :
     - soit il accepte de le prendre en charge (il est donc l'élu), et le client peut donc communiquer avec ce processus pour le reste de la session ;
@@ -84,7 +88,7 @@ Nous utiliserons des tests automatisés pour vérifier que, lors de la connectio
 
 Nous vérifierons aussi bien sûr que le reste du gestionnaire de dettes fonctionne toujours comme décrit dans les deux précédents labos.
 
-Nous ne testerons cependant pas de scénarios dans lesquels les serveurs tombent en panne durant des commandes `pay`, `get` ou `clear` des clients, puisque cela sort du scope de ce labo.
+Nous ne testerons cependant pas de scénarios dans lesquels les serveurs tombent en panne, ou sont en panne, durant des commandes `pay`, `get` ou `clear` des clients, puisque cela sort du scope de ce labo.
 
 Nous évaluerons aussi la qualité de votre code et de votre solution manuellement, afin de pénaliser l'utilisation de locks, ou de découvrir des risques de race conditions non-découverts par nos tests.
 
