@@ -8,6 +8,7 @@ css:
 
 | Date  | Changement                                            |
 | ----- | ----------------------------------------------------- |
+| 27.11 | Nécessité d'envoyer un ACK dans le mainteneur d'anneau, [ici](#change_ack_necessary) |
 
 ## Informations Générales
 - **Date du rendu** : Lundi 18 décembre, 23:59 CEST.
@@ -36,7 +37,17 @@ Ces pannes ne seront pas nécessairement définitives, ce qui signifie qu'un pro
 
 Nous ferons aussi la (forte) supposition que tout message sera reçu en moins de 5 secondes, et que les temps de traitement seront comparativement négligeables. Cela signifie qu'un message restant sans réponse durant plus de 10 secondes implique que son destinataire est tombé en panne.
 
-## Serveur
+<span id="change_ack_necessary"></span>
+
+## Remarques sur le mainteneur d'anneau
+
+Dans le cours, le mainteneur d'anneau utilise des ACKs pour détecter la panne d'un voisin. Vous aurez peut-être noté que le fait d'utiliser TCP dans ce labo vous offre, en supplément gratuit, un détecteur de panne : si le serveur suivant est en panne, alors sa connection sera fermée, et elle pourra être détectée rapidement, et probablement avant qu'ait lieu un timeout dû à une non-réception d'un ACK.
+
+Toutefois, notez que ce ACK reste nécessaire. En d'autres termes, le fait d'avoir un détecteur de pannes dans le mainteneur d'anneau ne suffit à supprimer les ACKs. En effet, si un processus $A$ détecte une panne chez son prochain $B$ juste après lui avoir envoyé un message, rien ne lui permet de savoir si $B$ est tombé en panne avant ou après avoir reçu, ou même traité, son message.
+
+Il reste donc nécessaire que le recepteur d'un message envoie un ACK après avoir reçu *et traité* le message, afin de permettre à son envoyeur de le renvoyer au suivant si le message n'a pas été traité avec certitude. Notez aussi que cela autorise un serveur à tomber en panne après avoir traité un message mais *avant* d'avoir pû envoyer le ACK ; ce message aura donc été traité deux fois au total, chez les deux successeurs de l'envoyeur initial. Ceci n'est pas un problème pour l'algorithme Chang et Roberts, qui est capable de se remettre d'un tel scénario.
+
+# Serveur
 
 Nous vous proposons l'approche suivante pour permettre la distribution de charge. Vous êtes libres de choisir une autre solution, mais il vous faudra dans tous les cas respecter l'expérience utilisateur que notre proposition implique, et utiliser l'algoritthme d'élection Chang et Roberts avec gestion des pannes.
 
@@ -51,7 +62,7 @@ Vous êtes libres de choisir quel processus est initialement l'élu, et quelle r
 
 Si une requête de la part d'un client arrive en cours d'élection, alors celle-ci pourra être mise en attente jusqu'à ce que l'élu soit connu.
 
-### Récupération de panne
+## Récupération de panne
 
 Lorsqu'un processus tombe en panne puis est relancé, son état a été perdu. En particulier, le graphe de dettes sera de nouveau à l'état initial donné par le fichier de configuration.
 
@@ -61,11 +72,11 @@ Notez que ceci ne posera pas de problème grâce à notre supposition d'absence 
 
 Nous avons préféré cette approche-ci à d'autres consistant à persister les données pour plusieurs raisons. Tout d'abord, le cout d'implémentation sera probablement plus faible ici. Ensuite, cela met en avant une considération importante des systèmes distribués : nous supposons ici qu'aucune panne n'a lieu durant une mutation de l'état global, mais ceci n'est pas réaliste. Dans un vrai système distribué, des algorithmes plus complexes que celui de Lamport sont utilisés, autorisant ainsi les pannes, et permettant au système de continuer d'évoluer pendant qu'un processus n'est plus en ligne. Lorsque ce dernier se reconnecte au système, son état persisté sera certes utile, mais il lui faudra ensuite échanger avec ses voisins pour se mettre à jour sur les évenements qu'il aura raté le temps de son absence. Vous implémentez donc ici une version relativement simplifiée d'une telle phase de remise à jour.
 
-### Fichier de configuration
+## Fichier de configuration
 
 Le fichier de configuration du serveur ne prend aucune modification syntaxique. En revanche, la liste des serveurs spécifiée dans la propriété `servers` est maintenant ordonnancée de manière à ce que deux processus consécutifs dans cette liste sont voisins dans l'anneau utilisé par l'algorithme de Chang et Roberts, et de même pour le dernier et le premier, voisins également dans l'anneau.
 
-## Client
+# Client
 
 Du point de vue de l'utilisateur•rice, aucun changement ne doit être visible, si ce n'est un léger délai au moment de lancer le client, le temps qu'il trouve le bon serveur auquel se connecter. En particulier, **le client ne doit rien afficher pendant qu'il attend de pouvoir se connecter à l'élu**.
 

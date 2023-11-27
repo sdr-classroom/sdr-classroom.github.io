@@ -48,6 +48,10 @@ id="toc-informations-générales">Informations Générales</a></li>
 id="toc-distribution-de-charge">Distribution de charge</a></li>
 <li><a href="#suppositions" id="toc-suppositions">Suppositions</a>
 <ul>
+<li><a href="#remarques-sur-le-mainteneur-danneau"
+id="toc-remarques-sur-le-mainteneur-danneau">Remarques sur le mainteneur
+d’anneau</a></li>
+</ul></li>
 <li><a href="#serveur" id="toc-serveur">Serveur</a>
 <ul>
 <li><a href="#récupération-de-panne"
@@ -56,7 +60,6 @@ id="toc-récupération-de-panne">Récupération de panne</a></li>
 id="toc-fichier-de-configuration">Fichier de configuration</a></li>
 </ul></li>
 <li><a href="#client" id="toc-client">Client</a></li>
-</ul></li>
 <li><a href="#tests" id="toc-tests">Tests</a></li>
 <li><a href="#rendu" id="toc-rendu">Rendu</a></li>
 <li><a href="#contraintes-supplémentaires"
@@ -66,6 +69,10 @@ supplémentaires</a></li>
 </nav>
 <h2 id="changelog">Changelog</h2>
 <table>
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 91%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th>Date</th>
@@ -73,6 +80,11 @@ supplémentaires</a></li>
 </tr>
 </thead>
 <tbody>
+<tr class="odd">
+<td>27.11</td>
+<td>Nécessité d’envoyer un ACK dans le mainteneur d’anneau, <a
+href="#change_ack_necessary">ici</a></td>
+</tr>
 </tbody>
 </table>
 <h2 id="informations-générales">Informations Générales</h2>
@@ -138,7 +150,33 @@ en moins de 5 secondes, et que les temps de traitement seront
 comparativement négligeables. Cela signifie qu’un message restant sans
 réponse durant plus de 10 secondes implique que son destinataire est
 tombé en panne.</p>
-<h2 id="serveur">Serveur</h2>
+<p><span id="change_ack_necessary"></span></p>
+<h2 id="remarques-sur-le-mainteneur-danneau">Remarques sur le mainteneur
+d’anneau</h2>
+<p>Dans le cours, le mainteneur d’anneau utilise des ACKs pour détecter
+la panne d’un voisin. Vous aurez peut-être noté que le fait d’utiliser
+TCP dans ce labo vous offre, en supplément gratuit, un détecteur de
+panne : si le serveur suivant est en panne, alors sa connection sera
+fermée, et elle pourra être détectée rapidement, et probablement avant
+qu’ait lieu un timeout dû à une non-réception d’un ACK.</p>
+<p>Toutefois, notez que ce ACK reste nécessaire. En d’autres termes, le
+fait d’avoir un détecteur de pannes dans le mainteneur d’anneau ne
+suffit à supprimer les ACKs. En effet, si un processus <span
+class="math inline"><em>A</em></span> détecte une panne chez son
+prochain <span class="math inline"><em>B</em></span> juste après lui
+avoir envoyé un message, rien ne lui permet de savoir si <span
+class="math inline"><em>B</em></span> est tombé en panne avant ou après
+avoir reçu, ou même traité, son message.</p>
+<p>Il reste donc nécessaire que le recepteur d’un message envoie un ACK
+après avoir reçu <em>et traité</em> le message, afin de permettre à son
+envoyeur de le renvoyer au suivant si le message n’a pas été traité avec
+certitude. Notez aussi que cela autorise un serveur à tomber en panne
+après avoir traité un message mais <em>avant</em> d’avoir pû envoyer le
+ACK ; ce message aura donc été traité deux fois au total, chez les deux
+successeurs de l’envoyeur initial. Ceci n’est pas un problème pour
+l’algorithme Chang et Roberts, qui est capable de se remettre d’un tel
+scénario.</p>
+<h1 id="serveur">Serveur</h1>
 <p>Nous vous proposons l’approche suivante pour permettre la
 distribution de charge. Vous êtes libres de choisir une autre solution,
 mais il vous faudra dans tous les cas respecter l’expérience utilisateur
@@ -164,7 +202,7 @@ toujours qu’un seul élu à la fois.</p>
 <p>Si une requête de la part d’un client arrive en cours d’élection,
 alors celle-ci pourra être mise en attente jusqu’à ce que l’élu soit
 connu.</p>
-<h3 id="récupération-de-panne">Récupération de panne</h3>
+<h2 id="récupération-de-panne">Récupération de panne</h2>
 <p>Lorsqu’un processus tombe en panne puis est relancé, son état a été
 perdu. En particulier, le graphe de dettes sera de nouveau à l’état
 initial donné par le fichier de configuration.</p>
@@ -191,14 +229,14 @@ mais il lui faudra ensuite échanger avec ses voisins pour se mettre à
 jour sur les évenements qu’il aura raté le temps de son absence. Vous
 implémentez donc ici une version relativement simplifiée d’une telle
 phase de remise à jour.</p>
-<h3 id="fichier-de-configuration">Fichier de configuration</h3>
+<h2 id="fichier-de-configuration">Fichier de configuration</h2>
 <p>Le fichier de configuration du serveur ne prend aucune modification
 syntaxique. En revanche, la liste des serveurs spécifiée dans la
 propriété <code>servers</code> est maintenant ordonnancée de manière à
 ce que deux processus consécutifs dans cette liste sont voisins dans
 l’anneau utilisé par l’algorithme de Chang et Roberts, et de même pour
 le dernier et le premier, voisins également dans l’anneau.</p>
-<h2 id="client">Client</h2>
+<h1 id="client">Client</h1>
 <p>Du point de vue de l’utilisateur•rice, aucun changement ne doit être
 visible, si ce n’est un léger délai au moment de lancer le client, le
 temps qu’il trouve le bon serveur auquel se connecter. En particulier,
