@@ -132,7 +132,7 @@ tard. En revanche, nous supposerons qu’un processus étant tombé en panne
 ne gardera pas son étant d’avant-panne. Par exemple, si un processus
 était sur le point d’envoyer un message (par exemple un
 <code>ACK</code>) avant de tomber en panne, cet envoi ne sera pas repris
-et terminé une fois le processus rétabli de sa.</p>
+et terminé une fois le processus rétabli de sa panne.</p>
 <p>Nous ferons aussi la (forte) supposition que tout message sera reçu
 en moins de 5 secondes, et que les temps de traitement seront
 comparativement négligeables. Cela signifie qu’un message restant sans

@@ -32,7 +32,7 @@ Dans ce labo, nous continuerons de supposer qu'aucun serveur ne peut tomber en p
 
 En revanche, nous supposerons qu'il est possible qu'un serveur tombe en panne durant une élection, ainsi que durant les "temps morts", c'est à dire les moments où aucun serveur n'est en train d'executer une quelconque action.
 
-Ces pannes ne seront pas nécessairement définitives, ce qui signifie qu'un processus tombé en panne peut à nouveau rejoindre le système plus tard. En revanche, nous supposerons qu'un processus étant tombé en panne ne gardera pas son étant d'avant-panne. Par exemple, si un processus était sur le point d'envoyer un message (par exemple un `ACK`) avant de tomber en panne, cet envoi ne sera pas repris et terminé une fois le processus rétabli de sa.
+Ces pannes ne seront pas nécessairement définitives, ce qui signifie qu'un processus tombé en panne peut à nouveau rejoindre le système plus tard. En revanche, nous supposerons qu'un processus étant tombé en panne ne gardera pas son étant d'avant-panne. Par exemple, si un processus était sur le point d'envoyer un message (par exemple un `ACK`) avant de tomber en panne, cet envoi ne sera pas repris et terminé une fois le processus rétabli de sa panne.
 
 Nous ferons aussi la (forte) supposition que tout message sera reçu en moins de 5 secondes, et que les temps de traitement seront comparativement négligeables. Cela signifie qu'un message restant sans réponse durant plus de 10 secondes implique que son destinataire est tombé en panne.
 
