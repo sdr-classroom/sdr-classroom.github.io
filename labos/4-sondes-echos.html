@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Labo 4 - Agrégation d’informations distribuées</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #cccccc; background-color: #303030; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ffcfaf; } /* Alert */
+    code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+    code span.at { } /* Attribute */
+    code span.bn { color: #dca3a3; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #f0dfaf; } /* ControlFlow */
+    code span.ch { color: #dca3a3; } /* Char */
+    code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+    code span.co { color: #7f9f7f; } /* Comment */
+    code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+    code span.do { color: #7f9f7f; } /* Documentation */
+    code span.dt { color: #dfdfbf; } /* DataType */
+    code span.dv { color: #dcdccc; } /* DecVal */
+    code span.er { color: #c3bf9f; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #c0bed1; } /* Float */
+    code span.fu { color: #efef8f; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+    code span.kw { color: #f0dfaf; } /* Keyword */
+    code span.op { color: #f0efd0; } /* Operator */
+    code span.ot { color: #efef8f; } /* Other */
+    code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+    code span.sc { color: #dca3a3; } /* SpecialChar */
+    code span.ss { color: #cc9393; } /* SpecialString */
+    code span.st { color: #cc9393; } /* String */
+    code span.va { } /* Variable */
+    code span.vs { color: #cc9393; } /* VerbatimString */
+    code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/labos/style.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+    <main>
+<header id="title-block-header">
+    <nav>
+        <a href="/"><i class="fa fa-angle-left"></i> Back</a>
+      </nav>
+<h1 class="title">Labo 4 - Agrégation d’informations distribuées</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#informations-générales"
+id="toc-informations-générales">Informations Générales</a></li>
+<li><a href="#introduction" id="toc-introduction">Introduction</a></li>
+<li><a href="#nouvelle-commande" id="toc-nouvelle-commande">Nouvelle
+commande</a></li>
+<li><a href="#nouvelle-structure-du-réseau"
+id="toc-nouvelle-structure-du-réseau">Nouvelle structure du
+réseau</a></li>
+<li><a href="#algorithme-à-sondes-et-échos"
+id="toc-algorithme-à-sondes-et-échos">Algorithme à sondes et
+échos</a></li>
+<li><a href="#tests" id="toc-tests">Tests</a></li>
+<li><a href="#rendu" id="toc-rendu">Rendu</a></li>
+<li><a href="#contraintes-supplémentaires"
+id="toc-contraintes-supplémentaires">Contraintes
+supplémentaires</a></li>
+</ul>
+</nav>
+<h2 id="informations-générales">Informations Générales</h2>
+<ul>
+<li><strong>Date du rendu</strong> : Vendredi 26 janvier, 23:59
+CEST.</li>
+<li><strong>Groupes</strong> : à réaliser seul ou à deux. Vous pouvez
+réutiliser les groupes du précédent labo.</li>
+<li><strong>Plagiat</strong> : en cas de copie manifeste, vous y serez
+confrontés, vous obtiendrez la note de 1, et l’incident sera reporté au
+responsable de la filière, avec un risque d’échec critique immédiat au
+cours. Ne trichez pas. <em>(Notez que les IAs génératives se trouvent
+aujourd’hui dans une zone qui est encore juridiquement floue pour ce qui
+est du plagiat, mais des arguments se valent à en considérer
+l’utilisation comme tel. Quoiqu’il en soit, nous vous proposons une
+autre vision sur la question : votre ambition est d’apprendre et
+d’acquérir des compétences, et votre utilisation éventuelle de cet outil
+doit refléter ceci. Tout comme Stackoverflow peut être à la fois un
+outil d’enrichissement et une banque de copy-paste, faites un choix
+intentionnel et réfléchi, vos propres intérêts en tête, de l’outil que
+vous ferez de l’IA générative)</em></li>
+</ul>
+<h1 id="introduction">Introduction</h1>
+<p>Dans ce labo, vous allez implémenter un algorithme à sondes et échos
+permettant au gestionnaire de dettes implémenté jusqu’ici de présenter
+des informations globales sur le système aux utilisateur•rice•s.</p>
+<p>Vous devez repartir de votre code du labo 3. Si vous avez formé une
+nouvelle équipe, utilisez le code de l’un ou l’une des deux membres de
+la nouvelle équipe. Si l’équipe à laquelle appartenait ce code contenait
+deux membres, et que l’autre membre réutilise aussi ce même code dans sa
+nouvelle équipe, <strong>ceci doit être précisé explicitement dans votre
+README, afin que cela n’apparaisse pas comme du plagiat.</strong></p>
+<p>Puisque ce labo construit sur les précédents, toutes les indications
+des précédents énoncés qui ne sont pas rendues obsolètes par celui-ci
+restent valables et doivent donc continuer d’être vérifiées par votre
+solution à ce labo-ci.</p>
+<h1 id="nouvelle-commande">Nouvelle commande</h1>
+<p>Vous devez implémenter une nouvelle commande, <code>users</code>, qui
+retourne la liste complète des utilisateur•rice•s participant au système
+de dettes, avec leur solde actuel total (positif si on leur doit plus
+qu’ils ne doivent, et négatif s’ils doivent plus qu’on ne leur doit), et
+le fait qu’ils soient actuellement en ligne (c’est à dire qu’un client à
+leur nom est actuellement connecté au système), s’ils le sont. Par
+exemple, si Jessie est connecté•e à un serveur et Blake à un autre, mais
+que Ollie n’est pas connecté•e, alors la commande <code>users</code>,
+exécutée par Jessie ou Ollie devra retourner quelque chose comme suit,
+en supposant que Blake doit 10 à Jessie et 5 à Ollie.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode txt"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>&gt; users</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>jessie: 10 (online)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>ollie: 5</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>blake: -15 (online)</span></code></pre></div>
+<p>Nous avons donc, pour chaque personne participant au système :</p>
+<ul>
+<li>Son pseudo</li>
+<li>Son solde actuel</li>
+<li>Seulement si elle est connectée, ce statut entre parenthèses :
+<code>(online)</code>. Si elle n’est pas connectée, rien n’est
+affiché.</li>
+</ul>
+<p>L’ordre dans lequel les pseudos sont affichés n’est pas
+important.</p>
+<h1 id="nouvelle-structure-du-réseau">Nouvelle structure du réseau</h1>
+<p>Jusqu’à maintenant, nous avons supposé que tous les processus étaient
+connectés à tous les autres. Afin de rendre ce labo pertinent, il nous
+faudrait maintenant supposer que chaque processus ne connait qu’un
+sous-ensemble des autres. Cependant, ceci nécessiterait des changements
+majeurs dans les algorithmes implémentés jusqu’ici, et afin d’éviter ce
+besoin, nous fournirons dans le fichier de configuration de chaque
+processus la liste des voisins que ce processus a le droit de contacter
+dans le contexte de ce labo, c’est à dire pour l’envoi et la réception
+de sondes et d’échos. Ce nouveau champ sera nommé
+<code>neighbors</code>.</p>
+<p>Par exemple, dans un système à 5 serveurs, le fichier de
+configuration du serveur associé au port <code>3333</code> pourrait
+inclure les champs suivants, en supposant que celui-ci n’a le droit de
+contacter que les serveurs <code>3334</code> et <code>3335</code> pour
+l’envoi et la réception de sondes et d’échos :</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>    <span class="er">&quot;port&quot;:</span> <span class="er">3333,</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="er">&quot;servers&quot;:</span> <span class="ot">[</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;localhost:3333&quot;</span><span class="ot">,</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;localhost:3334&quot;</span><span class="ot">,</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;localhost:3335&quot;</span><span class="ot">,</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;localhost:3336&quot;</span><span class="ot">,</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;localhost:3337&quot;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span><span class="er">,</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="er">&quot;neighbors&quot;:</span> <span class="ot">[</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;localhost:3334&quot;</span><span class="ot">,</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;localhost:3335&quot;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span></span></code></pre></div>
+<h1 id="algorithme-à-sondes-et-échos">Algorithme à sondes et échos</h1>
+<p>La nouvelle commande <code>users</code> nécessitera de la part du
+processus l’ayant reçue d’intéroger tous les autres processus pour
+obtenir les clients actuellement connectés à ceux-ci. Pour ce faire,
+vous implémenterez un algorithme à sondes et échos similaire à celui vu
+en cours, et adapté à cette problématique.</p>
+<p>Notez que nous autoriserons le réseau à avoir des cycles, c’est à
+dire à ne pas être un arbre. Il vaus faudra donc implémenter une version
+de l’algorithme fonctionnant sur graphe arbitraire.</p>
+<p>Par ailleurs, nous autoriserons plusieurs utilisateur•rice•s à
+exécuter la commande <code>users</code> de manière concurrente, sur le
+même processus ou sur des processus différents. Votre solution devra
+donc être capable de gérer plusieurs sondes et échos en parallèle.</p>
+<h1 id="tests">Tests</h1>
+<p>Nous utiliserons des tests automatisés pour vérifier que votre
+solution respecte les spécifications de ce document. Nous n’évaluerons
+cependant pas les fonctionnalités héritées des précédents labos, vous
+permettant ainsi de ne pas y perdre de temps sur ce labo-ci.</p>
+<p>Nous ne testerons pas de scénario dans lesquels une panne a lieu lors
+de l’exécution de la commande <code>users</code>.</p>
+<p>Une partie conséquente de votre note dépendra aussi de la qualité de
+votre code et de votre solution, afin de pénaliser l’utilisation de
+locks, ou de découvrir des risques de race conditions non-découverts par
+nos tests.</p>
+<p>Vous êtes par ailleurs libres, et il vous est même recommandé,
+d’implémenter des tests supplémentaires, que ce soit end-to-end en
+utilisant par exemple le framework que nous avons mis en place pour les
+tests que nous vous avons fourni aux labos 2 et 3, ou unitaires pour les
+nouvelles fonctionnalités de ce labo-ci.</p>
+<h1 id="rendu">Rendu</h1>
+<p>Les éléments à rendre sont les mêmes que pour le labo précédent,
+notamment les fichiers executables.</p>
+<p>Aussi, nous vous demandons à nouveau de décrire l’architecture
+logicielle de votre solution dans le README de votre repo. Vous devez
+décrire les différents modules et principales goroutines, leurs
+responsabilités et leurs moyens d’interaction avec le reste du système.
+Toute décision non-triviale doit être justifiée, mais inutile de rentrer
+dans chaque détail, le but étant de décrire la “big picture” de votre
+solution. Ceci nous servira à mieux appréhender votre code lorsque nous
+en évaluerons la qualité manuellement, et à juger de la pertinence de
+vos choix d’architecture et d’implémentation. Voyez aussi cela comme un
+exercice simplifié d’écriture de Design Specification.</p>
+<h1 id="contraintes-supplémentaires">Contraintes supplémentaires</h1>
+<p>Les contraintes du labo précédent s’appliquent également à
+celui-ci.</p>
+</main>
+</body>
+</html>
