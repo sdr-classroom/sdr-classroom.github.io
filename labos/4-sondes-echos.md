@@ -19,7 +19,7 @@ Puisque ce labo construit sur les précédents, toutes les indications des préc
 
 # Nouvelle commande
 
-Vous devez implémenter une nouvelle commande, `users`, qui retourne la liste complète des utilisateur•rice•s participant au système de dettes, avec leur solde actuel total (positif si on leur doit plus qu'ils ne doivent, et négatif s'ils doivent plus qu'on ne leur doit), et le fait qu'ils soient actuellement en ligne (c'est à dire qu'un client à leur nom est actuellement connecté au système), s'ils le sont. Par exemple, si Jessie est connecté•e à un serveur et Blake à un autre, mais que Ollie n'est pas connecté•e, alors la commande `users`, exécutée par Jessie ou Ollie devra retourner quelque chose comme suit, en supposant que Blake doit 10 à Jessie et 5 à Ollie.
+Vous devez implémenter une nouvelle commande, `users`, qui retourne la liste complète des utilisateur•rice•s participant au système de dettes, avec leur solde actuel total (positif si on leur doit plus qu'ils ne doivent, et négatif s'ils doivent plus qu'on ne leur doit), et le fait qu'ils soient actuellement en ligne (c'est à dire qu'un client à leur nom est actuellement connecté au système), s'ils le sont. Par exemple, si Jessie est connecté•e à un serveur et Blake à un autre, mais que Ollie n'est pas connecté•e, alors la commande `users`, exécutée par Jessie ou Blake devra retourner quelque chose comme suit, en supposant que Blake doit 10 à Jessie et 5 à Ollie.
 
 ```txt
 > users
@@ -61,7 +61,7 @@ Par exemple, dans un système à 5 serveurs, le fichier de configuration du serv
 
 La nouvelle commande `users` nécessitera de la part du processus l'ayant reçue d'intéroger tous les autres processus pour obtenir les clients actuellement connectés à ceux-ci. Pour ce faire, vous implémenterez un algorithme à sondes et échos similaire à celui vu en cours, et adapté à cette problématique.
 
-Notez que nous autoriserons le réseau à avoir des cycles, c'est à dire à ne pas être un arbre. Il vaus faudra donc implémenter une version de l'algorithme fonctionnant sur graphe arbitraire.
+Notez que nous autoriserons le réseau à avoir des cycles, c'est à dire à ne pas être un arbre. Il vous faudra donc implémenter une version de l'algorithme fonctionnant sur graphe arbitraire.
 
 Par ailleurs, nous autoriserons plusieurs utilisateur•rice•s à exécuter la commande `users` de manière concurrente, sur le même processus ou sur des processus différents. Votre solution devra donc être capable de gérer plusieurs sondes et échos en parallèle.
 
