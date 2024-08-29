@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Labo 1 - Résilience face aux pannes</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #cccccc; background-color: #303030; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ffcfaf; } /* Alert */
+    code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+    code span.at { } /* Attribute */
+    code span.bn { color: #dca3a3; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #f0dfaf; } /* ControlFlow */
+    code span.ch { color: #dca3a3; } /* Char */
+    code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+    code span.co { color: #7f9f7f; } /* Comment */
+    code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+    code span.do { color: #7f9f7f; } /* Documentation */
+    code span.dt { color: #dfdfbf; } /* DataType */
+    code span.dv { color: #dcdccc; } /* DecVal */
+    code span.er { color: #c3bf9f; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #c0bed1; } /* Float */
+    code span.fu { color: #efef8f; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+    code span.kw { color: #f0dfaf; } /* Keyword */
+    code span.op { color: #f0efd0; } /* Operator */
+    code span.ot { color: #efef8f; } /* Other */
+    code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+    code span.sc { color: #dca3a3; } /* SpecialChar */
+    code span.ss { color: #cc9393; } /* SpecialString */
+    code span.st { color: #cc9393; } /* String */
+    code span.va { } /* Variable */
+    code span.vs { color: #cc9393; } /* VerbatimString */
+    code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/labos/style.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+    <main>
+<header id="title-block-header">
+    <nav>
+        <a href="/"><i class="fa fa-angle-left"></i> Back</a>
+      </nav>
+<h1 class="title">Labo 1 - Résilience face aux pannes</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#changelog" id="toc-changelog">Changelog</a></li>
+<li><a href="#introduction" id="toc-introduction">Introduction</a></li>
+<li><a href="#informations-générales"
+id="toc-informations-générales">Informations Générales</a></li>
+<li><a href="#spécifications-fonctionnelles"
+id="toc-spécifications-fonctionnelles">Spécifications fonctionnelles</a>
+<ul>
+<li><a href="#lancement-de-lapplication"
+id="toc-lancement-de-lapplication">Lancement de l’application</a></li>
+<li><a href="#garanties" id="toc-garanties">Garanties</a></li>
+<li><a href="#fonctionnalités-manquantes"
+id="toc-fonctionnalités-manquantes">Fonctionnalités manquantes</a></li>
+</ul></li>
+<li><a href="#phase-1-conception" id="toc-phase-1-conception">Phase 1 :
+Conception</a>
+<ul>
+<li><a href="#rendu" id="toc-rendu">Rendu</a></li>
+</ul></li>
+<li><a href="#phase-2-implémentation"
+id="toc-phase-2-implémentation">Phase 2 : Implémentation</a>
+<ul>
+<li><a href="#rendu-1" id="toc-rendu-1">Rendu</a></li>
+</ul></li>
+</ul>
+</nav>
+<h2 id="changelog">Changelog</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Date</th>
+<th>Changement</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<h2 id="introduction">Introduction</h2>
+<p>Ce labo a les objectifs suivants.</p>
+<ul>
+<li>Prise en main de Go et ses paradigmes de programmation
+concurrente</li>
+<li>Implémentation de communication entre serveurs à travers TCP</li>
+<li>Implémentation d’un protocole de communication RR
+(Request-Reply)</li>
+</ul>
+<h2 id="informations-générales">Informations Générales</h2>
+<ul>
+<li><strong>Date du rendu</strong> : Dimanche 22 octobre, 23:59 CEST.
+L’énoncé du second labo sera déjà donné le lundi 16 octobre.</li>
+<li><strong>Groupes</strong> : à réaliser seul ou à deux</li>
+<li><strong>Plagiat</strong> : en cas de copie manifeste, vous y serez
+confrontés, vous obtiendrez la note de 1, et l’incident sera reporté au
+responsable de la filière, avec un risque d’échec critique immédiat au
+cours. Ne trichez pas. <em>(Notez que les IAs génératives se trouvent
+aujourd’hui dans une zone qui est encore juridiquement floue pour ce qui
+est du plagiat, mais des arguments se valent à en considérer
+l’utilisation comme tel. Quoiqu’il en soit, nous vous proposons une
+autre vision sur la question : votre ambition est d’apprendre et
+d’acquérir des compétences, et votre utilisation éventuelle de cet outil
+doit refléter ceci. Tout comme Stackoverflow peut être à la fois un
+outil d’enrichissement et une banque de copy-paste, faites un choix
+intentionnel et réfléchi, vos propres intérêts en tête, de l’outil que
+vous ferez de l’IA générative)</em></li>
+</ul>
+<h2 id="spécifications-fonctionnelles">Spécifications
+fonctionnelles</h2>
+<p>Nous décrivons ici les spécifications fonctionnelles de l’application
+ChatsApp telle qu’elle doit être rendue à la fin de ce premier labo.
+Notez que nous vous fournissons une version simple communiquant à
+travers UDP et dont il manque la garantie offerte par le protocole RR.
+Le reste ne nécessitera pas de modifications majeure de votre part.</p>
+<h3 id="lancement-de-lapplication">Lancement de l’application</h3>
+<p>ChatsApp, dans cette version, est une application distribuée. Chaque
+utilisateur.ice doit lancer l’exécutable du serveur et lui fournir des
+informations de configuration. Durant le développement, la commande
+<code>go run</code> peut être utilisée.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">go</span> run ./cmd/server <span class="op">&lt;</span>local_address<span class="op">&gt;</span> <span class="op">&lt;</span>config_file_path<span class="op">&gt;</span></span></code></pre></div>
+<ul>
+<li><code>&lt;local_address&gt;</code> correspond à l’adresse IP sur
+laquelle cette instance de serveur pourra recevoir des connexions
+d’autres serveurs,</li>
+<li><code>&lt;config_file_path&gt;</code> correspond au chemin d’accès
+du fichier de configuration de cette instance du serveur.</li>
+</ul>
+<p>Ce fichier de configuration doit être au format JSON, et inclure les
+champs suivants :</p>
+<ul>
+<li><code>Username</code> - pseudonyme au nom duquel ce serveur enverra
+les messages aux autres serveurs</li>
+<li><code>Neighbors</code> - tableau de chaines de caractères listant
+les adresses IP des voisins de ce serveur sur le réseau</li>
+<li><code>PrintReadAck</code> - booléen indiquant si le serveur doit
+afficher un accusé de réception suite à l’envoi de chaque message</li>
+<li><code>Debug</code> - booléen indiquant si les logs doivent être
+affichées sur stdout</li>
+<li><code>LogPath</code> - chemin d’accès à un répertoire dans lequel
+sera créé un fichier contenant les logs</li>
+<li><code>SlowdownMs</code> - en millisecondes, ralentissement
+artificiel du serveur après chaque réception et envoi de message</li>
+</ul>
+<p>Une fois que plusieurs serveurs sont lancés et se listent les uns les
+autres comme voisins, ils attendent qu’un message soit entré sur la
+ligne de commande pour l’envoyer à tous leurs voisins. Ces derniers
+afficheront les messages reçus dans la console sous le format
+<code>&lt;user&gt;: &lt;message&gt;</code>, suivit d’une nouvelle
+ligne.</p>
+<p>Si <code>PrintReadAck</code> est configuré à <code>true</code>,
+l’envoyeur affichera un message de la forme
+<code>[&lt;neighbor_address&gt; received: &lt;message&gt;]</code> dès
+que le voisin à l’adresse IP <code>&lt;neighbor_address&gt;</code>
+l’informe avoir reçu et traité ce message.</p>
+<h3 id="garanties">Garanties</h3>
+<p>ChatsApp doit offrir les garanties suivantes :</p>
+<ol type="1">
+<li>Entre tous deux serveurs sans panne, aucun message de doit être
+perdu, dupliqué, ou réordonnancé.</li>
+<li>Un accusé de réception doit être reçu exactement une fois pour
+chaque voisin correct au sens de pannes récupérables.</li>
+</ol>
+<h3 id="fonctionnalités-manquantes">Fonctionnalités manquantes</h3>
+<p>Tel que fourni, ChatsApp n’offre pas la fonctionnalité d’accusés de
+réception, ni les garanties ci-dessus.</p>
+<p>En effet, le serveur n’a actuellement aucun moyen d’obtenir un accusé
+de réception. Aussi, il utilise UDP, qui n’offre pas les garanties 1, et
+n’implémente aucun protocole supplémentaire satisfaisant la garantie
+2.</p>
+<p>Il vous revient, dans ce labo, d’implémenter ces fonctionnalités
+manquantes.</p>
+<h2 id="phase-1-conception">Phase 1 : Conception</h2>
+<p>Vous trouverez <a href="#">ici</a> l’implémentation de cette première
+version de ChatsApp. Dans le README se trouve sa spécification de
+conception, décrivant les abstractions utilisées et leur fonctionnement
+interne, dans les grandes lignes.</p>
+<p>Nous vous demandons de compléter ce code avec la garantie du
+protocole RR, c’est à dire qu’un message envoyé sera toujours reçu et
+traité exactement une fois. Vous l’utiliserez ensuite pour offrir la
+fonctionnalité d’accusé de réception.</p>
+<h3 id="rendu">Rendu</h3>
+<p>Nous attendons de votre part un document markdown ou pdf constituant
+une spécification de conception détaillant comment implémenter ce labo.
+Imaginez être architecte logiciel responsable de cette nouvelle
+fonctionnalité. Votre document sera destiné aux équipes de
+développement, qui devront pouvoir le suivre sans rencontrer d’inconnue
+majeure. Nous l’évaluerons comme le ferait un collègue responsable de
+valider votre proposition avant de la transmettre aux
+développeur.euses.</p>
+<p>Il nous faudra être capable de répondre aux questions suivantes après
+lecture de votre spécification (et avec un minimum de jugeotte). Notez
+qu’elles n’ont pas besoin d’apparaitre explicitement dans votre document
+; elles sont ici pour guider vos réflexions et vérifier l’exhaustivité
+de votre document. Celui-ci doit donc simplement contenir les
+informations suffisantes pour y répondre.</p>
+<ul>
+<li>Quelles abstractions doivent être créées, et quelles sont leurs
+responsabilités et leurs APIs ?</li>
+<li>Comment et où ces abstractions seront-elles utilisées par le code
+existant ?</li>
+<li>Quelles goroutines tourneront (en continu ou temporairement) et
+quelles seront leurs responsibilités ?</li>
+<li>Comment ces goroutines communiqueront-elles entre elles, et/ou avec
+les événements extérieurs tels que la réception d’un message, ou le
+souhait d’en envoyer un à quelqu’un ?</li>
+<li>Comment sera gérée la multiplicité des voisins et l’état associé à
+chacun d’eux (e.g. l’id du dernier message envoyé) ?</li>
+<li>Quel mechanisme permettra d’attendre la réponse à un message envoyé,
+sans bloquer la réception d’autres messages ?</li>
+<li>Comment sera garantie l’absence d’accès concurrent à tout état
+variable, s’il en existe ?</li>
+</ul>
+<p>Dans ce document, tentez d’être brefs bien que complets. Il s’agit en
+quelque sorte d’augmenter l’entropie de votre document ; chaque phrase
+doit servir à quelque chose.</p>
+<h2 id="phase-2-implémentation">Phase 2 : Implémentation</h2>
+<p>Une fois la phase 1 terminée, vous aurez accès à l’assignment Github
+Classroom qui vous créera un repo avec le code sur lequel vous avez basé
+votre travail de la phase 1.</p>
+<p>Ce code est complété avec les abstractions que nous avons choisies
+pour répondre aux besoins de ce labo. Il vous faudra les implémenter et
+les intégrer dans le code existant d’ici la deadline.</p>
+<h3 id="rendu-1">Rendu</h3>
+<p>Votre rendu doit être intégralement compris dans le commit votre plus
+récent avant la deadline. Cela inclue non seulement le code, mais
+également le readme dans lequel vous aurez écrit la spécification de
+conception décrivant votre travail. Celle-ci n’aura besoin de couvrir
+que vos ajouts ; nul besoin de décrire le code fourni. Elle doit
+satisfaire les mêmes exigeances que celles exprimées pour le rendu de la
+phase 1.</p>
+</main>
+</body>
+</html>

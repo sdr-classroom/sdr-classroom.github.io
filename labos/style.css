@@ -48,3 +48,8 @@ ul li {
 details summary:hover {
     color: rgb(26, 179, 230) !important;
 }
+
+span.remark {
+    font-style: italic;
+    opacity: 0.6;
+}
