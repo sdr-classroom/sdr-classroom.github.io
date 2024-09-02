@@ -96,7 +96,7 @@
     <main>
 <header id="title-block-header">
     <nav>
-        <a href="/"><i class="fa fa-angle-left"></i> Back</a>
+        <a href="/labos/chatsapp.html"><i class="fa fa-angle-left"></i> Back</a>
       </nav>
 <h1 class="title">Labo 1 - Résilience face aux pannes</h1>
 </header>
@@ -106,6 +106,7 @@
 <li><a href="#introduction" id="toc-introduction">Introduction</a></li>
 <li><a href="#informations-générales"
 id="toc-informations-générales">Informations Générales</a></li>
+<li><a href="#liens-utiles" id="toc-liens-utiles">Liens utiles</a></li>
 <li><a href="#spécifications-fonctionnelles"
 id="toc-spécifications-fonctionnelles">Spécifications fonctionnelles</a>
 <ul>
@@ -166,6 +167,12 @@ outil d’enrichissement et une banque de copy-paste, faites un choix
 intentionnel et réfléchi, vos propres intérêts en tête, de l’outil que
 vous ferez de l’IA générative)</em></li>
 </ul>
+<h2 id="liens-utiles">Liens utiles</h2>
+<ul>
+<li><a href="#">Repo Github Classroom</a></li>
+<li><a href="/labos/design-specs/1-udp.html">Document d’Architecture
+Logicielle de la donnée</a></li>
+</ul>
 <h2 id="spécifications-fonctionnelles">Spécifications
 fonctionnelles</h2>
 <p>Nous décrivons ici les spécifications fonctionnelles de l’application
@@ -216,7 +223,7 @@ l’informe avoir reçu et traité ce message.</p>
 <h3 id="garanties">Garanties</h3>
 <p>ChatsApp doit offrir les garanties suivantes :</p>
 <ol type="1">
-<li>Entre tous deux serveurs sans panne, aucun message de doit être
+<li>Entre tous deux serveurs sans panne, aucun message ne doit être
 perdu, dupliqué, ou réordonnancé.</li>
 <li>Un accusé de réception doit être reçu exactement une fois pour
 chaque voisin correct au sens de pannes récupérables.</li>
@@ -232,9 +239,9 @@ n’implémente aucun protocole supplémentaire satisfaisant la garantie
 manquantes.</p>
 <h2 id="phase-1-conception">Phase 1 : Conception</h2>
 <p>Vous trouverez <a href="#">ici</a> l’implémentation de cette première
-version de ChatsApp. Dans le README se trouve sa spécification de
-conception, décrivant les abstractions utilisées et leur fonctionnement
-interne, dans les grandes lignes.</p>
+version de ChatsApp. Vous trouverez également un document d’architecture
+logicielle décrivant le code fourni dans les grandes lignes <a
+href="./design-specs/1-udp.html">ici</a>.</p>
 <p>Nous vous demandons de compléter ce code avec la garantie du
 protocole RR, c’est à dire qu’un message envoyé sera toujours reçu et
 traité exactement une fois. Vous l’utiliserez ensuite pour offrir la

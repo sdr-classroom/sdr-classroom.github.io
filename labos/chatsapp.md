@@ -8,7 +8,7 @@ css:
 
 La partie pratique du cours de SDR se divise en quatre labos consécutifs, construisant chacun sur le précédent. Il s'agira de construire une application distribuée de messagerie instantanée de groupe. Les labos se diviseront comme suit.
 
-- **Labo 1** : Résilience face aux pannes (protocole de fiabilité RR)
+- [**Labo 1**](/labos/1-request-reply.html) : Résilience face aux pannes (protocole de fiabilité RR)
 - **Labo 2** : Garantie d'ordre total des messages (algorithme d'exclusion mutuelle de Lamport)
 - **Labo 3** : Distribution de charge entre serveurs (algorithme d'élection avec gestion de pannes de Chang et Roberts)
 - **Labo 4** : Tolérence de réseau incomplètement connecté (utilisation de sondes et échos pour broadcast et découverte topologique pour routage)

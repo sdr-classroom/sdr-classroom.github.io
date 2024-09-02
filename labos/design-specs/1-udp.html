@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Labo 1 - Architecture Logicielle de la donnée</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/labos/style.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+    <main>
+<header id="title-block-header">
+    <nav>
+        <a href="/labos/1-request-reply.html"><i class="fa fa-angle-left"></i> Back</a>
+      </nav>
+<h1 class="title">Labo 1 - Architecture Logicielle de la donnée</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#structure-générale" id="toc-structure-générale">Structure
+générale</a></li>
+<li><a href="#architecture-en-couches"
+id="toc-architecture-en-couches">Architecture en couches</a>
+<ul>
+<li><a href="#transport" id="toc-transport">Transport</a></li>
+<li><a href="#serveur" id="toc-serveur">Serveur</a></li>
+</ul></li>
+<li><a href="#modules-complémentaires"
+id="toc-modules-complémentaires">Modules complémentaires</a></li>
+</ul>
+</nav>
+<h2 id="structure-générale">Structure générale</h2>
+<p>Respectueusement des conventions en Go, la structure du projet se
+divise en un package <code>cmd</code> ne faisant qu’utiliser les
+packages définis dans <code>internal</code>.</p>
+<ul>
+<li><code>/cmd/</code> contient les main packages, actuellement
+uniquement <code>server</code></li>
+<li><code>/interna/</code> contient les packages utilitaires utilisés
+par l’exécutable <code>server</code>.
+<ul>
+<li><code>/internal/transport/</code> abstrait la couche réseau en un
+API simple</li>
+<li><code>/internal/server/</code> est responsable de la partie
+applicative, indépendante du réseau – écoute d’entrées sur stdin et
+affichage des messages reçus.</li>
+<li><code>/internal/logging/</code> offre une structure simplifiant la
+création de logs.</li>
+<li><code>/internal/utils/</code> contient des structures d’aide
+variées.</li>
+</ul></li>
+</ul>
+<h2 id="architecture-en-couches">Architecture en couches</h2>
+<p>Dans un soucis de séparation des préoccupations, ainsi que pour
+faciliter l’extension dans le futur, nous choisissons une achitecture en
+couches, dont il en existe pour l’instant deux : Transport et
+Server.</p>
+<h3 id="transport">Transport</h3>
+<p>La couche <strong>transport</strong> occulte la complexité du réseau
+derrière une abstraction qui prend la forme d’une interface
+<code>NetworkInterface</code>, définie dans
+<code>networkInterface.go</code>. Cela permettra un changement de
+protocole de communication sans effets pour les couches utilisatrices du
+réseau.</p>
+<h4 id="abstraction">Abstraction</h4>
+<p>L’interface <code>NetworkInterface</code> définit tout objet capable
+d’envoyer et recevoir des octets de la part de processus identifiés par
+une adresse IP. Nous choisissons de travailler avec des octets pour
+rendre cette couche indépendante de son contexte d’utilisation. Ses
+méthodes sont les suivantes : -
+<code>Send(addr Address, payload []byte) error</code>. -
+<code>RegisterHandler(MessageHandler) HandlerId</code> - la réception de
+messages utilise un pattern de souscription : un
+<code>MessageHandler</code> est tout objet offrant une méthode
+<code>HandleNetworkMessage(*Message) (wasHanlded bool)</code> qui doit
+retourner un booléen indiquant si le message reçu a été traité ou non.
+La <code>NetworkInterface</code> est responsable de partager chaque
+message reçu à tous les souscrits à travers cette méthode jusqu’à ce que
+l’un d’eux affirme l’avoir traité. Elle peut supposer que tout message
+n’appartient qu’à un seul souscrit. -
+<code>UnregisterHandler(HandlerId)</code> permet de résilier une
+souscription à l’aide de l’identifiant obtenu à la souscription. -
+<code>Close()</code> ferme toute connexion et goroutine en cours.</p>
+<p>Nous n’offrons pour l’instant qu’une seul implémentation de cette
+interface, <code>UDP</code>, que nous décrivons dans la suite de cette
+section.</p>
+<h4 id="état-interne">État interne</h4>
+<p>L’état interne d’une instance de <code>UDP</code>, c’est à dire toute
+donnée dont le comportement de l’instance dépend et qui peut changer au
+cours de l’exécution, se réduit aux valeurs suivantes.</p>
+<ul>
+<li>La connection UDP d’écoute de messages reçus.</li>
+<li>La liste des souscrits à la réception des messages.</li>
+<li>La liste des voisins connus et leur connection associée.</li>
+</ul>
+<p>Il est important de déterminer ces états puisque, par leur
+variabilité à travers le temps, il est nécessaire d’en prévenir tout
+accès concurrent. Cela est garanti par le choix des goroutines.</p>
+<h4 id="goroutines-principales">Goroutines principales</h4>
+<p>Il existe trois goroutines principales communiquant par channels.</p>
+<ul>
+<li><code>handleSends</code> est responsable d’envoyer des messages à
+une connection donnée. Une nouvelle est donc créée pour chaque nouvelle
+connection. Elles réagissent aux événements suivants :
+<ul>
+<li>Demandes d’envoi sur la connection correspondante (reçues sur
+<code>sendChan chan []byte</code>).</li>
+<li>Cloture de la channel <code>sendChan</code> comme un signal de fin
+d’exécution de la goroutine.</li>
+</ul></li>
+<li><code>handleState</code> est la goroutine principale et maintient la
+liste des souscrits et des voisins connus. Elle réagit aux événements
+suivants :
+<ul>
+<li>Demande d’envoi de bytes à un voisin donné (reçues sur
+<code>sendRequests chan struct{Address, []byte}</code>). Crée alors une
+instance de <code>handleSends</code> associée à ce voisin, et lui
+transmet la demande.</li>
+<li>Demande de souscription d’un handler (reçues sur
+<code>registrations chan struct{HandlerId, MessageHandler}</code>, où
+<code>HandlerId</code> est un alias d’<code>uint32</code> et
+<code>MessageHandler</code> est tel que défini ci-dessus).</li>
+<li>Demande de résiliation d’un handler (reçues sur
+<code>unregistrations chan HandlerId</code>)</li>
+<li>Notification de réception de message (reçues sur
+<code>receivedMessages chan Message</code>). Transmet alors le message
+reçu aux handlers souscrits.</li>
+<li>Demande de fin d’éxécution de la goroutine (reçue par la cloture
+d’une channel <code>closeChan</code>). Transmet alors la cloture à
+toutes les goroutines <code>handleSends</code> en cloturant leur channel
+<code>sendChan</code>.</li>
+</ul></li>
+<li><code>listenIncomingMessages</code> est responsable de la réception
+de messages. Elle réagit aux événemenst suivants :
+<ul>
+<li>Réception de messages par la connection UDP, qu’elle transmet
+ensuite à <code>handleState</code> par la channel
+<code>sendRequests</code></li>
+<li>Cloture de la channel <code>closeChan</code> pour cloturer la
+connection UDP et donc la réception de messages.</li>
+</ul></li>
+</ul>
+<details>
+<summary>
+Analyse des contraintes techniques justifiant l’architecture proposée.
+</summary>
+<p>Nous analysons ici les contraintes techniques auxquelles nous faisons
+face, afin de justifier l’architecture proposée.</p>
+<p>Les événements auxquels cette couche doit répondre sont les suivants,
+associés aux états auxquels elles doivent avoir accès</p>
+<ul>
+<li>Réception de message - accès à la liste des souscrits.</li>
+<li>Demande de souscription ou résiliation aux réceptions - modification
+de la liste des souscrits</li>
+<li>Demande d’envoi de message - accès à la liste des voisins connus, et
+modification potentielle si le voisin demandé n’est pas encore
+connu.</li>
+<li>Demande de cloture de l’interface réseau - accès à la liste des
+voisins connus et leur connection associée, ainsi que la connection
+d’écoute de messages reçus.</li>
+</ul>
+<p>Étant donné qu’aucune paire de ces événements ne doit pouvoir être
+exécutée en parallèle, nous optons pour la solution simple de regrouper
+leur gestion en une seule goroutine, <code>handleState</code>. Ainsi,
+tous les événements seront traités séquentiellement, évitant donc tout
+risque d’accès concurrent aux variables d’état. Afin d’éviter toute
+erreur lors de l’implémentation, ces variables d’état seront des
+variables locales à la goroutine, et non des attributs de la struct
+<code>UDP</code>.</p>
+<p>La gestion de la cloture de l’interface réseau se fera à l’aide d’une
+unique channel, <code>closeChan</code> qui sera cloturée au moment d’une
+demande de cloture. Elle pourra ainsi être surveillée par toutes les
+goroutines pour détecter leur nécessité de s’interrompre.</p>
+<p>Une seconde goroutine, <code>listenIncomingMessages</code>, est
+responsable d’écouter les messages reçus sur UDP, et les transmettre à
+<code>handleState</code> pour envoi aux souscrits. Celle-ci génère une
+petite goroutine écoutant simplement <code>closeChan</code> et cloturant
+la connection UDP d’écoute, permettant de notifier la goroutine
+principale en faisant échouer l’écoute.</p>
+<p>Enfin, afin d’éviter de recréer une connection au même voisin à
+chaque envoi, la goroutine <code>handleState</code> crée une goroutine
+pour chaque voisin auquel une demande d’envoi a été faite. Cette
+dernière est responsable de la connection avec ce voisin, et une channel
+créée et maintenue par <code>handleState</code> lui est fournie. Cette
+channel sera utilisée par <code>handleState</code> pour informer la
+goroutine du message à envoyer.</p>
+<p><img src="./imgs/1-udp.svg"/></p>
+</details>
+<h3 id="serveur">Serveur</h3>
+<p>Le serveur est responsable uniquement de l’écoute d’entrée sur stdin,
+et l’affichage des messages reçus. Aucun état modifiable majeur n’existe
+dans cette couche.</p>
+<p>Le serveur est une struct offrant deux méthodes.</p>
+<ul>
+<li><code>Start</code> déclenche l’écoute de stdin et du réseau. Son
+constructeur, <code>NewServer</code>, prend comme argument une instance
+de <code>ServerConfig</code> décrivant sa configuration (voir
+ci-après).</li>
+<li><code>Close</code> déclenche la fermeture du serveur et de
+l’interface réseau qu’il utilise. Cela se fait à nouveau à l’aide d’une
+goroutine, <code>closeChan</code>, dont la fermeture est détectée par
+toutes les autres goroutines.</li>
+</ul>
+<h4 id="goroutines-principales-1">Goroutines principales</h4>
+<p>Il existe une seule goroutine centrale au serveur. Celle-ci est
+responsable d’écouter et envoyer sur le réseau les entrées de
+l’utilisateur.ice. Elle crée également une goroutine secondaire
+responsable uniquement de traduire l’appel bloquant à la lecture IO en
+une transmission sur channel, afin de permettre l’utilisation du
+<code>select</code> de Go.</p>
+<p>La gestion des réceptions se fait par une souscription au
+<code>NetworkInterface</code> lors de la construction de la structure.
+Aucune goroutine n’est donc nécessaire ici.</p>
+<h4 id="structures-additionnelles">Structures additionnelles</h4>
+<p>Quelques structures supplémentaires permettent de séparer les
+préoccupations.</p>
+<ul>
+<li><code>ServerConfig</code> peut être créé à l’aide de
+<code>NewServerConfig</code>, qui est responsable de lire le fichier de
+configuration et peupler une instance de <code>ServerConfig</code>.</li>
+<li><code>messages.go</code> offre une interface <code>Message</code>
+définissant les types de messages qui peuvent être encodés avec
+<code>gob</code>. <code>ChatMessage</code> est une implémentation de
+cette interface définissant un message de chat.</li>
+</ul>
+<h2 id="modules-complémentaires">Modules complémentaires</h2>
+<p>Quelques autres modules d’aide sont fournis.</p>
+<ul>
+<li><code>Logger</code> est une structure permettant de logger des
+messages de différents niveaux d’importance (<code>INFO</code>,
+<code>WARN</code>, <code>ERR</code>), qui seront affichés dans la
+console ainsi que, optionellement, dans un fichier.</li>
+<li><code>IOStream</code> est une interface qui abstrait l’écriture et
+la lecture sur un stream IO. Elle offre les méthodes
+<code>ReadLine()</code>, <code>Println()</code> et <code>Print()</code>.
+Elle est implémentée par les structs <code>stdStream</code> pour
+l’abstraction de stdin/stdout, et <code>mockStream</code> pour une
+simulation de stream utilisable par les tests.</li>
+<li>Le package <code>utils</code> propose quelques outils pratiques
+<ul>
+<li><code>Option[T any]</code> implémente l’abstraction <a
+href="https://www.codeproject.com/Articles/17607/The-Option-Pattern">Optional</a>.</li>
+<li><code>BufferedChan</code> implémente une abstraction de channel à
+taille variable.</li>
+<li><code>UIDGenerator</code> implémente un générateur d’identifiants
+uniques.</li>
+</ul></li>
+</ul>
+</main>
+</body>
+</html>

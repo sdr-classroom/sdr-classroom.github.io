@@ -1,6 +1,9 @@
-# Architecture Logicielle de la donnée - Labo 1
-
-Ce document décrit l'architecture logicielle de la version de ChatsAppe fournie au premier labo.
+---
+title: Labo 1 - Architecture Logicielle de la donnée
+css:
+    - "/labos/style.css"
+back: "/labos/1-request-reply.html"
+---
 
 ## Structure générale
 

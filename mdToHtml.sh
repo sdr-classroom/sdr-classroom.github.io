@@ -4,12 +4,10 @@
 # See https://medium.com/craftycode/how-to-create-a-simple-web-page-using-markdown-95e462e43e01
 
 # For every md file in dir "labos"
-for file in labos/*.md
-do
+find labos -name "*.md" -type f | while read -r file; do
     # Get filename without extension
     filename=$(basename -- "$file")
-    dst="labos/${filename%.*}.html"
+    dst="$(dirname "$file")/${filename%.*}.html"
 
-    pandoc --toc labos/$filename -f markdown -t html -s -o $dst --template labos/pandoc-template.html --highlight-style zenburn
-
+    pandoc --toc "$file" -f markdown -t html -s -o "$dst" --template labos/pandoc-template.html --highlight-style zenburn --css=/labos/style.css
 done

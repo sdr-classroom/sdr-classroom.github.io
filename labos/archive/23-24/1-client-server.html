@@ -34,7 +34,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -96,7 +96,7 @@
     <main>
 <header id="title-block-header">
     <nav>
-        <a href="/"><i class="fa fa-angle-left"></i> Back</a>
+        <a href="/ "><i class="fa fa-angle-left"></i> Back</a>
       </nav>
 <h1 class="title">Labo 1 - Gestionnaire de dettes</h1>
 </header>
@@ -167,7 +167,7 @@ commandes d’un même client apparaissent séquentielles.</td>
 <tr class="odd">
 <td>16.10</td>
 <td>Fix typo dans preuve : nouvelle dette vaut <span
-class="math inline"><em>d</em>(<em>v</em>,<em>w</em>) = <em>m</em><em>i</em><em>n</em>(<em>d</em>(<em>v</em>),−<em>d</em>(<em>w</em>))</span>.</td>
+class="math inline"><em>d</em>(<em>v</em>, <em>w</em>) = <em>m</em><em>i</em><em>n</em>(<em>d</em>(<em>v</em>), −<em>d</em>(<em>w</em>))</span>.</td>
 </tr>
 </tbody>
 </table>
@@ -390,7 +390,7 @@ spécifications ci-dessus sur les formats d’input et d’output, puisqu’ils
 seront utilisés pour automatiser certains tests.</p>
 <h1 id="appendice">Appendice</h1>
 <p><strong>Claim</strong>: There exists a graph <span
-class="math inline"><em>G</em>(<em>V</em>,<em>E</em>)</span> such that
+class="math inline"><em>G</em>(<em>V</em>, <em>E</em>)</span> such that
 <span class="math inline"><em>E</em> ≤ <em>V</em></span>, which
 represents any debt situation within a group of people.</p>
 <blockquote>
@@ -418,9 +418,9 @@ vertex <span class="math inline"><em>w</em> ∈ <em>V</em></span> such
 that <span class="math inline"><em>d</em>(<em>w</em>) &lt; 0</span>, and
 create an edge between <span class="math inline"><em>v</em></span> and
 <span class="math inline"><em>w</em></span> with value equal to <span
-class="math inline"><em>d</em>(<em>v</em>,<em>w</em>) = <em>m</em><em>i</em><em>n</em>(<em>d</em>(<em>v</em>),−<em>d</em>(<em>w</em>))</span>.
+class="math inline"><em>d</em>(<em>v</em>, <em>w</em>) = <em>m</em><em>i</em><em>n</em>(<em>d</em>(<em>v</em>), −<em>d</em>(<em>w</em>))</span>.
 Then remove <span
-class="math inline"><em>d</em>(<em>v</em>,<em>w</em>)</span> from <span
+class="math inline"><em>d</em>(<em>v</em>, <em>w</em>)</span> from <span
 class="math inline"><em>d</em>(<em>v</em>)</span> and add it to <span
 class="math inline"><em>d</em>(<em>w</em>)</span>. We have essentially
 let <span class="math inline"><em>v</em></span> give as much money to
