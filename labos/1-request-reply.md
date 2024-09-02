@@ -81,14 +81,14 @@ Nous vous demandons de compléter ce code avec la garantie du protocole RR, c'es
 
 Nous attendons de votre part un document markdown ou pdf constituant une spécification de conception détaillant comment implémenter ce labo. Imaginez être architecte logiciel responsable de cette nouvelle fonctionnalité. Votre document sera destiné aux équipes de développement, qui devront pouvoir le suivre sans rencontrer d'inconnue majeure. Nous l'évaluerons comme le ferait un collègue responsable de valider votre proposition avant de la transmettre aux développeur.euses.
 
-Il nous faudra être capable de répondre aux questions suivantes après lecture de votre spécification (et avec un minimum de jugeotte). Notez qu'elles n'ont pas besoin d'apparaitre explicitement dans votre document ; elles sont ici pour guider vos réflexions et vérifier l'exhaustivité de votre document. Celui-ci doit donc simplement contenir les informations suffisantes pour y répondre.
+Il nous faudra être capable de répondre aux questions suivantes après lecture de votre spécification (et avec un minimum de jugeote). Notez qu'elles n'ont pas besoin d'apparaitre explicitement dans votre document ; elles sont ici pour guider vos réflexions et vérifier l'exhaustivité de votre document. Celui-ci doit donc simplement contenir les informations suffisantes pour y répondre.
 
 - Quelles abstractions doivent être créées, et quelles sont leurs responsabilités et leurs APIs ?
 - Comment et où ces abstractions seront-elles utilisées par le code existant ?
-- Quelles goroutines tourneront (en continu ou temporairement) et quelles seront leurs responsibilités ?
+- Quelles goroutines tourneront (en continu ou temporairement) et quelles seront leurs responsabilités ?
 - Comment ces goroutines communiqueront-elles entre elles, et/ou avec les événements extérieurs tels que la réception d'un message, ou le souhait d'en envoyer un à quelqu'un ?
 - Comment sera gérée la multiplicité des voisins et l'état associé à chacun d'eux (e.g. l'id du dernier message envoyé) ?
-- Quel mechanisme permettra d'attendre la réponse à un message envoyé, sans bloquer la réception d'autres messages ?
+- Quel mécanisme permettra d'attendre la réponse à un message envoyé, sans bloquer la réception d'autres messages ?
 - Comment sera garantie l'absence d'accès concurrent à tout état variable, s'il en existe ?
 
 Dans ce document, tentez d'être brefs bien que complets. Il s'agit en quelque sorte d'augmenter l'entropie de votre document ; chaque phrase doit servir à quelque chose.
@@ -101,4 +101,4 @@ Ce code est complété avec les abstractions que nous avons choisies pour répon
 
 ### Rendu
 
-Votre rendu doit être intégralement compris dans le commit votre plus récent avant la deadline. Cela inclue non seulement le code, mais également le readme dans lequel vous aurez écrit la spécification de conception décrivant votre travail. Celle-ci n'aura besoin de couvrir que vos ajouts ; nul besoin de décrire le code fourni. Elle doit satisfaire les mêmes exigeances que celles exprimées pour le rendu de la phase 1.
+Votre rendu doit être intégralement compris dans le commit votre plus récent avant la deadline. Cela inclue non seulement le code, mais également le readme dans lequel vous aurez écrit la spécification de conception décrivant votre travail. Celle-ci n'aura besoin de couvrir que vos ajouts ; nul besoin de décrire le code fourni. Elle doit satisfaire les mêmes exigences que celles exprimées pour le rendu de la phase 1.

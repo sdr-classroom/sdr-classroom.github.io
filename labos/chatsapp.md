@@ -11,7 +11,7 @@ La partie pratique du cours de SDR se divise en quatre labos consécutifs, const
 - [**Labo 1**](/labos/1-request-reply.html) : Résilience face aux pannes (protocole de fiabilité RR)
 - **Labo 2** : Garantie d'ordre total des messages (algorithme d'exclusion mutuelle de Lamport)
 - **Labo 3** : Distribution de charge entre serveurs (algorithme d'élection avec gestion de pannes de Chang et Roberts)
-- **Labo 4** : Tolérence de réseau incomplètement connecté (utilisation de sondes et échos pour broadcast et découverte topologique pour routage)
+- **Labo 4** : Tolérance de réseau incomplètement connecté (utilisation de sondes et échos pour broadcast et découverte topologique pour routage)
 
 Les labos seront à implémenter par groupe de 3 ou 4, au choix.
 
@@ -36,10 +36,10 @@ Pour chaque labo, le protocole sera le suivant :
 
 Votre note finale pour chaque labo sera calculée comme suit :
 
-- 25% : spécification de conception individuelle. Nous nous placerons dans la peau d'un collègue de travail chargé de valider votre proposition en vue de donner le feu vert aux équipes de développement. Votre note visera à refleter la quantité et l'importance des modifications qu'il aurait à vous demander avant de donner son feu vert et transmettre votre document aux développeur.euses. Cela dépendra donc notamment de
+- 25% : spécification de conception individuelle. Nous nous placerons dans la peau d'un collègue de travail chargé de valider votre proposition en vue de donner le feu vert aux équipes de développement. Votre note visera à refléter la quantité et l'importance des modifications qu'il aurait à vous demander avant de donner son feu vert et transmettre votre document aux développeur.euses. Cela dépendra donc notamment de
   - l'exhaustivité de votre spécification (notamment en ce qui concerne les questions d'aide fournies dans l'énoncé)
   - la validité de la solution proposée (i.e. s'il existe, ou non, des failles dans votre conception)
-- 75% : le rendu final. Nous nous placerons alors dans la peau d'un collègue de travail effectuant une revue de code pour autoriser une merge request dans une branche principale. Votre note visera à refleter la quantité et l'importance des modifications qu'il aurait à demander avant de valider votre merge request. Cela dépendra donc notamment de
+- 75% : le rendu final. Nous nous placerons alors dans la peau d'un collègue de travail effectuant une revue de code pour autoriser une merge request dans une branche principale. Votre note visera à refléter la quantité et l'importance des modifications qu'il aurait à demander avant de valider votre merge request. Cela dépendra donc notamment de
   - votre code lui-même (e.g. utilisation pertinente des paradigmes de Go, bonne modularisation, etc)
   - les résultats des tests automatisés, sachant que nous en ajouterons à ceux fournis -- un code qui ne passe pas les tests ne pouvant évidemment pas être merged dans `main`.
   - la qualité de votre spécification de conception et de la documentation de votre code -- un code mal documenté étant pénible à review, mais aussi inacceptable sur `main` pour des raisons de maintenabilité.
