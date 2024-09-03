@@ -1,5 +1,3 @@
-# For the filename given as first argument, insert empty script tag before the last <script> tag of the file
-
 import os
 import sys
 import re
@@ -14,7 +12,7 @@ filename = sys.argv[1]
 
 # Text to be inserted before the last <script> tag:
 toInsert = '''<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/notes/notes.js"></script>
-    <script src="../script.js"></script>
+    <script src="./script.js"></script>
     '''
 
 # Open the file with rw permissions
