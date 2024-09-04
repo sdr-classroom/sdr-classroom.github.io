@@ -10,7 +10,7 @@ back: "/labos/1-request-reply.html"
 Respectueusement des conventions en Go, la structure du projet se divise en un package `cmd` ne faisant qu'utiliser les packages définis dans `internal`.
 
 - `/cmd/` contient les main packages, actuellement uniquement `server`
-- `/interna/` contient les packages utilitaires utilisés par l'exécutable `server`.
+- `/internal/` contient les packages utilisés par l'exécutable `server`.
   - `/internal/transport/` abstrait la couche réseau en un API simple
   - `/internal/server/` est responsable de la partie applicative, indépendante du réseau -- écoute d'entrées sur stdin et affichage des messages reçus.
   - `/internal/logging/` offre une structure simplifiant la création de logs.
@@ -18,7 +18,7 @@ Respectueusement des conventions en Go, la structure du projet se divise en un p
 
 ## Architecture en couches
 
-Dans un soucis de séparation des préoccupations, ainsi que pour faciliter l'extension dans le futur, nous choisissons une achitecture en couches, dont il en existe pour l'instant deux : Transport et Server.
+Dans un soucis de séparation des préoccupations, ainsi que pour faciliter l'extension dans le futur, nous choisissons une architecture en couches, dont il en existe pour l'instant deux : Transport et Server.
 
 ### Transport
 
@@ -26,65 +26,70 @@ La couche **transport** occulte la complexité du réseau derrière une abstract
 
 #### Abstraction
 
-L'interface `NetworkInterface` définit tout objet capable d'envoyer et recevoir des octets de la part de processus identifiés par une adresse IP. Nous choisissons de travailler avec des octets pour rendre cette couche indépendante de son contexte d'utilisation. Ses méthodes sont les suivantes :
+L'interface `NetworkInterface` définit tout objet capable d'envoyer et recevoir des octets de la part de processus identifiés par une adresse IP. L'utilisation d'octets pour rendre cette couche indépendante de son contexte d'utilisation.
+
+La `NetworkInterface` utilise un modèle de souscription pour la réception de messages. Elle définit pour cela une interface `MessageHandler` décrivant tout objet offrant une méthode `HandleNetworkMessage(*Message) (wasHanlded bool)` qui retourne un booléen ssi le message reçu a été traité. La `NetworkInterface` est alors responsable de partager chaque message reçu à tous les souscrits à travers cette méthode, jusqu'à ce que l'un d'eux affirme l'avoir traité. Elle peut donc supposer que tout message n'appartient qu'à un seul souscrit.
+
+Les méthodes d'une `NetworkInterface` sont les suivantes :
+
   - `Send(addr Address, payload []byte) error`.
-  - `RegisterHandler(MessageHandler) HandlerId` - la réception de messages utilise un pattern de souscription : un `MessageHandler` est tout objet offrant une méthode `HandleNetworkMessage(*Message) (wasHanlded bool)` qui doit retourner un booléen indiquant si le message reçu a été traité ou non. La `NetworkInterface` est responsable de partager chaque message reçu à tous les souscrits à travers cette méthode jusqu'à ce que l'un d'eux affirme l'avoir traité. Elle peut supposer que tout message n'appartient qu'à un seul souscrit.
-  - `UnregisterHandler(HandlerId)` permet de résilier une souscription à l'aide de l'identifiant obtenu à la souscription.
-  - `Close()` ferme toute connexion et goroutine en cours.
+  - `RegisterHandler(MessageHandler) HandlerId` pour souscrire un `MessageHandler`.
+  - `UnregisterHandler(HandlerId)` pour résilier une souscription à l'aide de l'identifiant obtenu à la souscription.
+  - `Close()` pour fermer toute connexion et goroutine en cours.
 
 Nous n'offrons pour l'instant qu'une seul implémentation de cette interface, `UDP`, que nous décrivons dans la suite de cette section.
 
 #### État interne
 
-L'état interne d'une instance de `UDP`, c'est à dire toute donnée dont le comportement de l'instance dépend et qui peut changer au cours de l'exécution, se réduit aux valeurs suivantes.
+L'état interne d'une instance de `UDP`, c'est à dire toute donnée dont dépend le comportement de l'instance et qui peut changer au cours de l'exécution, se réduit aux valeurs suivantes.
 
-- La connection UDP d'écoute de messages reçus.
+- La connexion UDP d'écoute de messages reçus.
 - La liste des souscrits à la réception des messages.
-- La liste des voisins connus et leur connection associée.
+- La liste des voisins connus et leur connexion associée.
 
 Il est important de déterminer ces états puisque, par leur variabilité à travers le temps, il est nécessaire d'en prévenir tout accès concurrent. Cela est garanti par le choix des goroutines.
 
 #### Goroutines principales
 
-Il existe trois goroutines principales communiquant par channels.
-
-- `handleSends` est responsable d'envoyer des messages à une connection donnée. Une nouvelle est donc créée pour chaque nouvelle connection. Elles réagissent aux événements suivants :
-  - Demandes d'envoi sur la connection correspondante (reçues sur `sendChan chan []byte`).
-  - Cloture de la channel `sendChan` comme un signal de fin d'exécution de la goroutine.
-- `handleState` est la goroutine principale et maintient la liste des souscrits et des voisins connus. Elle réagit aux événements suivants :
-  - Demande d'envoi de bytes à un voisin donné (reçues sur `sendRequests chan struct{Address, []byte}`). Crée alors une instance de `handleSends` associée à ce voisin, et lui transmet la demande.
-  - Demande de souscription d'un handler (reçues sur `registrations chan struct{HandlerId, MessageHandler}`, où `HandlerId` est un alias d'`uint32` et `MessageHandler` est tel que défini ci-dessus).
-  - Demande de résiliation d'un handler (reçues sur `unregistrations chan HandlerId`)
-  - Notification de réception de message (reçues sur `receivedMessages chan Message`). Transmet alors le message reçu aux handlers souscrits.
-  - Demande de fin d'éxécution de la goroutine (reçue par la cloture d'une channel `closeChan`). Transmet alors la cloture à toutes les goroutines `handleSends` en cloturant leur channel `sendChan`.
-- `listenIncomingMessages` est responsable de la réception de messages. Elle réagit aux événemenst suivants :
-  - Réception de messages par la connection UDP, qu'elle transmet ensuite à `handleState` par la channel `sendRequests`
-  - Cloture de la channel `closeChan` pour cloturer la connection UDP et donc la réception de messages.
-
-<details>
-
-<summary>
-Analyse des contraintes techniques justifiant l'architecture proposée.
-</summary>
-
-Nous analysons ici les contraintes techniques auxquelles nous faisons face, afin de justifier l'architecture proposée.
+Nous analysons ici les contraintes techniques auxquelles nous faisons face, et les goroutines permettant de les satisfaire.
 
 Les événements auxquels cette couche doit répondre sont les suivants, associés aux états auxquels elles doivent avoir accès
 
 - Réception de message - accès à la liste des souscrits.
 - Demande de souscription ou résiliation aux réceptions - modification de la liste des souscrits
 - Demande d'envoi de message - accès à la liste des voisins connus, et modification potentielle si le voisin demandé n'est pas encore connu.
-- Demande de cloture de l'interface réseau - accès à la liste des voisins connus et leur connection associée, ainsi que la connection d'écoute de messages reçus.
+- Demande de clôture de l'interface réseau - accès à la liste des voisins connus et leur connexion associée, ainsi que la connexion d'écoute de messages reçus.
 
 Étant donné qu'aucune paire de ces événements ne doit pouvoir être exécutée en parallèle, nous optons pour la solution simple de regrouper leur gestion en une seule goroutine, `handleState`. Ainsi, tous les événements seront traités séquentiellement, évitant donc tout risque d'accès concurrent aux variables d'état. Afin d'éviter toute erreur lors de l'implémentation, ces variables d'état seront des variables locales à la goroutine, et non des attributs de la struct `UDP`.
 
-La gestion de la cloture de l'interface réseau se fera à l'aide d'une unique channel, `closeChan` qui sera cloturée au moment d'une demande de cloture. Elle pourra ainsi être surveillée par toutes les goroutines pour détecter leur nécessité de s'interrompre.
+La gestion de la clôture de l'interface réseau se fait à l'aide d'une unique channel, `closeChan`, qui sera clôturée au moment d'une demande de clôture. Elle pourra ainsi être surveillée par toutes les goroutines pour détecter leur nécessité de s'interrompre.
 
-Une seconde goroutine, `listenIncomingMessages`, est responsable d'écouter les messages reçus sur UDP, et les transmettre à `handleState` pour envoi aux souscrits. Celle-ci génère une petite goroutine écoutant simplement `closeChan` et cloturant la connection UDP d'écoute, permettant de notifier la goroutine principale en faisant échouer l'écoute.
+Une seconde goroutine, `listenIncomingMessages`, est responsable d'écouter les messages reçus sur UDP, et les transmettre à `handleState` pour envoi aux souscrits. Celle-ci génère une petite goroutine écoutant simplement `closeChan` et clôturant la connexion UDP d'écoute, permettant de notifier la goroutine principale en faisant échouer l'écoute.
 
-Enfin, afin d'éviter de recréer une connection au même voisin à chaque envoi, la goroutine `handleState` crée une goroutine pour chaque voisin auquel une demande d'envoi a été faite. Cette dernière est responsable de la connection avec ce voisin, et une channel créée et maintenue par `handleState` lui est fournie. Cette channel sera utilisée par `handleState` pour informer la goroutine du message à envoyer.
+Enfin, afin d'éviter de recréer une connexion au même voisin à chaque envoi, la goroutine `handleState` crée une goroutine pour chaque voisin auquel une demande d'envoi a été faite. Cette dernière est responsable de la connexion avec ce voisin, et une channel créée et maintenue par `handleState` lui est fournie. Cette channel sera utilisée par `handleState` pour informer la goroutine du message à envoyer, puis clôturée pour indiquer la fin de programme.
 
-<img src="./imgs/1-udp.svg"/>
+<img src="/labos/imgs/1-udp.png"/>
+
+<details>
+<summary>
+Pour le détail des goroutines et leurs moyens de communication...
+</summary>
+
+Il existe donc trois goroutines principales communiquant par channels.
+
+- `handleSends` est responsable d'envoyer des messages à une connexion donnée. Une nouvelle est donc créée pour chaque nouvelle connexion. Elles réagissent aux événements suivants :
+  - Demandes d'envoi sur la connexion correspondante (reçues sur `sendChan chan []byte`).
+  - Clôture de la channel `sendChan` comme un signal de fin d'exécution de la goroutine.
+- `handleState` est la goroutine principale et maintient la liste des souscrits et des voisins connus. Elle réagit aux événements suivants :
+  - Demande d'envoi de bytes à un voisin donné (reçues sur `sendRequests chan struct{Address, []byte}`). Crée alors une instance de `handleSends` associée à ce voisin, et lui transmet la demande.
+  - Demande de souscription d'un handler (reçues sur `registrations chan struct{HandlerId, MessageHandler}`, où `HandlerId` est un alias d'`uint32` et `MessageHandler` est tel que défini plus tôt).
+  - Demande de résiliation d'un handler (reçues sur `unregistrations chan HandlerId`)
+  - Notification de réception de message (reçues sur `receivedMessages chan Message`). Transmet alors le message reçu aux handlers souscrits.
+  - Demande de fin d'exécution de la goroutine (reçue par la clôture d'une channel `closeChan`). Transmet alors la clôture à toutes les goroutines `handleSends` en clôturant leur channel `sendChan`.
+- `listenIncomingMessages` est responsable de la réception de messages. Elle réagit aux événements suivants :
+  - Réception de messages par la connexion UDP, qu'elle transmet ensuite à `handleState` par la channel `receivedMessages`
+  - Clôture de la channel `closeChan` pour clôturer la connexion UDP et donc la réception de messages.
+
 
 </details>
 
