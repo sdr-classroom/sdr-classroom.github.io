@@ -36,7 +36,7 @@ nav#TOC li {
     padding-bottom: 0;
 }
 
-nav :where(a, [role="link"]) {
+nav li :where(a, [role="link"]) {
     margin: 0;
     padding: 0;
 }

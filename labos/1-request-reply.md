@@ -2,7 +2,7 @@
 title: Labo 1 - Résilience face aux pannes
 css:
     - "/labos/style.css"
-back: "/labos/chatsapp.html"
+back: "/labos/labos.html"
 ---
 
 ## Changelog
@@ -25,7 +25,7 @@ Ce labo a les objectifs suivants.
 
 ## Liens utiles
 
-- [Repo Github Classroom](#)
+- [Protocole de rendu des labos de SDR](/labos/labos.html#chronologie-de-chaque-labo)
 - [Document d'Architecture Logicielle de la donnée](/labos/design-specs/1-udp.html)
 
 ## Spécifications fonctionnelles
@@ -73,7 +73,7 @@ Il vous revient, dans ce labo, d'implémenter ces fonctionnalités manquantes.
 
 ## Phase 1 : Conception
 
-Vous trouverez [ici](#) l'implémentation de cette première version de ChatsApp. Vous trouverez également un document d'architecture logicielle décrivant le code fourni dans les grandes lignes [ici](./design-specs/1-udp.html).
+Nous vous fournirons en temps voulu l'implémentation de cette première version de ChatsApp. Vous trouverez également [ici](/labos/design-specs/1-udp.html) un document d'architecture logicielle décrivant le code fourni, dans les grandes lignes.
 
 Nous vous demandons de compléter ce code avec la garantie du protocole RR, c'est à dire qu'un message envoyé sera toujours reçu et traité exactement une fois. Vous l'utiliserez ensuite pour offrir la fonctionnalité d'accusé de réception.
 
