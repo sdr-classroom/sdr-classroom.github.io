@@ -68,17 +68,15 @@ topologique pour routage)</li>
 <p>Pour chaque labo, le protocole sera le suivant :</p>
 <ul>
 <li><p><strong>Séance de conception</strong> : la première séance
-destinée à chaque labo sera une séance de conception
-<strong><em>individuelle</em></strong>. Seul l’énoncé vous sera alors
-fourni ; pas le code. <span class="remark">(Ceci excepté pour le labo 1,
-qui vous fournira une base permettant (1) d’accélérer les choses et (2)
-servir d’exemples pour apprendre à utiliser Go)</span></p>
-<p>À la fin de celle-ci, vous rendrez <strong>tous</strong> un document
-markdown ou pdf constituant une spécification de conception, c’est à
-dire un document décrivant comment le labo pourrait être implémenté. Il
-faut penser ce document comme celui fourni par l’architecte aux équipes
-de développement, qui n’auront ensuite qu’à le suivre. Il devra donc
-notamment inclure</p>
+destinée à chaque labo sera une séance de conception. Seul l’énoncé vous
+sera alors fourni ; pas le code. <span class="remark">(Ceci excepté pour
+le labo 1, qui vous fournira une base permettant (1) d’accélérer les
+choses et (2) servir d’exemples pour apprendre à utiliser Go)</span></p>
+<p>À la fin de celle-ci, vous rendrez un document d’architecture
+logicielle, c’est à dire un document décrivant comment le labo pourrait
+être implémenté. Il faut penser ce document comme celui fourni par
+l’architecte aux équipes de développement, qui n’auront ensuite qu’à le
+suivre. Il devra donc notamment inclure</p>
 <ul>
 <li>les abstractions à définir et leurs APIs</li>
 <li>leur fonctionnement interne (les structures, goroutines, leurs
@@ -87,9 +85,9 @@ responsabilités et interactions, etc)</li>
 </ul>
 <p>Pour chaque labo, nous vous fournirons également un certain nombre de
 questions auxquelles nous devrons être capables de répondre après
-lecture de votre spécification, afin de vous aider à être exhaustif.
-<span class="remark">Par exemple “sous quelle forme sera maintenue la
-liste des participants à une élection”, “comment seront arbitrées deux
+lecture de votre document, afin de vous aider à être exhaustif. <span
+class="remark">Par exemple “sous quelle forme sera maintenue la liste
+des participants à une élection”, “comment seront arbitrées deux
 tentatives de connexion simultanées”, “quel choix structurel permettra
 de garantir l’absence d’accès concurrent au tableau des clients
 actuellement connectés”, etc.</span></p></li>
@@ -101,15 +99,15 @@ unitaires rudimentaires. Vous aurez alors jusqu’à la deadline pour
 implémenter le labo, avec comme seule contrainte de ne pas modifier les
 tests ni les APIs testés.</p></li>
 <li><p><strong>Rendu</strong> : avec votre code, nous vous demanderons
-également un document markdown ou pdf constituant à nouveau une
-spécification de conception, cette fois-ci descriptive de la solution
-que vous avez implémentée.</p></li>
+également un document markdown ou pdf constituant à nouveau un document
+d’architecture logicielle, cette fois-ci descriptif de la solution que
+vous avez implémentée.</p></li>
 </ul>
 <h2 id="évaluation">Évaluation</h2>
 <p>Votre note finale pour chaque labo sera calculée comme suit :</p>
 <ul>
-<li>25% : spécification de conception individuelle. Nous nous placerons
-dans la peau d’un collègue de travail chargé de valider votre
+<li>25% : document d’architecture logicielle initial. Nous nous
+placerons dans la peau d’un collègue de travail chargé de valider votre
 proposition en vue de donner le feu vert aux équipes de développement.
 Votre note visera à refléter la quantité et l’importance des
 modifications qu’il aurait à vous demander avant de donner son feu vert
@@ -132,7 +130,7 @@ Go, bonne modularisation, etc)</li>
 <li>les résultats des tests automatisés, sachant que nous en ajouterons
 à ceux fournis – un code qui ne passe pas les tests ne pouvant
 évidemment pas être merged dans <code>main</code>.</li>
-<li>la qualité de votre spécification de conception et de la
+<li>la qualité du document d’architecture logicielle et de la
 documentation de votre code – un code mal documenté étant pénible à
 review, mais aussi inacceptable sur <code>main</code> pour des raisons
 de maintenabilité.</li>

@@ -19,9 +19,8 @@ Ce labo a les objectifs suivants.
 - Implémentation d'un protocole de communication RR (Request-Reply)
 
 ## Informations Générales
-- **Date du rendu** : Dimanche 22 octobre, 23:59 CEST. L'énoncé du second labo sera déjà donné le lundi 16 octobre.
-- **Groupes** : à réaliser seul ou à deux
-- **Plagiat** : en cas de copie manifeste, vous y serez confrontés, vous obtiendrez la note de 1, et l'incident sera reporté au responsable de la filière, avec un risque d'échec critique immédiat au cours. Ne trichez pas. *(Notez que les IAs génératives se trouvent aujourd'hui dans une zone qui est encore juridiquement floue pour ce qui est du plagiat, mais des arguments se valent à en considérer l'utilisation comme tel. Quoiqu'il en soit, nous vous proposons une autre vision sur la question : votre ambition est d'apprendre et d'acquérir des compétences, et votre utilisation éventuelle de cet outil doit refléter ceci. Tout comme Stackoverflow peut être à la fois un outil d'enrichissement et une banque de copy-paste, faites un choix intentionnel et réfléchi, vos propres intérêts en tête, de l'outil que vous ferez de l'IA générative)*
+- **Groupes** : à réaliser par groupes de deux.
+- **Plagiat** : en cas de copie manifeste, vous y serez confrontés, vous obtiendrez la note de 1, et l'incident sera reporté au responsable de la filière, avec un risque d'échec critique immédiat au cours. Ne trichez pas. <span class="remark">(Notez que les IAs génératives se trouvent aujourd'hui dans une zone qui est encore juridiquement floue pour ce qui est du plagiat, mais des arguments se valent à en considérer l'utilisation comme tel. Quoiqu'il en soit, nous vous proposons une autre vision sur la question : votre ambition est d'apprendre et d'acquérir des compétences, et votre utilisation éventuelle de cet outil doit refléter ceci. Tout comme StackOverflow peut être autant un outil d'enrichissement qu'une une banque de copy-paste, faites un choix intentionnel et réfléchi, vos propres intérêts en tête, de l'outil que vous ferez de l'IA générative)*</span>
 
 ## Liens utiles
 
@@ -101,4 +100,4 @@ Ce code est complété avec les abstractions que nous avons choisies pour répon
 
 ### Rendu
 
-Votre rendu doit être intégralement compris dans le commit votre plus récent avant la deadline. Cela inclue non seulement le code, mais également le readme dans lequel vous aurez écrit la spécification de conception décrivant votre travail. Celle-ci n'aura besoin de couvrir que vos ajouts ; nul besoin de décrire le code fourni. Elle doit satisfaire les mêmes exigences que celles exprimées pour le rendu de la phase 1.
+Votre rendu doit être intégralement compris dans le commit votre plus récent avant la deadline. Cela inclue non seulement le code, mais également le readme constituant le document d'architecture logicielle décrivant votre travail. Celui-ci n'aura besoin de couvrir que vos ajouts ; nul besoin de décrire le code fourni. Il doit satisfaire les mêmes exigences que celles exprimées pour le rendu de la phase 1.
