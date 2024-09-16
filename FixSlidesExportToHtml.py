@@ -10,15 +10,37 @@ if len(sys.argv) < 2:
 # Get file given as first argument to this script
 filename = sys.argv[1]
 
+fixedStamp = "<!-- Fixed after export -->"
+
 # Text to be inserted before the last <script> tag:
-toInsert = '''<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/notes/notes.js"></script>
+toInsertLast = fixedStamp + '''
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/notes/notes.js"></script>
     <script src="./script.js"></script>
     '''
+
+toInsertHead = '''<script src="/print.js" defer></script>
+'''
 
 # Open the file with rw permissions
 with open(filename, "r+") as f:
     # Read the file
     contents = f.read()
+
+    # If the file contains fixed stamp
+    if fixedStamp in contents:
+        print(f"Already fixed {filename}")
+        exit()
+
+    # Find the closing </head> tag
+    index = contents.find("</head>")
+
+    # insert the script tag before the closing </head> tag
+    if index != -1:
+        contents = contents[:index] + toInsertHead + contents[index:]
+    else:
+        print("No </head> tag found")
+        exit()
+    
     # Find the last occurrence of 
     index = contents.rfind("<script>")
 
@@ -28,7 +50,7 @@ with open(filename, "r+") as f:
         exit()
     
     # Insert empty script tag before the last script tag
-    contents = contents[:index] + toInsert + contents[index:]
+    contents = contents[:index] + toInsertLast + contents[index:]
 
     # Where "plugins: [ RevealHighlight ]" is in the contents, insert ", RevealNotes" after "RevealHighlight"
     contents = re.sub(r"plugins: \[ *RevealHighlight *\]", r"plugins: [ RevealHighlight, RevealNotes ]", contents)
