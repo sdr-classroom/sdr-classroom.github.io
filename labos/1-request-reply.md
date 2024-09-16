@@ -94,10 +94,8 @@ Dans ce document, tentez d'être brefs bien que complets. Il s'agit en quelque s
 
 ## Phase 2 : Implémentation
 
-Une fois la phase 1 terminée, vous aurez accès à l'assignment Github Classroom qui vous créera un repo avec le code sur lequel vous avez basé votre travail de la phase 1.
-
-Ce code est complété avec les abstractions que nous avons choisies pour répondre aux besoins de ce labo. Il vous faudra les implémenter et les intégrer dans le code existant d'ici la deadline.
+Une fois la phase 1 terminée, vous aurez accès au code de départ, complété avec les abstractions que nous avons choisies pour répondre aux besoins de ce labo. Il vous faudra les implémenter et les intégrer dans le code existant d'ici la deadline.
 
 ### Rendu
 
-Votre rendu doit être intégralement compris dans le commit votre plus récent avant la deadline. Cela inclue non seulement le code, mais également le readme constituant le document d'architecture logicielle décrivant votre travail. Celui-ci n'aura besoin de couvrir que vos ajouts ; nul besoin de décrire le code fourni. Il doit satisfaire les mêmes exigences que celles exprimées pour le rendu de la phase 1.
+Votre rendu doit être intégralement compris dans le commit le plus récent avant la deadline. Cela inclue non seulement le code, mais également le readme constituant le document d'architecture logicielle décrivant votre travail. Celui-ci n'aura besoin de couvrir que vos ajouts ; nul besoin de décrire le code fourni. Il doit satisfaire les mêmes exigences que celles exprimées pour le rendu de la phase 1.

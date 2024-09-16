@@ -26,7 +26,7 @@ La couche **transport** occulte la complexité du réseau derrière une abstract
 
 #### Abstraction
 
-L'interface `NetworkInterface` définit tout objet capable d'envoyer et recevoir des octets de la part de processus identifiés par une adresse IP. L'utilisation d'octets pour rendre cette couche indépendante de son contexte d'utilisation.
+L'interface `NetworkInterface` définit tout objet capable d'envoyer et recevoir des octets de la part de processus identifiés par une adresse IP. L'utilisation d'octets permet à cette couche d'être indépendante de son contexte d'utilisation.
 
 La `NetworkInterface` utilise un modèle de souscription pour la réception de messages. Elle définit pour cela une interface `MessageHandler` décrivant tout objet offrant une méthode `HandleNetworkMessage(*Message) (wasHanlded bool)` qui retourne un booléen ssi le message reçu a été traité. La `NetworkInterface` est alors responsable de partager chaque message reçu à tous les souscrits à travers cette méthode, jusqu'à ce que l'un d'eux affirme l'avoir traité. Elle peut donc supposer que tout message n'appartient qu'à un seul souscrit.
 
@@ -60,7 +60,7 @@ Les événements auxquels cette couche doit répondre sont les suivants, associ�
 - Demande d'envoi de message - accès à la liste des voisins connus, et modification potentielle si le voisin demandé n'est pas encore connu.
 - Demande de clôture de l'interface réseau - accès à la liste des voisins connus et leur connexion associée, ainsi que la connexion d'écoute de messages reçus.
 
-Étant donné qu'aucune paire de ces événements ne doit pouvoir être exécutée en parallèle, nous optons pour la solution simple de regrouper leur gestion en une seule goroutine, `handleState`. Ainsi, tous les événements seront traités séquentiellement, évitant donc tout risque d'accès concurrent aux variables d'état. Afin d'éviter toute erreur lors de l'implémentation, ces variables d'état seront des variables locales à la goroutine, et non des attributs de la struct `UDP`.
+Étant donné qu'aucune paire de ces événements n'a besoin de pouvoir être exécutée en parallèle, nous optons pour la solution simple de regrouper leur gestion en une seule goroutine, `handleState`. Ainsi, tous les événements seront traités séquentiellement, évitant donc tout risque d'accès concurrent aux variables d'état. Afin d'éviter toute erreur lors de l'implémentation, ces variables d'état seront des variables locales à la goroutine, et non des attributs de la struct `UDP`.
 
 La gestion de la clôture de l'interface réseau se fait à l'aide d'une unique channel, `closeChan`, qui sera clôturée au moment d'une demande de clôture. Elle pourra ainsi être surveillée par toutes les goroutines pour détecter leur nécessité de s'interrompre.
 

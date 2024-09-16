@@ -28,7 +28,7 @@ Pour chaque labo, le protocole sera le suivant :
   
   Pour chaque labo, nous vous fournirons également un certain nombre de questions auxquelles nous devrons être capables de répondre après lecture de votre document, afin de vous aider à être exhaustif. <span class="remark">Par exemple "sous quelle forme sera maintenue la liste des participants à une élection", "comment seront arbitrées deux tentatives de connexion simultanées", "quel choix structurel permettra de garantir l'absence d'accès concurrent au tableau des clients actuellement connectés", etc.</span>
 
-- **Période d'implémentation** : suite à cette séance de conception, nous vous fournirons un code de base pour le labo, qui contiendra un corrigé du labo précédent, ainsi que les APIs des abstractions que nous vous proposons pour ce labo, accompagnées de tests unitaires rudimentaires. Vous aurez alors jusqu'à la deadline pour implémenter le labo, avec comme seule contrainte de ne pas modifier les tests ni les APIs testés.
+- **Période d'implémentation** : suite à cette phase de conception, nous vous fournirons un code de base pour le labo, qui contiendra un corrigé du labo précédent, ainsi que les APIs des abstractions que nous vous proposons pour ce labo, accompagnées de tests unitaires rudimentaires. Vous aurez alors jusqu'à la deadline pour implémenter le labo, avec comme seule contrainte de ne pas modifier les tests ni les APIs testés.
 
 - **Rendu** : avec votre code, nous vous demanderons également un document markdown ou pdf constituant à nouveau un document d'architecture logicielle, cette fois-ci descriptif de la solution que vous avez implémentée.
 
