@@ -13,7 +13,7 @@ La partie pratique du cours de SDR se divise en quatre labos consécutifs, const
 - **Labo 3** : Distribution de charge entre serveurs (algorithme d'élection avec gestion de pannes de Chang et Roberts)
 - **Labo 4** : Tolérance de réseau incomplètement connecté (utilisation de sondes et échos pour broadcast et découverte topologique pour routage)
 
-Les labos seront à implémenter par groupe de 3 ou 4, au choix.
+Les labos seront à implémenter par groupe de 2.
 
 ## Chronologie de chaque labo
 
