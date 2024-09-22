@@ -7,7 +7,7 @@ back: "/labos/1-request-reply.html"
 
 ## Structure générale
 
-Respectueusement des conventions en Go, la structure du projet se divise en un package `cmd` ne faisant qu'utiliser les packages définis dans `internal`.
+Respectueusement des conventions de Go, la structure du projet se divise en un package `cmd` ne faisant qu'utiliser les packages définis dans `internal`.
 
 - `/cmd/` contient les main packages, actuellement uniquement `server`
 - `/internal/` contient les packages utilisés par l'exécutable `server`.
@@ -47,7 +47,7 @@ L'état interne d'une instance de `UDP`, c'est à dire toute donnée dont dépen
 - La liste des souscrits à la réception des messages.
 - La liste des voisins connus et leur connexion associée.
 
-Il est important de déterminer ces états puisque, par leur variabilité à travers le temps, il est nécessaire d'en prévenir tout accès concurrent. Cela est garanti par le choix des goroutines.
+Il est important de déterminer ces états puisque, par leur variabilité à travers le temps, il est nécessaire d'en prévenir tout accès concurrent, ce qui est garanti par le choix des goroutines.
 
 #### Goroutines principales
 
@@ -60,7 +60,7 @@ Les événements auxquels cette couche doit répondre sont les suivants, associ�
 - Demande d'envoi de message - accès à la liste des voisins connus, et modification potentielle si le voisin demandé n'est pas encore connu.
 - Demande de clôture de l'interface réseau - accès à la liste des voisins connus et leur connexion associée, ainsi que la connexion d'écoute de messages reçus.
 
-Étant donné qu'aucune paire de ces événements n'a besoin de pouvoir être exécutée en parallèle, nous optons pour la solution simple de regrouper leur gestion en une seule goroutine, `handleState`. Ainsi, tous les événements seront traités séquentiellement, évitant donc tout risque d'accès concurrent aux variables d'état. Afin d'éviter toute erreur lors de l'implémentation, ces variables d'état seront des variables locales à la goroutine, et non des attributs de la struct `UDP`.
+Étant donné qu'aucune paire de ces événements n'a besoin de pouvoir être exécutée en parallèle, nous optons pour la solution simple de regrouper leur gestion en une seule goroutine, `handleState`. Ainsi, tous les événements seront traités séquentiellement, évitant donc tout risque d'accès concurrent aux variables d'état. Afin d'éviter toute erreur lors de l'implémentation, ces variables d'état sont locales à la goroutine, et non des attributs de la struct `UDP`.
 
 La gestion de la clôture de l'interface réseau se fait à l'aide d'une unique channel, `closeChan`, qui sera clôturée au moment d'une demande de clôture. Elle pourra ainsi être surveillée par toutes les goroutines pour détecter leur nécessité de s'interrompre.
 
@@ -100,7 +100,7 @@ Le serveur est responsable uniquement de l'écoute d'entrée sur stdin, et l'aff
 Le serveur est une struct offrant deux méthodes.
 
 - `Start` déclenche l'écoute de stdin et du réseau. Son constructeur, `NewServer`, prend comme argument une instance de `ServerConfig` décrivant sa configuration (voir ci-après).
-- `Close` déclenche la fermeture du serveur et de l'interface réseau qu'il utilise. Cela se fait à nouveau à l'aide d'une goroutine, `closeChan`, dont la fermeture est détectée par toutes les autres goroutines.
+- `Close` déclenche la fermeture du serveur et de l'interface réseau qu'il utilise. Cela se fait à nouveau à l'aide d'une channel, `closeChan`, dont la fermeture est détectée par toutes les autres goroutines.
 
 #### Goroutines principales
 

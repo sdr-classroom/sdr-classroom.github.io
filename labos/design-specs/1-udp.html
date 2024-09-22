@@ -52,7 +52,7 @@ id="toc-modules-complémentaires">Modules complémentaires</a></li>
 </ul>
 </nav>
 <h2 id="structure-générale">Structure générale</h2>
-<p>Respectueusement des conventions en Go, la structure du projet se
+<p>Respectueusement des conventions de Go, la structure du projet se
 divise en un package <code>cmd</code> ne faisant qu’utiliser les
 packages définis dans <code>internal</code>.</p>
 <ul>
@@ -123,7 +123,7 @@ cours de l’exécution, se réduit aux valeurs suivantes.</p>
 </ul>
 <p>Il est important de déterminer ces états puisque, par leur
 variabilité à travers le temps, il est nécessaire d’en prévenir tout
-accès concurrent. Cela est garanti par le choix des goroutines.</p>
+accès concurrent, ce qui est garanti par le choix des goroutines.</p>
 <h4 id="goroutines-principales">Goroutines principales</h4>
 <p>Nous analysons ici les contraintes techniques auxquelles nous faisons
 face, et les goroutines permettant de les satisfaire.</p>
@@ -145,9 +145,8 @@ d’écoute de messages reçus.</li>
 regrouper leur gestion en une seule goroutine, <code>handleState</code>.
 Ainsi, tous les événements seront traités séquentiellement, évitant donc
 tout risque d’accès concurrent aux variables d’état. Afin d’éviter toute
-erreur lors de l’implémentation, ces variables d’état seront des
-variables locales à la goroutine, et non des attributs de la struct
-<code>UDP</code>.</p>
+erreur lors de l’implémentation, ces variables d’état sont locales à la
+goroutine, et non des attributs de la struct <code>UDP</code>.</p>
 <p>La gestion de la clôture de l’interface réseau se fait à l’aide d’une
 unique channel, <code>closeChan</code>, qui sera clôturée au moment
 d’une demande de clôture. Elle pourra ainsi être surveillée par toutes
@@ -227,7 +226,7 @@ de <code>ServerConfig</code> décrivant sa configuration (voir
 ci-après).</li>
 <li><code>Close</code> déclenche la fermeture du serveur et de
 l’interface réseau qu’il utilise. Cela se fait à nouveau à l’aide d’une
-goroutine, <code>closeChan</code>, dont la fermeture est détectée par
+channel, <code>closeChan</code>, dont la fermeture est détectée par
 toutes les autres goroutines.</li>
 </ul>
 <h4 id="goroutines-principales-1">Goroutines principales</h4>

@@ -5,10 +5,12 @@ css:
 back: "/labos/labos.html"
 ---
 
+<!---
 ## Changelog
 
 | Date  | Changement                                            |
 | ----- | ----------------------------------------------------- |
+-->
 
 ## Introduction
 
@@ -24,6 +26,7 @@ Ce labo a les objectifs suivants.
 
 ## Liens utiles
 
+- [Votre repo GitHub](https://classroom.github.com/a/A3qqFHHt)
 - [Protocole de rendu des labos de SDR](/labos/labos.html#chronologie-de-chaque-labo)
 - [Document d'Architecture Logicielle de la donnée](/labos/design-specs/1-udp.html)
 
@@ -33,16 +36,16 @@ Nous décrivons ici les spécifications fonctionnelles de l'application ChatsApp
 
 ### Lancement de l'application
 
-ChatsApp, dans cette version, est une application distribuée. Chaque utilisateur.ice doit lancer l'exécutable du serveur et lui fournir des informations de configuration. Durant le développement, la commande `go run` peut être utilisée.
+ChatsApp est une application distribuée. Chaque utilisateur.ice lance l'exécutable du serveur et lui fournit sa configuration. Durant le développement, la commande `go run` peut être utilisée.
 
 ```sh
-go run ./cmd/server <local_address> <config_file_path>
+go run ./cmd/server/main.go <local_address> <config_file_path>
 ```
 
-- `<local_address>` correspond à l'adresse IP sur laquelle cette instance de serveur pourra recevoir des connexions d'autres serveurs,
-- `<config_file_path>` correspond au chemin d'accès du fichier de configuration de cette instance du serveur.
+- `<local_address>` est l'adresse IP sur laquelle ce serveur recevra les connexions d'autres serveurs,
+- `<config_file_path>` est le chemin d'accès au fichier de configuration de ce serveur.
 
-Ce fichier de configuration doit être au format JSON, et inclure les champs suivants :
+Ce fichier de configuration est au format JSON, et inclut les champs suivants :
 
 - `Username` - pseudonyme au nom duquel ce serveur enverra les messages aux autres serveurs
 - `Neighbors` - tableau de chaines de caractères listant les adresses IP des voisins de ce serveur sur le réseau
@@ -51,9 +54,9 @@ Ce fichier de configuration doit être au format JSON, et inclure les champs sui
 - `LogPath` - chemin d'accès à un répertoire dans lequel sera créé un fichier contenant les logs
 - `SlowdownMs` - en millisecondes, ralentissement artificiel du serveur après chaque réception et envoi de message
 
-Une fois que plusieurs serveurs sont lancés et se listent les uns les autres comme voisins, ils attendent qu'un message soit entré sur la ligne de commande pour l'envoyer à tous leurs voisins. Ces derniers afficheront les messages reçus dans la console sous le format `<user>: <message>`, suivit d'une nouvelle ligne.
+Une fois lancé, un serveur attend un qu'un message soit entré sur la ligne de commande pour l'envoyer à tous ses voisins. Ces derniers l'afficheront dans la console sous le format `<user>: <message>`, suivit d'un saut de ligne.
 
-Si `PrintReadAck` est configuré à `true`, l'envoyeur affichera un message de la forme `[<neighbor_address> received: <message>]` dès que le voisin à l'adresse IP `<neighbor_address>` l'informe avoir reçu et traité ce message.
+Si `PrintReadAck` est configuré à `true`, l'envoyeur affichera un message de la forme `[<neighbor_address> received: <message>]` dès que le voisin d'adresse IP `<neighbor_address>` l'informe avoir reçu et traité ce message.
 
 ### Garanties
 
@@ -72,15 +75,15 @@ Il vous revient, dans ce labo, d'implémenter ces fonctionnalités manquantes.
 
 ## Phase 1 : Conception
 
-Nous vous fournirons en temps voulu l'implémentation de cette première version de ChatsApp. Vous trouverez également [ici](/labos/design-specs/1-udp.html) un document d'architecture logicielle décrivant le code fourni, dans les grandes lignes.
+Vous trouverez dans votre repo [GitHub Classroom](https://classroom.github.com/a/A3qqFHHt) l'implémentation de cette première version de ChatsApp. Vous trouverez également sur [cette page](/labos/design-specs/1-udp.html) un document d'architecture logicielle décrivant le code fourni, dans les grandes lignes.
 
-Nous vous demandons de compléter ce code avec la garantie du protocole RR, c'est à dire qu'un message envoyé sera toujours reçu et traité exactement une fois. Vous l'utiliserez ensuite pour offrir la fonctionnalité d'accusé de réception.
+Nous vous demandons de compléter ce code afin d'offrir les garanties demandées et la fonctionnalité d'accusé de réception.
 
 ### Rendu
 
-Nous attendons de votre part un document markdown ou pdf constituant une spécification de conception détaillant comment implémenter ce labo. Imaginez être architecte logiciel responsable de cette nouvelle fonctionnalité. Votre document sera destiné aux équipes de développement, qui devront pouvoir le suivre sans rencontrer d'inconnue majeure. Nous l'évaluerons comme le ferait un collègue responsable de valider votre proposition avant de la transmettre aux développeur.euses.
+Nous attendons de votre part un document markdown ou pdf constituant un document d'architecture logicielle détaillant comment implémenter ce labo. Imaginez être architecte logiciel responsable de cette nouvelle fonctionnalité. Votre document sera destiné aux équipes de développement, qui devront pouvoir le suivre sans rencontrer d'inconnue majeure. Nous l'évaluerons comme le ferait un collègue responsable de valider votre proposition avant de la transmettre aux développeur.euses.
 
-Il nous faudra être capable de répondre aux questions suivantes après lecture de votre spécification (et avec un minimum de jugeote). Notez qu'elles n'ont pas besoin d'apparaitre explicitement dans votre document ; elles sont ici pour guider vos réflexions et vérifier l'exhaustivité de votre document. Celui-ci doit donc simplement contenir les informations suffisantes pour y répondre.
+Il nous faudra être capable de répondre aux questions suivantes après lecture de votre document (et avec un minimum de jugeote de notre part). Notez qu'elles n'ont pas besoin d'apparaitre explicitement dans votre document ; elles sont ici pour guider vos réflexions et vérifier l'exhaustivité de votre document. Celui-ci doit donc simplement contenir les informations suffisantes pour y répondre.
 
 - Quelles abstractions doivent être créées, et quelles sont leurs responsabilités et leurs APIs ?
 - Comment et où ces abstractions seront-elles utilisées par le code existant ?
@@ -90,7 +93,7 @@ Il nous faudra être capable de répondre aux questions suivantes après lectur
 - Quel mécanisme permettra d'attendre la réponse à un message envoyé, sans bloquer la réception d'autres messages ?
 - Comment sera garantie l'absence d'accès concurrent à tout état variable, s'il en existe ?
 
-Dans ce document, tentez d'être brefs bien que complets. Il s'agit en quelque sorte d'augmenter l'entropie de votre document ; chaque phrase doit servir à quelque chose.
+Dans ce document, tentez d'être brefs bien que complet. Il s'agit en quelque sorte d'augmenter l'entropie de votre document ; chaque phrase doit servir à quelque chose.
 
 ## Phase 2 : Implémentation
 
@@ -98,4 +101,4 @@ Une fois la phase 1 terminée, vous aurez accès au code de départ, complété 
 
 ### Rendu
 
-Votre rendu doit être intégralement compris dans le commit le plus récent avant la deadline. Cela inclue non seulement le code, mais également le readme constituant le document d'architecture logicielle décrivant votre travail. Celui-ci n'aura besoin de couvrir que vos ajouts ; nul besoin de décrire le code fourni. Il doit satisfaire les mêmes exigences que celles exprimées pour le rendu de la phase 1.
+Votre rendu doit être intégralement compris dans le commit le plus récent avant la deadline. Cela inclue non seulement le code, mais également le document d'architecture logicielle décrivant votre travail. Celui-ci n'aura besoin de couvrir que vos ajouts ; nul besoin de décrire le code fourni. Il doit satisfaire les mêmes exigences que celles exprimées pour le rendu de la phase 1.
