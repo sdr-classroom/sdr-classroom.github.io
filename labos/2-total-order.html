@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Labo 2 - Ordre total des messages</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/labos/style.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+    <main>
+<header id="title-block-header">
+    <nav>
+        <a href="/labos/labos.html"><i class="fa fa-angle-left"></i> Back</a>
+      </nav>
+<h1 class="title">Labo 2 - Ordre total des messages</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#introduction" id="toc-introduction">Introduction</a></li>
+<li><a href="#informations-générales"
+id="toc-informations-générales">Informations Générales</a></li>
+<li><a href="#liens-utiles" id="toc-liens-utiles">Liens utiles</a></li>
+<li><a href="#ordre-global-des-messages"
+id="toc-ordre-global-des-messages">Ordre global des messages</a></li>
+<li><a href="#phase-1-conception" id="toc-phase-1-conception">Phase 1 :
+Conception</a></li>
+<li><a href="#phase-2-implémentation"
+id="toc-phase-2-implémentation">Phase 2 : Implémentation</a>
+<ul>
+<li><a href="#rendu" id="toc-rendu">Rendu</a></li>
+</ul></li>
+</ul>
+</nav>
+<!---
+## Changelog
+
+| Date  | Changement                                            |
+| ----- | ----------------------------------------------------- |
+-->
+<!-- TODO
+Mentionner que
+- ne doit pas s'envoyer des messages à lui-même.
+-->
+<h2 id="introduction">Introduction</h2>
+<p>Ce labo a pour objectif de compléter l’application ChatsApp pour
+garantir un ordre total des messages.</p>
+<p>Vous aurez accès, comme point de départ à l’implémentation, à la
+solution au labo 1.</p>
+<h2 id="informations-générales">Informations Générales</h2>
+<ul>
+<li><strong>Groupes</strong> : à réaliser par groupes de deux.</li>
+<li><strong>Plagiat</strong> : en cas de copie manifeste, vous y serez
+confrontés, vous obtiendrez la note de 1, et l’incident sera reporté au
+responsable de la filière, avec un risque d’échec critique immédiat au
+cours. Ne trichez pas. <span class="remark">(Notez que les IAs
+génératives se trouvent aujourd’hui dans une zone qui est encore
+juridiquement floue pour ce qui est du plagiat, mais des arguments se
+valent à en considérer l’utilisation comme tel. Quoiqu’il en soit, nous
+vous proposons une autre vision sur la question : votre ambition est
+d’apprendre et d’acquérir des compétences, et votre utilisation
+éventuelle de cet outil doit refléter cela. Tout comme StackOverflow
+peut être autant un outil d’enrichissement qu’une banque de copy-paste,
+faites un choix intentionnel et réfléchi, vos propres intérêts en tête,
+de l’outil que vous ferez de l’IA générative)</span></li>
+</ul>
+<h2 id="liens-utiles">Liens utiles</h2>
+<ul>
+<li><a href="https://classroom.github.com/a/rK7JoECZ">Repo GitHub pour
+la phase 1</a></li>
+<li><a href="/labos/labos.html#chronologie-de-chaque-labo">Protocole de
+rendu des labos de SDR</a>
+<!-- TODO - [Document d'Architecture Logicielle de la solution au labo 1](/labos/design-specs/1-tcp-rr.html) --></li>
+</ul>
+<h2 id="ordre-global-des-messages">Ordre global des messages</h2>
+<p>Le but de ce labo est de compléter l’application distribuée ChatsApp
+avec la garantie que l’ordre des messages est le même pour tous les
+serveurs. Cela signifie que, pour tous deux messages <code>m1</code> et
+<code>m2</code>, peu importe leur source, si un serveur <code>A</code>
+affiche <code>m1</code> avant <code>m2</code>, alors tous les autres
+serveurs afficheront <code>m1</code> avant <code>m2</code>.</p>
+<h2 id="phase-1-conception">Phase 1 : Conception</h2>
+<p>Vous trouverez, dans le repo <a
+href="https://classroom.github.com/a/rK7JoECZ">GitHub Classroom</a> de
+la phase 1, le document d’architecture logicielle à compléter avec votre
+proposition de solution. Le format attendu est le même qu’au labo 1.
+L’évaluation de ce document se basera sur les questions ci-dessous ; il
+faudra (1) que votre document contienne les informations nécessaires
+pour répondre à ces questions, et (2) que ces réponses forment une
+solution correcte au problème posé.</p>
+<ul>
+<li>Quelle(s) abstraction(s) devront être créée(s) ?
+<ul>
+<li>Quelles sont leurs responsabilités (que font-elles, que
+délèguent-elles, que savent-elles, que ne savent-elles pas) ?</li>
+<li>Quel est leur API exact (constructeur, méthodes) ? N’hésitez pas à
+donner des exemples d’utilisation de vos abstractions.</li>
+</ul></li>
+<li>Quelles sont les goroutines nécessaires ?
+<ul>
+<li>De quel état sont-elles responsables ?</li>
+<li>Quand et par qui sont-elles créées ?</li>
+</ul></li>
+<li>Pour tout channel nécessaire à la communication entre goroutines,
+<ul>
+<li>Où sont-ils stockés ?</li>
+<li>Quelle(s) goroutine(s) y écrivent, et lesquelles y lisent ?</li>
+</ul></li>
+<li>Quels changements à <code>server.go</code> permettront de garantir
+l’ordre total des messages ?</li>
+</ul>
+<p><span class="remark">Pour les groupes de trois : comment
+garantissez-vous une complexité asymptotique de calcul de <span
+class="math inline"><em>o</em>(<em>n</em>)</span> pour chaque message
+envoyé, où <span class="math inline"><em>n</em></span> est le nombre de
+processus et <span class="math inline"><em>o</em>(⋅)</span> est la <a
+href="https://en.wikipedia.org/wiki/Big_O_notation#Little-o_notation">notation
+petit-o</a> ? </span></p>
+<h2 id="phase-2-implémentation">Phase 2 : Implémentation</h2>
+<p>Une fois la phase 1 terminée, vous aurez accès à la solution du labo
+1 qui contiendra aussi un point de départ pour la partie 2. Ce point de
+départ imposera des abstractions et APIs, mais vous laissera libre
+d’implémenter le fonctionnement interne que vous aurez proposé.</p>
+<h3 id="rendu">Rendu</h3>
+<p>Votre rendu doit être intégralement compris dans le commit le plus
+récent avant la deadline. Cela inclue non seulement le code, mais
+également le document d’architecture logicielle décrivant votre travail.
+Celui-ci n’aura besoin de couvrir que vos ajouts ; nul besoin de décrire
+le code fourni. Il doit satisfaire les mêmes exigences que celles
+exprimées pour le rendu de la phase 1.</p>
+</main>
+</body>
+</html>
