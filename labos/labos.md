@@ -9,7 +9,7 @@ css:
 La partie pratique du cours de SDR se divise en quatre labos consécutifs, construisant chacun sur le précédent. Il s'agira de construire une application distribuée de messagerie instantanée de groupe, dont la spécification fonctionnelle est fournie avec [l'énoncé du labo 1](/labos/1-request-reply.html). Les labos se diviseront comme suit.
 
 - [**Labo 1**](/labos/1-request-reply.html) ([Architecture de la solution](/labos/design-specs/1-tcp-rr.html)) : Résilience face aux pannes (protocole de fiabilité RR)
-- [**Labo 2**](/labos/2-total-order.html) ([Phase 1](https://classroom.github.com/a/rK7JoECZ), [Phase 2](#TODO)) : Garantie d'ordre total des messages (algorithme d'exclusion mutuelle de Lamport)
+- [**Labo 2**](/labos/2-total-order.html) ([Phase 1](https://classroom.github.com/a/rK7JoECZ), [Phase 2](https://classroom.github.com/a/x4ZoWF7m)) : Garantie d'ordre total des messages (algorithme d'exclusion mutuelle de Lamport)
 - **Labo 3** : Distribution de charge entre serveurs (algorithme d'élection avec gestion de pannes de Chang et Roberts)
 - **Labo 4** : Tolérance de réseau incomplètement connecté (utilisation de sondes et échos pour broadcast et découverte topologique pour routage)
 

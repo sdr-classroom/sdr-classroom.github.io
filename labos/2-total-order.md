@@ -5,17 +5,11 @@ css:
 back: "/labos/labos.html"
 ---
 
-<!---
 ## Changelog
 
 | Date  | Changement                                            |
 | ----- | ----------------------------------------------------- |
--->
-
-<!-- TODO
-Mentionner que
-- ne doit pas s'envoyer des messages à lui-même.
--->
+| 10.29 | [Lien et précisions sur phase 2.](#phase-2-implémentation)                       |
 
 ## Introduction
 
@@ -29,9 +23,10 @@ Vous aurez accès, comme point de départ à l'implémentation, à la solution a
 
 ## Liens utiles
 
-- [Repo GitHub pour la phase 1](https://classroom.github.com/a/rK7JoECZ)
+- [Repo GitHub de la phase 1](https://classroom.github.com/a/rK7JoECZ)
+- [Repo GitHub de la phase 2](https://classroom.github.com/a/x4ZoWF7m)
 - [Protocole de rendu des labos de SDR](/labos/labos.html#chronologie-de-chaque-labo)
-<!-- TODO - [Document d'Architecture Logicielle de la solution au labo 1](/labos/design-specs/1-tcp-rr.html) -->
+- [Document d'Architecture Logicielle de la solution au labo 1](/labos/design-specs/1-tcp-rr.html)
 
 ## Ordre global des messages
 
@@ -56,7 +51,41 @@ Vous trouverez, dans le repo [GitHub Classroom](https://classroom.github.com/a/r
 
 ## Phase 2 : Implémentation
 
-Une fois la phase 1 terminée, vous aurez accès à la solution du labo 1 qui contiendra aussi un point de départ pour la partie 2. Ce point de départ imposera des abstractions et APIs, mais vous laissera libre d'implémenter le fonctionnement interne que vous aurez proposé.
+Une fois la phase 1 terminée, vous trouverez [ici](https://classroom.github.com/a/x4ZoWF7m) le repo sur lequel vous devrez implémenter la solution. Celui-ci contiendra la solution du labo 1 ainsi qu'un point de départ pour la partie 2. Ce point de départ imposera des abstractions et APIs, mais vous laissera libre d'implémenter le fonctionnement interne que vous aurez proposé.
+
+Le code fourni introduit également un `Dispatcher`, responsable de faciliter les échanges avec le réseau : (1) en gérant la traduction entre `[]byte` et `Message`, et (2) en répartissant les messages venant du réseau en fonction du type de message reçu. L'extrait suivant illustre l'utilisation de ce dispatcher.
+
+```go
+// dispatcher étant une instance de Dispatcher.
+
+// Enregistrement d'un handler pour les messages de type ChatMessage
+dispatcher.Register(ChatMessage{}, func(m Message, source Address) {
+    chatMessage := m.(ChatMessage) // Conversion on ChatMessage
+    fmt.Printf("Message %v reçu de la part de %v.\n", chatMessage, source)
+})
+
+// Enregistrement d'un handler pour les messages de type Mutex
+dispatcher.Register(mutex.Message{}, func(m Message, source Address) {
+    mutex := m.(mutex.Message) // Conversion en mutex.Message
+    fmt.Printf("Message de type mutex %v reçu de la part de %v.\n", mutex, source)
+})
+
+// Envoi de messages
+chatMsg := ChatMessage{Content: "Hello, world!"}
+dispatcher.Send(chatMsg, dstAddr)
+
+mtxMsg = mutex.Message{Type: mutex.Request, TS: ts}
+dispatcher.Send(mtxMsg, dstAddr)
+```
+
+Le serveur initialise et met en place un dispatcher auprès duquel vous ne devriez avoir qu'à enregistrer vos nouveaux types de messages.
+
+Notez également que :
+
+- Il vous faudra implémenter une Mutex de Lamport.
+- Les tests fournis supposent que cette Mutex ne s'envoie jamais de message à elle-même à travers le réseau.
+- Vous ne devez en aucun cas utiliser les abstractions fournies par le package `sync` de Go. Toute gestion de la concurrence doit être gérée par des goroutines et des channels.
+- Vous êtes libres d'ajouter des tests, mais ne devez pas modifier ceux fournis.
 
 ### Rendu
 

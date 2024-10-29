@@ -12,7 +12,7 @@ Nous rappelons que le but de ce labo est d'offrir les garanties suivantes :
 1. Entre tous deux serveurs sans panne, aucun message ne doit être perdu, dupliqué, ou réordonné.
 2. Un accusé de réception doit être reçu exactement une fois pour chaque voisin correct au sens de pannes récupérables.
 
-Nous choisissons d'implémenter un `NetworkInterface` utilisant TCP pour offrir les garanties entre serveurs corrects (1), et implémentant, par dessus, le protocole RR pour garantir les accusés de réception (2). Nous décrivons ici l'architecture proposée pour mettre en oeuvre cette solution. La solution elle-même est fournie comme point de départ au labo 2 <!-- TODO -->.
+Nous choisissons d'implémenter un `NetworkInterface` utilisant TCP pour offrir les garanties entre serveurs corrects (1), et implémentant, par dessus, le protocole RR pour garantir les accusés de réception (2). Nous décrivons ici l'architecture proposée pour mettre en oeuvre cette solution. La solution elle-même est fournie comme point de départ au labo 2.
 
 ## Architecture générale
 
