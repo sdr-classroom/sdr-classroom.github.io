@@ -15,7 +15,7 @@ fixedStamp = "<!-- Fixed after export -->"
 # Text to be inserted before the last <script> tag:
 toInsertLast = fixedStamp + '''
     <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/notes/notes.js"></script>
-    <script src="./script.js"></script>
+    <script src="/slides/script.js"></script>
     '''
 
 toInsertHead = '''<script src="/print.js" defer></script>
