@@ -24,7 +24,7 @@ Vous aurez accès, comme point de départ à l'implémentation, à la solution a
 ## Liens utiles
 
 - [Repo GitHub de la phase 1](https://classroom.github.com/a/rK7JoECZ)
-- [Repo GitHub de la phase 2](https://classroom.github.com/a/x4ZoWF7m)
+- [Repo GitHub de la phase 2](https://classroom.github.com/a/vQc2DytO)
 - [Protocole de rendu des labos de SDR](/labos/labos.html#chronologie-de-chaque-labo)
 - [Document d'Architecture Logicielle de la solution au labo 1](/labos/design-specs/1-tcp-rr.html)
 
@@ -51,7 +51,7 @@ Vous trouverez, dans le repo [GitHub Classroom](https://classroom.github.com/a/r
 
 ## Phase 2 : Implémentation
 
-Une fois la phase 1 terminée, vous trouverez [ici](https://classroom.github.com/a/x4ZoWF7m) le repo sur lequel vous devrez implémenter la solution. Celui-ci contiendra la solution du labo 1 ainsi qu'un point de départ pour la partie 2. Ce point de départ imposera des abstractions et APIs, mais vous laissera libre d'implémenter le fonctionnement interne que vous aurez proposé.
+Une fois la phase 1 terminée, vous trouverez [ici](https://classroom.github.com/a/vQc2DytO) le repo sur lequel vous devrez implémenter la solution. Celui-ci contiendra la solution du labo 1 ainsi qu'un point de départ pour la partie 2. Ce point de départ imposera des abstractions et APIs, mais vous laissera libre d'implémenter le fonctionnement interne que vous aurez proposé.
 
 Le code fourni introduit également un `Dispatcher`, responsable de faciliter les échanges avec le réseau : (1) en gérant la traduction entre `[]byte` et `Message`, et (2) en répartissant les messages venant du réseau en fonction du type de message reçu. L'extrait suivant illustre l'utilisation de ce dispatcher.
 
