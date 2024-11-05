@@ -9,7 +9,8 @@ back: "/labos/labos.html"
 
 | Date  | Changement                                            |
 | ----- | ----------------------------------------------------- |
-| 10.29 | [Lien et précisions sur phase 2.](#phase-2-implémentation)                       |
+| 29.10 | [Lien et précisions sur phase 2.](#phase-2-implémentation)                       |
+| 05.11 | [Nécessité de passer le tests au race detector](#change_05_11)  |
 
 ## Introduction
 
@@ -86,6 +87,7 @@ Notez également que :
 - Les tests fournis supposent que cette Mutex ne s'envoie jamais de message à elle-même à travers le réseau.
 - Vous ne devez en aucun cas utiliser les abstractions fournies par le package `sync` de Go. Toute gestion de la concurrence doit être gérée par des goroutines et des channels.
 - Vous êtes libres d'ajouter des tests, mais ne devez pas modifier ceux fournis.
+- <span id="change_05_11"></span>Tous les tests doivent passer sans *et avec* le [data race detector](https://go.dev/doc/articles/race_detector) de Go (`go test -race`).
 
 ### Rendu
 

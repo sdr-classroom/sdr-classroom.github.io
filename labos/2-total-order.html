@@ -132,9 +132,14 @@ id="toc-phase-2-implémentation">Phase 2 : Implémentation</a>
 </thead>
 <tbody>
 <tr class="odd">
-<td>10.29</td>
+<td>29.10</td>
 <td><a href="#phase-2-implémentation">Lien et précisions sur phase
 2.</a></td>
+</tr>
+<tr class="even">
+<td>05.11</td>
+<td><a href="#change_05_11">Nécessité de passer le tests au race
+detector</a></td>
 </tr>
 </tbody>
 </table>
@@ -262,6 +267,10 @@ package <code>sync</code> de Go. Toute gestion de la concurrence doit
 être gérée par des goroutines et des channels.</li>
 <li>Vous êtes libres d’ajouter des tests, mais ne devez pas modifier
 ceux fournis.</li>
+<li><span id="change_05_11"></span>Tous les tests doivent passer sans
+<em>et avec</em> le <a
+href="https://go.dev/doc/articles/race_detector">data race detector</a>
+de Go (<code>go test -race</code>).</li>
 </ul>
 <h3 id="rendu">Rendu</h3>
 <p>Votre rendu doit être intégralement compris dans le commit le plus
