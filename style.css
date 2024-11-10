@@ -53,6 +53,15 @@ h1, h2 {
     color: #888;
 }
 
+.yellow {
+    color: var(--yellow);
+    opacity: .8;
+}
+
+.italic {
+    font-style: italic;
+}
+
 .timeline-table tr > td.row-te {
     color: var(--yellow);
     opacity: .8;
