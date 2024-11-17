@@ -86,7 +86,8 @@ de l’outil que vous ferez de l’IA générative)</span></li>
 </ul>
 <h3 id="liens-utiles">Liens utiles</h3>
 <ul>
-<li><a href="#TODO">Repo GitHub de la phase 3</a></li>
+<li><a href="https://classroom.github.com/a/fbc8Rn9l">Repo GitHub de la
+phase 3</a></li>
 </ul>
 <h2 id="client">Client</h2>
 <p>Dans le code de départ de ce labo, l’utilisateur ne communique plus
@@ -103,7 +104,7 @@ l’adresse du client, et l’adresse du serveur auquel se connecter.</li>
 <li>Le serveur, au lieu d’échanger avec la ligne de commande, utilise
 maintenant un <code>clientsManager</code>, responsable de
 <ul>
-<li>écouter et répondre aux les demandes de connexion des clients,</li>
+<li>écouter et répondre aux demandes de connexion des clients,</li>
 <li>transmettre les messages reçus de la part des clients connectés au
 serveur,</li>
 <li>transmettre les messages reçus par le serveur aux clients
@@ -171,7 +172,8 @@ définie comme pour le mainteneur d’anneau.</li>
 d’anneau pour implémenter l’algorithme d’élection de Chang et Roberts.
 Il devra déclencher une nouvelle élection à chaque changement
 d’aptitude, <em>et non au moment d’un appel à
-<code>GetLeader</code></em>. L’électeur sera ensuite utilisé par le
+<code>GetLeader</code></em> (sauf si aucun leader n’a encore été
+déterminé). L’électeur sera ensuite utilisé par le
 <code>clientsManager</code> pour répondre correctement aux demandes de
 connexion des clients.</p>
 <h2 id="validation-de-votre-solution">Validation de votre solution</h2>
@@ -184,13 +186,12 @@ votre idée de solution pour obtenir un retour.</p>
 <ul>
 <li>Les tests fournis ne doivent pas être modifiés, mais vous êtes
 encouragés à en ajouter.</li>
+<li>Tous les tests doivent passer sans <em>et avec</em> le <a
+href="https://go.dev/doc/articles/race_detector">data race detector</a>
+de Go (<code>go test -race</code>).</li>
 <li>Vous ne devez en aucun cas utiliser les abstractions fournies par le
 package <code>sync</code> de Go. Toute gestion de la concurrence doit
 être gérée par des goroutines et des channels.</li>
-<li><span id="change_05_11"></span>Tous les tests doivent passer sans
-<em>et avec</em> le <a
-href="https://go.dev/doc/articles/race_detector">data race detector</a>
-de Go (<code>go test -race</code>).</li>
 </ul>
 <p>Enfin, votre rendu doit contenir un document d’architecture
 logicielle décrivant votre solution. Celui-ci devra couvrir les points

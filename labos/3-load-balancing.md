@@ -23,7 +23,7 @@ Vous aurez accès, comme point de départ, à la solution au labo 2 ainsi qu'à 
 
 ### Liens utiles
 
-- [Repo GitHub de la phase 3](#TODO)
+- [Repo GitHub de la phase 3](https://classroom.github.com/a/fbc8Rn9l)
 
 ## Client
 
@@ -31,7 +31,7 @@ Dans le code de départ de ce labo, l'utilisateur ne communique plus directement
 
 - Un package `/internal/client` implémente un client qui se connecte à un serveur donné, écoute la ligne de commande, envoie les entrées de l'utilisateur au serveur, et affiche les messages reçus de la part du serveur. Il est utilisé par le package exécutable `cmd/client`, qui prend en arguments le nom d'utilisateur, l'adresse du client, et l'adresse du serveur auquel se connecter.
 - Le serveur, au lieu d'échanger avec la ligne de commande, utilise maintenant un `clientsManager`, responsable de
-  - écouter et répondre aux les demandes de connexion des clients,
+  - écouter et répondre aux demandes de connexion des clients,
   - transmettre les messages reçus de la part des clients connectés au serveur,
   - transmettre les messages reçus par le serveur aux clients connectés.
 
@@ -61,7 +61,7 @@ Pour ce faire, vous devrez implémenter :
   - la méthode `UpdateAbility(ability int)`, qui met à jour l'aptitude du processus et déclenche une nouvelle élection,
   - le constructeur prenant en arguments, notamment, le dispatcher, l'adresse `self`, et une liste d'adresses `ring` définie comme pour le mainteneur d'anneau.
 
-Le `crElector` créera donc et utilisera un mainteneur d'anneau pour implémenter l'algorithme d'élection de Chang et Roberts. Il devra déclencher une nouvelle élection à chaque changement d'aptitude, *et non au moment d'un appel à `GetLeader`*. L'électeur sera ensuite utilisé par le `clientsManager` pour répondre correctement aux demandes de connexion des clients.
+Le `crElector` créera donc et utilisera un mainteneur d'anneau pour implémenter l'algorithme d'élection de Chang et Roberts. Il devra déclencher une nouvelle élection à chaque changement d'aptitude, *et non au moment d'un appel à `GetLeader`* (sauf si aucun leader n'a encore été déterminé). L'électeur sera ensuite utilisé par le `clientsManager` pour répondre correctement aux demandes de connexion des clients.
 
 ## Validation de votre solution
 
@@ -72,8 +72,8 @@ Vous êtes encouragés à réfléchir à votre approche avant de commencer le d�
 Votre rendu doit contenir les modifications listées ci-dessus. Notez également que :
 
 - Les tests fournis ne doivent pas être modifiés, mais vous êtes encouragés à en ajouter.
+- Tous les tests doivent passer sans *et avec* le [data race detector](https://go.dev/doc/articles/race_detector) de Go (`go test -race`).
 - Vous ne devez en aucun cas utiliser les abstractions fournies par le package `sync` de Go. Toute gestion de la concurrence doit être gérée par des goroutines et des channels.
-- <span id="change_05_11"></span>Tous les tests doivent passer sans *et avec* le [data race detector](https://go.dev/doc/articles/race_detector) de Go (`go test -race`).
 
 Enfin, votre rendu doit contenir un document d'architecture logicielle décrivant votre solution. Celui-ci devra couvrir les points suivants :
 
