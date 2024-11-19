@@ -23,7 +23,7 @@ Vous aurez accès, comme point de départ, à la solution au labo 2 ainsi qu'à 
 
 ### Liens utiles
 
-- [Repo GitHub de la phase 3](https://classroom.github.com/a/fbc8Rn9l)
+- [Repo GitHub de la phase 3](#TODO)
 
 ## Client
 
