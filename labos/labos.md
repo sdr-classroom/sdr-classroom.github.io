@@ -11,10 +11,11 @@ La partie pratique du cours de SDR se divise en quatre labos consécutifs, const
 - [**Labo 1**](/labos/1-request-reply.html) ([Architecture de la solution](/labos/design-specs/1-tcp-rr.html)) : Résilience face aux pannes (protocole de fiabilité RR)
 - [**Labo 2**](/labos/2-total-order.html) ([Phase 1](https://classroom.github.com/a/rK7JoECZ), [Phase 2](https://classroom.github.com/a/vQc2DytO)) : Garantie d'ordre total des messages (algorithme d'exclusion mutuelle de Lamport)
 - [**Labo 3**](/labos/3-load-balancing.html) ([Repo](https://classroom.github.com/a/fbc8Rn9l)) : Distribution de charge entre serveurs (algorithme d'élection avec gestion de pannes de Chang et Roberts)
-- **Labo 4** : Tolérance de réseau incomplètement connecté (utilisation de sondes et échos pour broadcast et découverte topologique pour routage)
+- [**Labo 4**](/labos/4-routing.html) ([Repo](https://classroom.github.com/a/N2dTrFgo)) : Tolérance de réseau incomplètement connecté (utilisation de sondes et échos pour broadcast et découverte topologique pour routage)
 
 Les labos seront à implémenter par groupe de 2.
 
+<!--
 ## Chronologie de chaque labo
 
 Pour chaque labo, le protocole sera le suivant :
@@ -45,3 +46,5 @@ Votre note finale pour chaque labo sera calculée comme suit :
   - la qualité du document d'architecture logicielle et de la documentation de votre code -- un code mal documenté étant pénible à review, mais aussi inacceptable sur `main` pour des raisons de maintenabilité.
 
 Vous comprenez donc qu'il vous faudra viser un travail de qualité professionnelle.
+
+-->
