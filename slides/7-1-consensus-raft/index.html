@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+	<html class="sl-root decks export offline loaded">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, minimal-ui">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+		<link rel="manifest" href='data:application/manifest+json,{"display": "standalone", "name": "SDR - 7.1 - Consensus - Raft"}' />
+		<title>SDR - 7.1 - Consensus - Raft</title>
+
+
+		<link rel="stylesheet" type="text/css" href="lib/offline-v2.css">
+
+
+
+	<script src="/print.js" defer></script>
+</head>
+	<body class="reveal-viewport theme-font-montserrat theme-color-white-blue">
+		<div class="reveal">
+			<div class="slides">
+				<section data-id="f88d21125a869be99dcf5f40485d8b0b" data-auto-animate="">
+
+
+<div class="sl-block" data-block-type="text" style="width: 684px; left: 60.5px; top: 238.5px; height: auto;" data-name="text-701913" data-block-id="3784be162ce2e4d847327cbb0b0e45b2"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10; text-align: left;"><h3>SDR</h3></div></div>
+<div class="sl-block" data-block-type="text" style="width: 839px; left: 60.5px; top: 289.5px; height: auto;" data-name="text-210072" data-block-id="4ed1775091683e4c712486b6dc501b36"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 11; text-align: left;"><h1>Consensus</h1></div></div>
+<div class="sl-block" data-block-type="text" style="width: 740px; left: 60.5px; top: 622px; height: auto;" data-name="text-d6e712" data-block-id="cb11d9f29128455ddbcf80c916289fcc"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 12; text-align: left;"><p>Olivier Lemer</p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 853px; left: 60.5px; top: 387.5px; height: auto;" data-name="text-b69d41" data-block-id="81109816b877405f4e8458d756c347a0"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 13; text-align: left;"><h2>Raft</h2></div></div></section><section class="stack" data-id="d11432c15ccb7c14de9e246763cd3b58"><section data-id="d1b7eaeb559fc96e31c9c14125a35e76"><div class="sl-block" data-block-type="text" style="width: 806px; left: 109.375px; top: 313px; height: auto;" data-name="text-701913" data-block-id="8f6f0c8e3b04b28a2d56223ea97e7237"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10;"><h2 style="text-align:left">Le principe</h2></div></div>
+<div class="sl-block" data-block-type="shape" style="width: 41.5px; height: 41.5px; left: 44.625px; top: 329.25px;" data-name="shape-dcfd9f" data-block-id="cce8064488a3f70bbdb9082cda4582b8"><div class="sl-block-content" data-shape-type="symbol-thin-arrow-down" data-shape-fill-color="rgb(170, 170, 170)" data-shape-stretch="true" style="z-index: 11;"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="4.000251770019531 1.9999980926513672 23.999500274658203 27.999752044677734"><g class="shape-element" fill="rgb(170, 170, 170)" data-viewbox="4.000251770019531 1.9999980926513672 23.999500274658203 27.999752044677734"><path d="M4.586 19.414l10 10c0.781 0.781 2.047 0.781 2.828 0l10-10c0.781-0.781 0.781-2.047 0-2.828s-2.047-0.781-2.828 0l-6.586 6.586v-19.172c0-1.105-0.895-2-2-2s-2 0.895-2 2v19.172l-6.586-6.586c-0.391-0.39-0.902-0.586-1.414-0.586s-1.024 0.195-1.414 0.586c-0.781 0.781-0.781 2.047 0 2.828z"></path></g></svg></div></div>
+</section><section data-transition="fade" data-id="12ad93be45bc5d4807c419e63022b96a">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="sl-block" data-block-type="text" style="width: 832px; left: 33.487257px; top: 30px; height: auto;" data-name="text-ef6d7c" data-block-id="2fa5c84075d8d8ce2c2433f4cb2670dc"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10; text-align: left;"><h3>Suppositions</h3></div></div>
+
+
+
+
+
+
+
+
+
+<div class="sl-block" data-block-type="text" style="width: 650.368px; left: 33.4873px; top: 204px; height: auto;" data-block-id="60e028e0cf9b5f580ddef099b1e1c8c0" data-name="text-c9cd87"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 29; text-align: left; font-size: 80%;">
+<p>Pas plus de ⎡N/2⎤-1 pannes simultannées.</p>
+
+<p> </p>
+
+<p>Pannes récupérables, sans amnésie.</p>
+
+<p> </p>
+
+<p>Pas de duplication ou réordonnancement de messages.</p>
+
+<p>Pertes possibles.</p>
+
+<p> </p>
+
+<p>Réseau partiellement synchrone.</p>
+</div></div></section><section data-transition="fade" data-id="96ea4224ed93b94c5d89bf5c0d5368c2">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="sl-block" data-block-type="text" style="width: 832px; left: 33.487257px; top: 30px; height: auto;" data-name="text-ef6d7c" data-block-id="e4dd1c29ff6868fb46423c3da20cd623"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10; text-align: left;"><h3>Réplication de machine d'état</h3></div></div>
+
+
+
+
+
+
+
+
+
+<div class="sl-block" data-block-type="text" style="width: 875.368px; left: 33.4873px; top: 137px; height: auto;" data-name="text-c9cd87" data-block-id="9643ee9ae9a6ad13bc62a049a15472c9"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 11; text-align: left; font-size: 80%;"><p>Pensé pour répliquer une machine d'état sur chaque processus.</p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 368.368px; left: 34.1586px; top: 269px; height: auto;" data-name="text-b45334" data-block-id="96c14c4ca9c21efc694cdf0bf4d6f41d"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 12; text-align: left; font-size: 80%; line-height: 1.43;" data-has-line-height=""><p><strong>Un log répliqué</strong></p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 383.368px; left: 33.4873px; top: 310px; height: auto;" data-block-id="7a4c2d467faf72ecf9e34c94def43341" data-name="text-5353f3"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 13; text-align: left; font-size: 80%; line-height: 1.43;" data-has-line-height=""><p>Chaque processus maintient un log des opérations à appliquer.</p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 428.368px; left: 505.671px; top: 269px; height: auto;" data-block-id="724a75bd439208bdaf77b8a5f5681b74" data-name="text-1d61f1"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 14; text-align: left; font-size: 80%; line-height: 1.43;" data-has-line-height=""><p><strong>Un élu</strong></p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 418.084px; left: 503.074px; top: 313px; height: auto;" data-block-id="019f670848ca152fe0a72adb0240a0f7" data-name="text-5855c7"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 15; text-align: left; font-size: 80%; line-height: 1.43;" data-has-line-height=""><p>Responsable de synchroniser ces logs répliqués.</p></div></div>
+
+
+
+
+<div class="sl-block sl-block-group" data-block-type="group" data-name="group-67ec7f" data-block-id="24bde18829ca4071ce48ef90809e3ec0"><div class="sl-block-content sl-block-group-content fragment" style="transform-origin: 483.763px 547px 0px; z-index: 17;" data-fragment-index="0">
+<div class="sl-block" data-block-type="text" style="width: 368.368px; left: 34.1586px; top: 514px; height: auto;" data-block-id="a7181699250caac498f479ef6655cb26" data-name="text-6791e9"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 18; text-align: left; font-size: 80%; line-height: 1.43;" data-has-line-height=""><p><strong>Synchronisation des logs</strong></p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 383.368px; left: 33.4873px; top: 555px; height: auto;" data-block-id="47158c2a28b182949957a17f770d0b14" data-name="text-b06e72"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 19; text-align: left; font-size: 80%; line-height: 1.43;" data-has-line-height=""><p>Un consensus doit exister sur le contenu du log.</p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 428.368px; left: 505.671px; top: 514px; height: auto;" data-block-id="27df860250c21b780ea9739bc314e036" data-name="text-7350c0"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 20; text-align: left; font-size: 80%; line-height: 1.43;" data-has-line-height=""><p><strong>Élection d'un leader</strong></p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 418.084px; left: 503.074px; top: 558px; height: auto;" data-block-id="00d8ce359cbec0bf9ec1a1b5128f62a3" data-name="text-5afe3e"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 21; text-align: left; font-size: 80%; line-height: 1.43;" data-has-line-height=""><p>Un élu mort doit être remplacé, et toute incohérence corrigée.</p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 875.368px; left: 33.4873px; top: 467px; height: auto;" data-name="text-a94875" data-block-id="500308bd260b1bbdccfcdd8d20541ab0"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 22; text-align: left; font-size: 80%;"><p>Deux responsabilités distinctes</p></div></div>
+</div></div></section></section><section class="stack" data-id="009ffbfd3c1c0b2f7be2254583cb3aa4"><section data-id="b5e96735317c913e339e99aff93c6403"><div class="sl-block" data-block-type="text" style="width: 806px; left: 109.375px; top: 313px; height: auto;" data-name="text-701913" data-block-id="76de718ff93ae428faf3902620278f83"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10;"><h2 style="text-align:left">Gestion des logs répliqués</h2></div></div>
+<div class="sl-block" data-block-type="shape" style="width: 41.5px; height: 41.5px; left: 44.625px; top: 329.25px;" data-name="shape-dcfd9f" data-block-id="4deaa823ef8e577e3207e145eccd2393"><div class="sl-block-content" data-shape-type="symbol-thin-arrow-down" data-shape-fill-color="rgb(170, 170, 170)" data-shape-stretch="true" style="z-index: 11;"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="4.000251770019531 1.9999980926513672 23.999500274658203 27.999752044677734"><g class="shape-element" fill="rgb(170, 170, 170)" data-viewbox="4.000251770019531 1.9999980926513672 23.999500274658203 27.999752044677734"><path d="M4.586 19.414l10 10c0.781 0.781 2.047 0.781 2.828 0l10-10c0.781-0.781 0.781-2.047 0-2.828s-2.047-0.781-2.828 0l-6.586 6.586v-19.172c0-1.105-0.895-2-2-2s-2 0.895-2 2v19.172l-6.586-6.586c-0.391-0.39-0.902-0.586-1.414-0.586s-1.024 0.195-1.414 0.586c-0.781 0.781-0.781 2.047 0 2.828z"></path></g></svg></div></div>
+<div class="sl-block" data-block-type="text" style="width: 806px; left: 109.375px; top: 387px; height: auto;" data-name="text-28c4bb" data-block-id="114a936283ca8e565e4253eba50b3a03"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 12; color: rgb(136, 136, 136);"><p style="text-align:left">Un élu responsable du log</p></div></div></section><section data-transition="fade" data-id="62436e8175fcdf7ca395f3fa81c5e1df">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="sl-block" data-block-type="text" style="width: 832px; left: 33.487257px; top: 30px; height: auto;" data-name="text-ef6d7c" data-block-id="b33d481486455df3f5b19d8efd23acd5"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10; text-align: left;"><h3>Log vs Machine d'état</h3></div></div>
+
+
+
+
+
+
+
+
+
+<div class="sl-block" data-block-type="text" style="width: 875.368px; left: 33.4873px; top: 207px; height: auto;" data-name="text-c9cd87" data-block-id="05dee09b9246bf2625919b1dd200dfd3"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 11; text-align: left; font-size: 80%;"><p>Deux concepts distincts</p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 368.368px; left: 34.1586px; top: 271px; height: auto;" data-name="text-b45334" data-block-id="533671e45adcaf659da6c766b35e0d37"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 12; text-align: left; font-size: 80%; line-height: 1.43;" data-has-line-height=""><p><strong>Le log d'opérations</strong></p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 383.368px; left: 33.4873px; top: 311px; height: auto;" data-name="text-5353f3" data-block-id="949f7d9c5a7d4e4e39bd8b3f28e53124"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 13; text-align: left; font-size: 80%; line-height: 1.43;" data-has-line-height=""><p>Ce qui va être ou a été appliqué à la machine d'état</p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 368.368px; left: 505.671px; top: 271px; height: auto;" data-block-id="34131c536b1d9e0a330d5cf485f0e4bd" data-name="text-4c8bf6"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 14; text-align: left; font-size: 80%; line-height: 1.43;" data-has-line-height=""><p><strong>La machine d'état elle-même</strong></p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 383.368px; left: 505.671px; top: 311px; height: auto;" data-block-id="7c36884781bde9ead2001836dcce0dc3" data-name="text-ab78fd"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 15; text-align: left; font-size: 80%; line-height: 1.43;" data-has-line-height=""><p>L'état actuel, toutes opérations appliquées.</p></div></div>
+<div class="sl-block sl-block-group" data-block-type="group" data-name="group-302bae" data-block-id="c687846e7d8851e51407687366921116"><div class="sl-block-content sl-block-group-content fragment" style="transform-origin: 310.849px 463.5px 0px; z-index: 16;" data-fragment-index="0">
+<div class="sl-block" data-block-type="text" style="width: 383.368px; left: 33.4873px; top: 409.25px; height: auto;" data-block-id="497a1c034df437630a7776b0cf850b81" data-name="text-474054"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 17; text-align: left; font-size: 80%; line-height: 1.43;" data-has-line-height=""><p>Chaque log peut donc être</p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 383.368px; left: 33.4873px; top: 448.75px; height: auto;" data-block-id="70caa7e6cc7cde25be240636edcf97e9" data-name="text-fc606c"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 18; text-align: left; font-size: 80%; line-height: 1.43;" data-has-line-height=""><ul>
+	<li>Pending</li>
+	<li>Committed</li>
+</ul></div></div>
+<div class="sl-block" data-block-type="text" style="width: 383.368px; left: 174.487px; top: 449.75px; height: auto;" data-block-id="be531782faadcaa4721351fd8446abaf" data-name="text-9b05cf"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 19; text-align: left; font-size: 80%; line-height: 1.43; color: rgb(170, 170, 170);" data-has-line-height=""><p><em>(pas encore appliqué)</em></p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 383.368px; left: 204.843px; top: 483.75px; height: auto;" data-block-id="e7ededf3be7fb3f2b88c7b5d5c22d68d" data-name="text-b1f591"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 20; text-align: left; font-size: 80%; line-height: 1.43; color: rgb(170, 170, 170);" data-has-line-height=""><p><em>(appliqué)</em></p></div></div>
+</div></div></section><section data-transition="fade" data-id="d95ed7e79d79a9fe845efb708c4e331c">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="sl-block" data-block-type="text" style="width: 832px; left: 33.487257px; top: 30px; height: auto;" data-name="text-ef6d7c" data-block-id="a94a5158b39dc89ee8ae3f0d095497a2"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10; text-align: left;"><h3>Le leader qui synchronise</h3></div></div>
+
+
+
+
+
+
+
+
+
+<div class="sl-block" data-block-type="text" style="width: 875.368px; left: 34.1586px; top: 116px; height: auto;" data-name="text-c9cd87" data-block-id="d2e83f7caef7c23bdbaea8b680eb502f"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 11; text-align: left; font-size: 80%;"><p>Le leader reçoit les requêtes d'opérations, et assure leur application chez tous.</p></div></div>
+
+<div class="sl-block" data-block-type="text" style="width: 907.368px; left: 33.4873px; top: 457.125px; height: auto;" data-name="text-474054" data-block-id="419d34b23b28c540a3f8a2d82aa6b3ad"><div class="sl-block-content fragment" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 12; text-align: left; font-size: 80%; line-height: 1.43;" data-has-line-height="" data-fragment-index="7"><p><em>Pour tout message, penser un envoi RR ; je réessaie jusqu'à confirmation de réception.</em></p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 814.368px; left: 34.1586px; top: 240.875px; height: auto;" data-block-id="1f3b58a43866ab3fcf15177b8ddfb8e5" data-name="text-18f0fd"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 13; text-align: left; font-size: 80%; line-height: 1.43;" data-has-line-height=""><ul>
+	<li class="fragment" data-fragment-index="1">Je la log localement comme <em>pending</em>
+</li>
+	<li class="fragment" data-fragment-index="2">Je broadcast un message <strong>LogThis</strong> <em>(AppendEntry)</em>
+</li>
+	<li class="fragment" data-fragment-index="3">J'attends le ACK d'au moins ⎡N/2⎤+1 voisins</li>
+	<li class="fragment" data-fragment-index="4">J'applique l'opération à la machine d'état</li>
+	<li class="fragment" data-fragment-index="5">Je marque l'opération comme <em>committed</em>
+</li>
+	<li class="fragment" data-fragment-index="6">J'en informe tout le monde par un <strong>Confirm</strong>
+</li>
+</ul></div></div>
+
+<div class="sl-block sl-block-group" data-block-type="group" data-name="group-485388" data-block-id="fb63ae3d0c714d5c4924a9bbdaaeedd9"><div class="sl-block-content sl-block-group-content fragment" style="transform-origin: 811.928px 360px 0px; z-index: 24;" data-fragment-index="8">
+<div class="sl-block" data-block-type="line" style="width: auto; height: auto; min-width: 0px; min-height: 0px; left: 626px; top: 281.5px;" data-name="line-d6639b" data-block-id="3f5882e36ac53fd5cf7586ba383ee323"><div class="sl-block-content" data-line-x1="0" data-line-y1="0" data-line-x2="9.613477373306723e-15" data-line-y2="157" data-line-color="#000000" data-line-width="2px" data-line-start-type="none" data-line-end-type="none" data-line-style="solid-rounded" style="z-index: 25;"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" preserveaspectratio="xMidYMid" width="1" height="157" viewbox="0 0 1 157"><path class="line-element" fill="rgba(0,0,0,0)" stroke="#000000" stroke-width="2" stroke-linecap="round" d="M0 0 L0 157"></path><path class="line-skeleton" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" d="M0 0 L0 157"></path><path class="line-hitarea" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" stroke-width="15" d="M0 0 L0 157"></path></svg></div></div>
+<div class="sl-block" data-block-type="line" style="width: auto; height: auto; min-width: 0px; min-height: 0px; left: 627px; top: 363.875px;" data-block-id="e543873ac7a61a523c9be8e14c75db32" data-name="line-892164"><div class="sl-block-content" data-line-x1="50.814999999999934" data-line-y1="0" data-line-x2="0" data-line-y2="0" data-line-color="#000000" data-line-width="2px" data-line-start-type="none" data-line-end-type="none" data-line-style="solid-rounded" style="z-index: 26;"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" preserveaspectratio="xMidYMid" width="50.814999999999934" height="1" viewbox="0 0 50.814999999999934 1"><path class="line-element" fill="rgba(0,0,0,0)" stroke="#000000" stroke-width="2" stroke-linecap="round" d="M50.815 0 L0 0"></path><path class="line-skeleton" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" d="M50.815 0 L0 0"></path><path class="line-hitarea" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" stroke-width="15" d="M50.815 0 L0 0"></path></svg></div></div>
+<div class="sl-block" data-block-type="text" style="width: 313.368px; left: 684.487px; top: 345.375px; height: auto;" data-block-id="147bbf6026007929c8ba9f20215e6109" data-name="text-f0c3b9"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 27; text-align: left; font-size: 80%; line-height: 1.43;" data-has-line-height=""><p><em>En cas de panne ici ?</em></p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 313.368px; left: 684.487px; top: 379.375px; height: auto;" data-block-id="591222a2e8cd71479831ab158f09c10e" data-name="text-ba0357"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 28; text-align: left; font-size: 80%; line-height: 1.43;" data-has-line-height=""><p><em>On y reviendra</em></p></div></div>
+</div></div>
+<div class="sl-block sl-block-group" data-block-type="group" data-name="group-43d984" data-block-id="8fad734e6dffceb7e1a806a9d7c878d3"><div class="sl-block-content sl-block-group-content fragment" style="transform-origin: 268.678px 578.75px 0px; z-index: 17;" data-fragment-index="9">
+<div class="sl-block" data-block-type="text" style="width: 368.368px; left: 34.1586px; top: 531.75px; height: auto;" data-block-id="250bffca57acc34349969d1cfb23e89f" data-name="text-29cb5f"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 18; text-align: left; font-size: 60%; line-height: 1.43;" data-has-line-height=""><p><em>En tant que follower,</em></p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 468.368px; left: 34.8299px; top: 591.75px; height: auto;" data-block-id="a51d02509914cc47a55446371a911d90" data-name="text-0cda3b"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 19; text-align: left; font-size: 80%; line-height: 1.43;" data-has-line-height=""><ul>
+	<li>Je log localement comme <em>pending</em>
+</li>
+</ul></div></div>
+<div class="sl-block" data-block-type="text" style="width: 368.368px; left: 34.1586px; top: 557.75px; height: auto;" data-block-id="524ce2db2702d80c1453f10df9524fca" data-name="text-ccbb0c"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 20; text-align: left; font-size: 80%; line-height: 1.43;" data-has-line-height=""><p><strong>À la réception d'un LogThis </strong></p></div></div>
+</div></div>
+<div class="sl-block sl-block-group" data-block-type="group" data-name="group-4ff1f0" data-block-id="15f9ac84fec081eaeb63a843308f920d"><div class="sl-block-content sl-block-group-content fragment" style="transform-origin: 726.151px 609.25px 0px; z-index: 21;" data-fragment-index="10">
+<div class="sl-block" data-block-type="text" style="width: 468.368px; left: 492.302px; top: 591.75px; height: auto;" data-block-id="5d656cc8fb851429611439595e2daf83" data-name="text-3a6d62"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 22; text-align: left; font-size: 80%; line-height: 1.43;" data-has-line-height=""><ul>
+	<li>Je marque l'opération <em>committed</em>
+</li>
+	<li>Je l'applique à la machine d'état</li>
+</ul></div></div>
+<div class="sl-block" data-block-type="text" style="width: 368.368px; left: 491.631px; top: 557.75px; height: auto;" data-block-id="a498c52d64c048b4c7420dfbadb4df61" data-name="text-d81f2b"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 23; text-align: left; font-size: 80%; line-height: 1.43;" data-has-line-height=""><p><strong>À la réception d'un Confirm</strong></p></div></div>
+</div></div>
+<div class="sl-block sl-block-group" data-block-type="group" data-name="group-b20c54" data-block-id="07b458161a005c36b1055a9031906da0"><div class="sl-block-content sl-block-group-content fragment" style="transform-origin: 217.671px 210.875px 0px; z-index: 14;" data-fragment-index="0">
+<div class="sl-block" data-block-type="text" style="width: 368.368px; left: 33.4873px; top: 180.875px; height: auto;" data-name="text-b45334" data-block-id="1f9c3c1b9077f89d7bd876b14d56fb58"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 15; text-align: left; font-size: 60%; line-height: 1.43;" data-has-line-height=""><p><em>En tant que leader,</em></p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 368.368px; left: 33.4873px; top: 206.875px; height: auto;" data-block-id="e551dd82a3f41667aac99537e4987c5f" data-name="text-2fee91"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 16; text-align: left; font-size: 80%; line-height: 1.43;" data-has-line-height=""><p><strong>À la réception d'une requête</strong></p></div></div>
+</div></div></section></section><section class="stack" data-id="2689d444c9c3b6bb5a86385911d4a581"><section data-id="8bd2340f7439794883ec8e1cc43599fa"><div class="sl-block" data-block-type="text" style="width: 806px; left: 109.375px; top: 313px; height: auto;" data-name="text-701913" data-block-id="9ff3a6e8335946ac457929edaf4b01c9"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10;"><h2 style="text-align:left">Élection</h2></div></div>
+<div class="sl-block" data-block-type="shape" style="width: 41.5px; height: 41.5px; left: 44.625px; top: 329.25px;" data-name="shape-dcfd9f" data-block-id="357dc693477254acf53de92eb45ef149"><div class="sl-block-content" data-shape-type="symbol-thin-arrow-down" data-shape-fill-color="rgb(170, 170, 170)" data-shape-stretch="true" style="z-index: 11;"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="4.000251770019531 1.9999980926513672 23.999500274658203 27.999752044677734"><g class="shape-element" fill="rgb(170, 170, 170)" data-viewbox="4.000251770019531 1.9999980926513672 23.999500274658203 27.999752044677734"><path d="M4.586 19.414l10 10c0.781 0.781 2.047 0.781 2.828 0l10-10c0.781-0.781 0.781-2.047 0-2.828s-2.047-0.781-2.828 0l-6.586 6.586v-19.172c0-1.105-0.895-2-2-2s-2 0.895-2 2v19.172l-6.586-6.586c-0.391-0.39-0.902-0.586-1.414-0.586s-1.024 0.195-1.414 0.586c-0.781 0.781-0.781 2.047 0 2.828z"></path></g></svg></div></div>
+<div class="sl-block" data-block-type="text" style="width: 806px; left: 109.375px; top: 387px; height: auto;" data-name="text-28c4bb" data-block-id="68a5ba3f62e4d29b74f7bd59b681e2c6"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 12; color: rgb(136, 136, 136);"><p style="text-align:left">Un algorithme spécialisé</p></div></div></section><section data-transition="fade" data-id="c028dd5d6ec4f0486f6ca560e2855181">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="sl-block" data-block-type="text" style="width: 832px; left: 33.487257px; top: 30px; height: auto;" data-name="text-ef6d7c" data-block-id="c1b2d8fa65caf18156cc55cebac2ca2b"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10; text-align: left;"><h3>First Come First Serve</h3></div></div>
+
+
+
+
+
+
+
+
+
+<div class="sl-block" data-block-type="text" style="width: 875.368px; left: 33.4873px; top: 186px; height: auto;" data-name="text-c9cd87" data-block-id="f833ff4e69b78b72908a8fd50f43b476"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 11; text-align: left; font-size: 80%;"><p>Chaque processus a une durée de <em>timeout d'élection</em>.</p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 875.368px; left: 33.4873px; top: 149px; height: auto;" data-block-id="ecc10c35bbeeb13a717f547e9fc12dca" data-name="text-a802ec"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 12; text-align: left; font-size: 80%;"><p>Le leader envoie un heartbeat régulier à tous les followers.</p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 368.368px; left: 33.4873px; top: 248px; height: auto;" data-name="text-b45334" data-block-id="b1fbebb3607fca87680e26a95342596e"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 13; text-align: left; font-size: 60%; line-height: 1.43;" data-has-line-height=""><p><em>En tant que follower,</em></p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 764.368px; left: 33.4873px; top: 274px; height: auto;" data-name="text-2fee91" data-block-id="b9ce7a2c9c252945b4418ab8ff8a284b"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 14; text-align: left; font-size: 80%; line-height: 1.43;" data-has-line-height=""><p><strong>Si aucun heartbeat pendant ma durée de timeout</strong></p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 875.368px; left: 33.4873px; top: 312px; height: auto;" data-block-id="f183d8ce8e1ad763f369ec3498d49791" data-name="text-cd4f8d"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 15; text-align: left; font-size: 80%;"><ul>
+	<li>Je deviens candidat au prochaines élections</li>
+	<li>J'envoie ma candidature à tout le monde, avec mes logs récents</li>
+</ul></div></div>
+<div class="sl-block sl-block-group" data-block-type="group" data-name="group-b4a7b3" data-block-id="243726b58669f5e565a2d400675a9778"><div class="sl-block-content sl-block-group-content fragment" style="transform-origin: 471.171px 474px 0px; z-index: 16;" data-fragment-index="0">
+<div class="sl-block" data-block-type="text" style="width: 764.368px; left: 33.4873px; top: 402px; height: auto;" data-block-id="49240f3a178626ffdb892c59f4bb5cf0" data-name="text-9f494e"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 17; text-align: left; font-size: 80%; line-height: 1.43;" data-has-line-height=""><p><strong>Si je reçois une candidature</strong></p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 875.368px; left: 33.4873px; top: 440px; height: auto;" data-block-id="34962bf543a90e2b1fcd76ea42c3d91d" data-name="text-fa55a4"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 18; text-align: left; font-size: 80%;"><ul>
+	<li>Si j'ai des logs <em>committed</em> plus récents que lui, je l'ignore</li>
+	<li>Si c'est la première candidature valide pour ce mandat
+	<ul>
+		<li>Je l'accepte et lui envoie mon vote</li>
+	</ul>
+	</li>
+</ul></div></div>
+</div></div>
+<div class="sl-block sl-block-group" data-block-type="group" data-name="group-ed0988" data-block-id="0e8c6a42583ca05e99966f05d0aa5ac9"><div class="sl-block-content sl-block-group-content fragment" style="transform-origin: 471.171px 604.5px 0px; z-index: 19;" data-fragment-index="1">
+<div class="sl-block" data-block-type="text" style="width: 764.368px; left: 33.4873px; top: 570px; height: auto;" data-block-id="4f586d3f9a19500c03df2c4072f40c87" data-name="text-4df04a"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 20; text-align: left; font-size: 80%; line-height: 1.43;" data-has-line-height=""><p><strong>Si je suis candidat et reçois une majorité de votes</strong></p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 875.368px; left: 33.4873px; top: 608px; height: auto;" data-block-id="64f8a56994e345a4539ccc7bcbf47304" data-name="text-10da73"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 21; text-align: left; font-size: 80%;"><ul>
+	<li>Je deviens le leader.</li>
+</ul></div></div>
+</div></div></section><section data-transition="fade" data-id="2800b423eaad75035625563c7016c639">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="sl-block" data-block-type="text" style="width: 832px; left: 33.487257px; top: 30px; height: auto;" data-name="text-ef6d7c" data-block-id="38d55e0a2c265399b6170fcb0a909fe8"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 14; text-align: left;"><h3>Absence de majorité absolue ?</h3></div></div>
+
+
+
+
+
+
+
+
+
+<div class="sl-block" data-block-type="text" style="width: 875.368px; left: 33.4873px; top: 557.5px; height: auto;" data-name="text-a802ec" data-block-id="81e728c4a3c9689936518dc8868d7b61"><div class="sl-block-content fragment" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 15; text-align: left; font-size: 80%;" data-fragment-index="0"><p>La durée du <em>timeout d'élection</em> est <strong>aléatoire</strong> pour éviter ce scénario !</p></div></div>
+<div class="sl-block sl-block-group" data-block-type="group" data-name="group-abcb76" style="height: auto;" data-block-id="185b14e5a4c382296416d49392b2c5c3"><div class="sl-block-content sl-block-group-content" style="transform-origin: 171.171px 196.5px 0px; z-index: 22;">
+<div class="sl-block" data-block-type="shape" style="width: 40px; height: 40px; left: 151.171px; top: 176.5px;" data-name="shape-14bdf0" data-origin-id="f2ee30636da3a145aa646803d44e61f0" data-block-id="d68468fe1baaa4fdb9d74cc2e0ed1221"><div class="sl-block-content" data-shape-type="circle" data-shape-fill-color="rgb(255, 255, 255)" data-shape-stretch="true" style="z-index: 23;" data-shape-stroke-color="#000000" data-shape-stroke-width="3px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 40 40"><defs><clippath id="shape-mask-9-1736686737614"><ellipse rx="20" ry="20" cx="20" cy="20" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6"></ellipse></clippath></defs><ellipse rx="20" ry="20" cx="20" cy="20" class="shape-element" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6" clip-path="url(#shape-mask-9-1736686737614)"></ellipse></svg></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 30.9439px; left: 155.699px; top: 180px;" data-name="text-0ff63d" data-origin-id="995b909cbc00bd7a4656d7c7aea8179a" data-block-id="3cfcd6688ce1d0b1671732ce91313e04"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 24; font-size: 80%; text-align: center; color: rgb(68, 68, 68);"><p><code>A</code></p></div></div>
+</div></div>
+<div class="sl-block sl-block-group" data-block-type="group" style="height: auto;" data-name="group-ba1daf" data-block-id="a357cf347865ec26fe78bdf6d600fcbe"><div class="sl-block-content sl-block-group-content" style="transform-origin: 311.171px 196.5px 0px; z-index: 25;">
+<div class="sl-block" data-block-type="shape" style="width: 40px; height: 40px; left: 291.171px; top: 176.5px;" data-name="shape-189453" data-origin-id="900f726157d4b80e9c21f4749d199fc0" data-block-id="de8697e2cea8ef757e384fcd3104a720"><div class="sl-block-content" data-shape-type="circle" data-shape-fill-color="rgb(255, 255, 255)" data-shape-stretch="true" style="z-index: 26;" data-shape-stroke-color="#000000" data-shape-stroke-width="3px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 40 40"><defs><clippath id="shape-mask-10-1736686737614"><ellipse rx="20" ry="20" cx="20" cy="20" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6"></ellipse></clippath></defs><ellipse rx="20" ry="20" cx="20" cy="20" class="shape-element" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6" clip-path="url(#shape-mask-10-1736686737614)"></ellipse></svg></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 30.9439px; left: 295.699px; top: 180px;" data-name="text-93c971" data-origin-id="1b8e07ae0d9555fb853be01aa010e8ea" data-block-id="82fef7c68be43d555c802b0c8d658d68"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 27; font-size: 80%; text-align: center; color: rgb(68, 68, 68);"><p><code>B</code></p></div></div>
+</div></div>
+<div class="sl-block sl-block-group" data-block-type="group" style="height: auto;" data-name="group-431269" data-block-id="bb45fdbc46e2ca617d1b5b8cbb3d9908"><div class="sl-block-content sl-block-group-content" style="transform-origin: 451.171px 196.5px 0px; z-index: 28;">
+<div class="sl-block" data-block-type="shape" style="width: 40px; height: 40px; left: 431.171px; top: 176.5px;" data-name="shape-0eee9a" data-origin-id="82ba135a1a657244c7a0662f2edafdeb" data-block-id="3700945c6fc0d494c7b16cdcb7923a92"><div class="sl-block-content" data-shape-type="circle" data-shape-fill-color="rgb(255, 255, 255)" data-shape-stretch="true" style="z-index: 29;" data-shape-stroke-color="#000000" data-shape-stroke-width="3px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 40 40"><defs><clippath id="shape-mask-11-1736686737614"><ellipse rx="20" ry="20" cx="20" cy="20" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6"></ellipse></clippath></defs><ellipse rx="20" ry="20" cx="20" cy="20" class="shape-element" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6" clip-path="url(#shape-mask-11-1736686737614)"></ellipse></svg></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 30.9439px; left: 435.699px; top: 180px;" data-name="text-5b1818" data-origin-id="befb8ec7822c247438c6b7ee191250d3" data-block-id="f6ac83538b4ff39c17796c28ab909a1d"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 30; font-size: 80%; text-align: center; color: rgb(68, 68, 68);"><p><code>C</code></p></div></div>
+</div></div>
+<div class="sl-block sl-block-group" data-block-type="group" style="height: auto;" data-name="group-5ae578" data-block-id="1d4b130a3b29d1310a0de1a12217867d"><div class="sl-block-content sl-block-group-content" style="transform-origin: 591.171px 196.5px 0px; z-index: 31;">
+<div class="sl-block" data-block-type="shape" style="width: 40px; height: 40px; left: 571.171px; top: 176.5px;" data-name="shape-178de0" data-origin-id="07fbf151f6ce38287a5abc3807847ad0" data-block-id="cb750a4592aa332e1c8984b9de9203d6"><div class="sl-block-content" data-shape-type="circle" data-shape-fill-color="rgb(255, 255, 255)" data-shape-stretch="true" style="z-index: 32;" data-shape-stroke-color="#000000" data-shape-stroke-width="3px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 40 40"><defs><clippath id="shape-mask-12-1736686737615"><ellipse rx="20" ry="20" cx="20" cy="20" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6"></ellipse></clippath></defs><ellipse rx="20" ry="20" cx="20" cy="20" class="shape-element" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6" clip-path="url(#shape-mask-12-1736686737615)"></ellipse></svg></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 30.9439px; left: 575.699px; top: 180px;" data-name="text-ac06df" data-origin-id="17405e74d1895b443ce51f90079f137f" data-block-id="dcb101fad6e11751e960f17f34782458"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 33; font-size: 80%; text-align: center; color: rgb(68, 68, 68);"><p><code><font face="Courier, monospace">D</font></code></p></div></div>
+</div></div>
+<div class="sl-block" data-block-type="line" style="width: auto; height: auto; left: 171.171px; top: 197px;" data-name="line-65860a" data-block-id="6a016c8f7c72f5c0509585d73b4de53b"><div class="sl-block-content" data-line-x1="0" data-line-y1="81.332" data-line-x2="0" data-line-y2="0" data-line-color="#aaaaaa" data-line-start-type="none" data-line-end-type="none" style="z-index: 10;" data-line-width="5px" data-line-style="dotted"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" preserveaspectratio="xMidYMid" width="1" height="81.332" viewbox="0 0 1 81.332"><path class="line-element" fill="rgba(0,0,0,0)" stroke="#aaaaaa" stroke-width="5" stroke-dasharray="0 10.0415 0 10.0415 0 10.0415 0 10.0415 0 10.0415 0 10.0415 0 10.0415 0 10.0415 0 10.0415" stroke-linecap="round" d="M0 81.332 L0 0"></path><path class="line-skeleton" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" d="M0 81.332 L0 0"></path><path class="line-hitarea" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" stroke-width="15" d="M0 81.332 L0 0"></path></svg></div></div>
+<div class="sl-block" data-block-type="shape" style="width: 32.8409px; height: 32.8409px; left: 153.802px; top: 266.332px;" data-name="shape-0839d6" data-block-id="8c93bb73576d42cf2d8dc373c4440830"><div class="sl-block-content" data-shape-type="symbol-x-circle" data-shape-fill-color="rgb(249, 90, 90)" data-shape-stretch="true" style="z-index: 21;"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 32 32"><g class="shape-element" fill="rgb(249, 90, 90)" data-viewbox="0 0 32 32"><path d="M16 0c-8.836 0-16 7.164-16 16s7.164 16 16 16 16-7.164 16-16-7.164-16-16-16zM23.914 21.086l-2.828 2.828-5.086-5.086-5.086 5.086-2.828-2.828 5.086-5.086-5.086-5.086 2.828-2.828 5.086 5.086 5.086-5.086 2.828 2.828-5.086 5.086 5.086 5.086z"></path></g></svg></div></div>
+<div class="sl-block" data-block-type="line" style="width: auto; height: auto; left: 311.171px; top: 328.5px;" data-name="line-fc1c0a" data-block-id="8982fadb8558f088a8ba7aca48aa94b3"><div class="sl-block-content" data-line-x1="139.99964999999997" data-line-y1="61.663" data-line-x2="0" data-line-y2="0" data-line-color="#000000" data-line-start-type="line-arrow" data-line-end-type="none" style="z-index: 59;" data-line-width="3px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" preserveaspectratio="xMidYMid" width="139.99964999999997" height="61.663" viewbox="0 0 139.99964999999997 61.663"><path class="line-element" fill="rgba(0,0,0,0)" stroke="#000000" stroke-width="3" d="M137.254 60.454 L0 0"></path><path stroke="#000000" stroke-width="3" d="M 129.958 64.616 L 138.856 61.159 L 135.399 52.261 L 138.856 61.159" class="line-start"></path><path class="line-skeleton" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" d="M140 61.663 L0 0"></path><path class="line-hitarea" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" stroke-width="15" d="M140 61.663 L0 0"></path></svg></div></div>
+<div class="sl-block" data-block-type="shape" style="width: 24px; height: 24px; left: 279.171px; top: 306.163px;" data-name="shape-8d399e" data-block-id="49a351ec0fe06f82df0c770bc98d7a64"><div class="sl-block-content" data-shape-type="symbol-clock" data-shape-fill-color="rgb(255, 206, 98)" data-shape-stretch="true" style="z-index: 18;"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 32 32"><g class="shape-element" fill="rgb(255, 206, 98)" data-viewbox="0 0 32 32"><path d="M16 4c6.617 0 12 5.383 12 12s-5.383 12-12 12-12-5.383-12-12 5.383-12 12-12zM16 0c-8.836 0-16 7.164-16 16s7.164 16 16 16 16-7.164 16-16-7.164-16-16-16v0zM21.422 18.578l-3.422-3.426v-7.152h-4.023v7.992c0 0.602 0.277 1.121 0.695 1.492l3.922 3.922 2.828-2.828z"></path></g></svg></div></div>
+<div class="sl-block" data-block-type="line" style="width: auto; height: auto; left: 311.171px; top: 197px;" data-block-id="7555afed7df8bdf47ef8b2466f923634" data-name="line-f7f1b7"><div class="sl-block-content" data-line-x1="0" data-line-y1="294" data-line-x2="0" data-line-y2="0" data-line-color="#aaaaaa" data-line-start-type="none" data-line-end-type="none" style="z-index: 11;" data-line-width="5px" data-line-style="dotted"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" preserveaspectratio="xMidYMid" width="1" height="294" viewbox="0 0 1 294"><path class="line-element" fill="rgba(0,0,0,0)" stroke="#aaaaaa" stroke-width="5" stroke-dasharray="0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207" stroke-linecap="round" d="M0 294 L0 0"></path><path class="line-skeleton" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" d="M0 294 L0 0"></path><path class="line-hitarea" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" stroke-width="15" d="M0 294 L0 0"></path></svg></div></div>
+<div class="sl-block" data-block-type="line" style="width: auto; height: auto; left: 451.171px; top: 197px;" data-block-id="f69c381af3cb744dd5f5920ec639b032" data-name="line-1a6994"><div class="sl-block-content" data-line-x1="0" data-line-y1="294" data-line-x2="0" data-line-y2="0" data-line-color="#aaaaaa" data-line-start-type="none" data-line-end-type="none" style="z-index: 12;" data-line-width="5px" data-line-style="dotted"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" preserveaspectratio="xMidYMid" width="1" height="294" viewbox="0 0 1 294"><path class="line-element" fill="rgba(0,0,0,0)" stroke="#aaaaaa" stroke-width="5" stroke-dasharray="0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207" stroke-linecap="round" d="M0 294 L0 0"></path><path class="line-skeleton" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" d="M0 294 L0 0"></path><path class="line-hitarea" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" stroke-width="15" d="M0 294 L0 0"></path></svg></div></div>
+<div class="sl-block" data-block-type="line" style="width: auto; height: auto; left: 591.171px; top: 197px;" data-block-id="803205a37699219fe18c9f0e53c8cf71" data-name="line-76138b"><div class="sl-block-content" data-line-x1="0" data-line-y1="294" data-line-x2="0" data-line-y2="0" data-line-color="#aaaaaa" data-line-start-type="none" data-line-end-type="none" style="z-index: 13;" data-line-width="5px" data-line-style="dotted"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" preserveaspectratio="xMidYMid" width="1" height="294" viewbox="0 0 1 294"><path class="line-element" fill="rgba(0,0,0,0)" stroke="#aaaaaa" stroke-width="5" stroke-dasharray="0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207 0 10.10344827586207" stroke-linecap="round" d="M0 294 L0 0"></path><path class="line-skeleton" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" d="M0 294 L0 0"></path><path class="line-hitarea" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" stroke-width="15" d="M0 294 L0 0"></path></svg></div></div>
+<div class="sl-block" data-block-type="text" style="width: 122.212px; left: 110.065px; top: 151px; height: auto;" data-block-id="7a72c392412c487d11553cfd013dd770" data-name="text-438cbe"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 68; text-align: center; font-size: 60%;"><p><em>Leader</em></p></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 43.1896px; left: 324.089px; top: 315.916px;" data-block-id="3b286880ba4982873a01af801cc802fa" data-name="text-d14055"><div class="sl-block-style" style="z-index: 76; transform: rotate(12deg);"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 76; font-size: 50%; text-align: left; color: rgb(68, 68, 68);"><p><code>moi!</code></p></div></div></div>
+<div class="sl-block" data-block-type="line" style="width: auto; height: auto; left: 311.684px; top: 328.5px;" data-block-id="c5da150b6b33226b3e999f1935f4e6e7" data-name="line-8b13d7"><div class="sl-block-content" data-line-x1="279.487" data-line-y1="62" data-line-x2="0" data-line-y2="0" data-line-color="#000000" data-line-start-type="line-arrow" data-line-end-type="none" style="z-index: 69;" data-line-width="3px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" preserveaspectratio="xMidYMid" width="279.487" height="62" viewbox="0 0 279.487 62"><path class="line-element" fill="rgba(0,0,0,0)" stroke="#000000" stroke-width="3" d="M276.558 61.35 L0 0"></path><path stroke="#000000" stroke-width="3" d="M 270.215 66.857 L 278.267 61.729 L 273.139 53.678 L 278.267 61.729" class="line-start"></path><path class="line-skeleton" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" d="M279.487 62 L0 0"></path><path class="line-hitarea" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" stroke-width="15" d="M279.487 62 L0 0"></path></svg></div></div>
+<div class="sl-block" data-block-type="line" style="width: auto; height: auto; left: 451.684px; top: 328.5px;" data-block-id="7699c5d11d96bc6ae4832301876a3c7c" data-name="line-ff69a1"><div class="sl-block-content" data-line-x1="139.48700000000002" data-line-y1="47" data-line-x2="0" data-line-y2="0" data-line-color="#000000" data-line-start-type="line-arrow" data-line-end-type="none" style="z-index: 70;" data-line-width="3px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" preserveaspectratio="xMidYMid" width="139.48700000000002" height="47" viewbox="0 0 139.48700000000002 47"><path class="line-element" fill="rgba(0,0,0,0)" stroke="#000000" stroke-width="3" d="M136.644 46.042 L0 0"></path><path stroke="#000000" stroke-width="3" d="M 129.75 50.842 L 138.302 46.601 L 134.061 38.049 L 138.302 46.601" class="line-start"></path><path class="line-skeleton" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" d="M139.487 47 L0 0"></path><path class="line-hitarea" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" stroke-width="15" d="M139.487 47 L0 0"></path></svg></div></div>
+<div class="sl-block" data-block-type="line" style="width: auto; height: auto; left: 311.171px; top: 328.5px;" data-block-id="13174a67010022964552886083d3afd4" data-name="line-c0518f"><div class="sl-block-content" data-line-x1="0" data-line-y1="47" data-line-x2="140.51305000000002" data-line-y2="0" data-line-color="#000000" data-line-start-type="line-arrow" data-line-end-type="none" style="z-index: 71;" data-line-width="3px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" preserveaspectratio="xMidYMid" width="140.51305000000002" height="47" viewbox="0 0 140.51305000000002 47"><path class="line-element" fill="rgba(0,0,0,0)" stroke="#000000" stroke-width="3" d="M2.845 46.048 L140.513 0"></path><path stroke="#000000" stroke-width="3" d="M 5.446 38.061 L 1.185 46.603 L 9.728 50.864 L 1.185 46.603" class="line-start"></path><path class="line-skeleton" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" d="M0 47 L140.513 0"></path><path class="line-hitarea" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" stroke-width="15" d="M0 47 L140.513 0"></path></svg></div></div>
+<div class="sl-block" data-block-type="line" style="width: auto; height: auto; left: 451.171px; top: 328.5px;" data-block-id="60f5cb2e76ce82e6f0f381fed8411a2b" data-name="line-735254"><div class="sl-block-content" data-line-x1="0" data-line-y1="61.663" data-line-x2="140" data-line-y2="0" data-line-color="#000000" data-line-start-type="line-arrow" data-line-end-type="none" style="z-index: 72;" data-line-width="3px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" preserveaspectratio="xMidYMid" width="140" height="61.663" viewbox="0 0 140 61.663"><path class="line-element" fill="rgba(0,0,0,0)" stroke="#000000" stroke-width="3" d="M2.745 60.454 L140 0"></path><path stroke="#000000" stroke-width="3" d="M 4.601 52.261 L 1.144 61.159 L 10.042 64.616 L 1.144 61.159" class="line-start"></path><path class="line-skeleton" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" d="M0 61.663 L140 0"></path><path class="line-hitarea" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" stroke-width="15" d="M0 61.663 L140 0"></path></svg></div></div>
+<div class="sl-block" data-block-type="line" style="width: auto; height: auto; left: 311.684px; top: 328.5px;" data-block-id="ea5592c06a1d0c3d87be573b42ede942" data-name="line-c48f9a"><div class="sl-block-content" data-line-x1="0" data-line-y1="59.5" data-line-x2="279.48699999999997" data-line-y2="0" data-line-color="#000000" data-line-start-type="line-arrow" data-line-end-type="none" style="z-index: 73;" data-line-width="3px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" preserveaspectratio="xMidYMid" width="279.48699999999997" height="59.5" viewbox="0 0 279.48699999999997 59.5"><path class="line-element" fill="rgba(0,0,0,0)" stroke="#000000" stroke-width="3" d="M2.934 58.875 L279.487 0"></path><path stroke="#000000" stroke-width="3" d="M 6.419 51.232 L 1.223 59.24 L 9.23 64.436 L 1.223 59.24" class="line-start"></path><path class="line-skeleton" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" d="M0 59.5 L279.487 0"></path><path class="line-hitarea" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" stroke-width="15" d="M0 59.5 L279.487 0"></path></svg></div></div>
+<div class="sl-block" data-block-type="shape" style="width: 24px; height: 24px; left: 419.171px; top: 306.163px;" data-block-id="1423d79ea3d10dd20c3f32967655e524" data-name="shape-1f501b"><div class="sl-block-content" data-shape-type="symbol-clock" data-shape-fill-color="rgb(255, 206, 98)" data-shape-stretch="true" style="z-index: 74;"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 32 32"><g class="shape-element" fill="rgb(255, 206, 98)" data-viewbox="0 0 32 32"><path d="M16 4c6.617 0 12 5.383 12 12s-5.383 12-12 12-12-5.383-12-12 5.383-12 12-12zM16 0c-8.836 0-16 7.164-16 16s7.164 16 16 16 16-7.164 16-16-7.164-16-16-16v0zM21.422 18.578l-3.422-3.426v-7.152h-4.023v7.992c0 0.602 0.277 1.121 0.695 1.492l3.922 3.922 2.828-2.828z"></path></g></svg></div></div>
+<div class="sl-block" data-block-type="shape" style="width: 24px; height: 24px; left: 558.699px; top: 304.5px;" data-block-id="d8311c4058659812f484333b14572060" data-name="shape-c8b57a"><div class="sl-block-content" data-shape-type="symbol-clock" data-shape-fill-color="rgb(255, 206, 98)" data-shape-stretch="true" style="z-index: 75;"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 32 32"><g class="shape-element" fill="rgb(255, 206, 98)" data-viewbox="0 0 32 32"><path d="M16 4c6.617 0 12 5.383 12 12s-5.383 12-12 12-12-5.383-12-12 5.383-12 12-12zM16 0c-8.836 0-16 7.164-16 16s7.164 16 16 16 16-7.164 16-16-7.164-16-16-16v0zM21.422 18.578l-3.422-3.426v-7.152h-4.023v7.992c0 0.602 0.277 1.121 0.695 1.492l3.922 3.922 2.828-2.828z"></path></g></svg></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 43.1896px; left: 468.915px; top: 317.5px;" data-block-id="9b203ff53e0443ac27755dafd69033a7" data-name="text-eca49f"><div class="sl-block-style" style="z-index: 77; transform: rotate(17deg);"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 77; font-size: 50%; text-align: left; color: rgb(68, 68, 68);"><p><code>moi!</code></p></div></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 43.1896px; left: 390.05px; top: 319.973px;" data-block-id="6126d62afee62001213d2fb2da22fb27" data-name="text-8a2ce6"><div class="sl-block-style" style="z-index: 78; transform: rotate(-20deg);"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 78; font-size: 50%; text-align: left; color: rgb(68, 68, 68);"><p><code>moi!</code></p></div></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 43.1896px; left: 516.079px; top: 317.5px;" data-block-id="2e0296df273bc88c58e9f8b1f427598a" data-name="text-7ef5f4"><div class="sl-block-style" style="z-index: 79; transform: rotate(-11deg);"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 79; font-size: 50%; text-align: left; color: rgb(68, 68, 68);"><p><code>moi!</code></p></div></div></div>
+<div class="sl-block" data-block-type="text" style="width: 187.368px; left: 158.315px; top: 375.5px; height: auto;" data-block-id="d7f0a36764a9ac6c8663f19e60478e92" data-name="text-9ceb40"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 80; text-align: left; font-size: 60%;"><p><em>"Déjà voté pour B"</em></p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 187.368px; left: 375px; top: 395.814px; height: auto;" data-block-id="2cf64f0bd355ab4e8e6f61b3ffa2c171" data-name="text-86e3b3"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 81; text-align: left; font-size: 60%;"><p><em>"Déjà voté pour C"</em></p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 187.368px; left: 597.684px; top: 388px; height: auto;" data-block-id="3394ea4631fad9ab8bb0f6d8d3317488" data-name="text-633ee0"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 82; text-align: left; font-size: 60%;"><p><em>"Déjà voté pour D"</em></p></div></div></section><section data-transition="fade" data-id="22afbae59e47cc27a35fceb735957314">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="sl-block" data-block-type="text" style="width: 832px; left: 33.487257px; top: 30px; height: auto;" data-name="text-ef6d7c" data-block-id="377251fc8e3138b3b1cf7bd7ebe15536"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 14; text-align: left;"><h3>Absence de majorité absolue ?</h3></div></div>
+
+
+
+
+
+
+
+
+
+<div class="sl-block sl-block-group" data-block-type="group" data-name="group-abcb76" style="height: auto;" data-block-id="386344559facf7943d1610df4af94d52"><div class="sl-block-content sl-block-group-content" style="transform-origin: 171.171px 196.5px 0px; z-index: 17;">
+<div class="sl-block" data-block-type="shape" style="width: 40px; height: 40px; left: 151.171px; top: 176.5px;" data-name="shape-14bdf0" data-block-id="2bfb64d2b308aadfbecf003a1a7489be"><div class="sl-block-content" data-shape-type="circle" data-shape-fill-color="rgb(255, 255, 255)" data-shape-stretch="true" style="z-index: 18;" data-shape-stroke-color="#000000" data-shape-stroke-width="3px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 40 40"><defs><clippath id="shape-mask-13-1736686743376"><ellipse rx="20" ry="20" cx="20" cy="20" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6"></ellipse></clippath></defs><ellipse rx="20" ry="20" cx="20" cy="20" class="shape-element" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6" clip-path="url(#shape-mask-13-1736686743376)"></ellipse></svg></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 30.9439px; left: 155.699px; top: 180px;" data-name="text-0ff63d" data-block-id="aaa448e3e672163814c392afd3d1b1f7"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 19; font-size: 80%; text-align: center; color: rgb(68, 68, 68);"><p><code>A</code></p></div></div>
+</div></div>
+<div class="sl-block sl-block-group" data-block-type="group" style="height: auto;" data-name="group-ba1daf" data-block-id="94dc6c9d11d0d4ab4f5a0e01ff4dd818"><div class="sl-block-content sl-block-group-content" style="transform-origin: 311.171px 196.5px 0px; z-index: 20;">
+<div class="sl-block" data-block-type="shape" style="width: 40px; height: 40px; left: 291.171px; top: 176.5px;" data-name="shape-189453" data-block-id="f3ccf7f43d1955a38498eb65a0cdefd8"><div class="sl-block-content" data-shape-type="circle" data-shape-fill-color="rgb(255, 255, 255)" data-shape-stretch="true" style="z-index: 21;" data-shape-stroke-color="#000000" data-shape-stroke-width="3px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 40 40"><defs><clippath id="shape-mask-14-1736686743376"><ellipse rx="20" ry="20" cx="20" cy="20" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6"></ellipse></clippath></defs><ellipse rx="20" ry="20" cx="20" cy="20" class="shape-element" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6" clip-path="url(#shape-mask-14-1736686743376)"></ellipse></svg></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 30.9439px; left: 295.699px; top: 180px;" data-name="text-93c971" data-block-id="cce0630ef872ff86392b6b2acbff7be5"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 22; font-size: 80%; text-align: center; color: rgb(68, 68, 68);"><p><code>B</code></p></div></div>
+</div></div>
+<div class="sl-block sl-block-group" data-block-type="group" style="height: auto;" data-name="group-431269" data-block-id="7f965a350f461992817ed03309c6525c"><div class="sl-block-content sl-block-group-content" style="transform-origin: 451.171px 196.5px 0px; z-index: 23;">
+<div class="sl-block" data-block-type="shape" style="width: 40px; height: 40px; left: 431.171px; top: 176.5px;" data-name="shape-0eee9a" data-block-id="3f7d8727ea4d5ad89b232b9e37b2219e"><div class="sl-block-content" data-shape-type="circle" data-shape-fill-color="rgb(255, 255, 255)" data-shape-stretch="true" style="z-index: 24;" data-shape-stroke-color="#000000" data-shape-stroke-width="3px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 40 40"><defs><clippath id="shape-mask-15-1736686743376"><ellipse rx="20" ry="20" cx="20" cy="20" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6"></ellipse></clippath></defs><ellipse rx="20" ry="20" cx="20" cy="20" class="shape-element" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6" clip-path="url(#shape-mask-15-1736686743376)"></ellipse></svg></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 30.9439px; left: 435.699px; top: 180px;" data-name="text-5b1818" data-block-id="f642b476a988482b637523b1de9690d5"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 25; font-size: 80%; text-align: center; color: rgb(68, 68, 68);"><p><code>C</code></p></div></div>
+</div></div>
+<div class="sl-block sl-block-group" data-block-type="group" style="height: auto;" data-name="group-5ae578" data-block-id="aaccea03529015c77b2b4c0615878c58"><div class="sl-block-content sl-block-group-content" style="transform-origin: 591.171px 196.5px 0px; z-index: 26;">
+<div class="sl-block" data-block-type="shape" style="width: 40px; height: 40px; left: 571.171px; top: 176.5px;" data-name="shape-178de0" data-block-id="826f0f941278653c3c4d5f0631fa429e"><div class="sl-block-content" data-shape-type="circle" data-shape-fill-color="rgb(255, 255, 255)" data-shape-stretch="true" style="z-index: 27;" data-shape-stroke-color="#000000" data-shape-stroke-width="3px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 40 40"><defs><clippath id="shape-mask-16-1736686743376"><ellipse rx="20" ry="20" cx="20" cy="20" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6"></ellipse></clippath></defs><ellipse rx="20" ry="20" cx="20" cy="20" class="shape-element" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6" clip-path="url(#shape-mask-16-1736686743376)"></ellipse></svg></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 30.9439px; left: 575.699px; top: 180px;" data-name="text-ac06df" data-block-id="efce620011d2b2b640c25381708db140"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 28; font-size: 80%; text-align: center; color: rgb(68, 68, 68);"><p><code><font face="Courier, monospace">D</font></code></p></div></div>
+</div></div>
+<div class="sl-block" data-block-type="line" style="width: auto; height: auto; left: 171.171px; top: 197px;" data-name="line-65860a" data-block-id="2736c6934f3e22d09ddfb3ade00de89d"><div class="sl-block-content" data-line-x1="0" data-line-y1="81.332" data-line-x2="0" data-line-y2="0" data-line-color="#aaaaaa" data-line-start-type="none" data-line-end-type="none" style="z-index: 10;" data-line-width="5px" data-line-style="dotted"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" preserveaspectratio="xMidYMid" width="1" height="81.332" viewbox="0 0 1 81.332"><path class="line-element" fill="rgba(0,0,0,0)" stroke="#aaaaaa" stroke-width="5" stroke-dasharray="0 10.0415 0 10.0415 0 10.0415 0 10.0415 0 10.0415 0 10.0415 0 10.0415 0 10.0415 0 10.0415" stroke-linecap="round" d="M0 81.332 L0 0"></path><path class="line-skeleton" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" d="M0 81.332 L0 0"></path><path class="line-hitarea" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" stroke-width="15" d="M0 81.332 L0 0"></path></svg></div></div>
+<div class="sl-block" data-block-type="shape" style="width: 32.8409px; height: 32.8409px; left: 153.802px; top: 266.332px;" data-name="shape-0839d6" data-block-id="6a585537fdb20a3df63497dc07424fe6"><div class="sl-block-content" data-shape-type="symbol-x-circle" data-shape-fill-color="rgb(249, 90, 90)" data-shape-stretch="true" style="z-index: 16;"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 32 32"><g class="shape-element" fill="rgb(249, 90, 90)" data-viewbox="0 0 32 32"><path d="M16 0c-8.836 0-16 7.164-16 16s7.164 16 16 16 16-7.164 16-16-7.164-16-16-16zM23.914 21.086l-2.828 2.828-5.086-5.086-5.086 5.086-2.828-2.828 5.086-5.086-5.086-5.086 2.828-2.828 5.086 5.086 5.086-5.086 2.828 2.828-5.086 5.086 5.086 5.086z"></path></g></svg></div></div>
+<div class="sl-block" data-block-type="shape" style="width: 24px; height: 24px; left: 279.658px; top: 416.5px;" data-name="shape-8d399e" data-block-id="b259b1e5081e104d0281d1c0e27fa869"><div class="sl-block-content" data-shape-type="symbol-clock" data-shape-fill-color="rgb(255, 206, 98)" data-shape-stretch="true" style="z-index: 15;"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 32 32"><g class="shape-element" fill="rgb(255, 206, 98)" data-viewbox="0 0 32 32"><path d="M16 4c6.617 0 12 5.383 12 12s-5.383 12-12 12-12-5.383-12-12 5.383-12 12-12zM16 0c-8.836 0-16 7.164-16 16s7.164 16 16 16 16-7.164 16-16-7.164-16-16-16v0zM21.422 18.578l-3.422-3.426v-7.152h-4.023v7.992c0 0.602 0.277 1.121 0.695 1.492l3.922 3.922 2.828-2.828z"></path></g></svg></div></div>
+<div class="sl-block" data-block-type="line" style="width: auto; height: auto; left: 311.171px; top: 197px;" data-name="line-f7f1b7" data-block-id="d7976791305abc39c609bbda4457974e"><div class="sl-block-content" data-line-x1="0" data-line-y1="388" data-line-x2="0" data-line-y2="0" data-line-color="#aaaaaa" data-line-start-type="none" data-line-end-type="none" style="z-index: 11;" data-line-width="5px" data-line-style="dotted"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" preserveaspectratio="xMidYMid" width="1" height="388" viewbox="0 0 1 388"><path class="line-element" fill="rgba(0,0,0,0)" stroke="#aaaaaa" stroke-width="5" stroke-dasharray="0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579" stroke-linecap="round" d="M0 388 L0 0"></path><path class="line-skeleton" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" d="M0 388 L0 0"></path><path class="line-hitarea" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" stroke-width="15" d="M0 388 L0 0"></path></svg></div></div>
+<div class="sl-block" data-block-type="line" style="width: auto; height: auto; left: 451.171px; top: 197px;" data-name="line-1a6994" data-block-id="c0a34bd102a5001e4f675ecd7278adb7"><div class="sl-block-content" data-line-x1="0" data-line-y1="388" data-line-x2="0" data-line-y2="0" data-line-color="#aaaaaa" data-line-start-type="none" data-line-end-type="none" style="z-index: 12;" data-line-width="5px" data-line-style="dotted"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" preserveaspectratio="xMidYMid" width="1" height="388" viewbox="0 0 1 388"><path class="line-element" fill="rgba(0,0,0,0)" stroke="#aaaaaa" stroke-width="5" stroke-dasharray="0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579" stroke-linecap="round" d="M0 388 L0 0"></path><path class="line-skeleton" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" d="M0 388 L0 0"></path><path class="line-hitarea" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" stroke-width="15" d="M0 388 L0 0"></path></svg></div></div>
+<div class="sl-block" data-block-type="line" style="width: auto; height: auto; left: 591.171px; top: 197px;" data-name="line-76138b" data-block-id="c756b08d57f796b806448ba3816f69ec"><div class="sl-block-content" data-line-x1="0" data-line-y1="388" data-line-x2="0" data-line-y2="0" data-line-color="#aaaaaa" data-line-start-type="none" data-line-end-type="none" style="z-index: 13;" data-line-width="5px" data-line-style="dotted"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" preserveaspectratio="xMidYMid" width="1" height="388" viewbox="0 0 1 388"><path class="line-element" fill="rgba(0,0,0,0)" stroke="#aaaaaa" stroke-width="5" stroke-dasharray="0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579 0 10.18421052631579" stroke-linecap="round" d="M0 388 L0 0"></path><path class="line-skeleton" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" d="M0 388 L0 0"></path><path class="line-hitarea" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" stroke-width="15" d="M0 388 L0 0"></path></svg></div></div>
+<div class="sl-block" data-block-type="text" style="width: 122.212px; left: 110.065px; top: 151px; height: auto;" data-name="text-438cbe" data-block-id="1389b5249ee2c15cc138c981e751f4b6"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 29; text-align: center; font-size: 60%;"><p><em>Leader</em></p></div></div>
+<div class="sl-block" data-block-type="line" style="width: auto; height: auto; left: 311.171px; top: 391px;" data-name="line-8b13d7" data-block-id="5bbfc737c889255ee5b98a711ff89623"><div class="sl-block-content" data-line-x1="279.99994999999996" data-line-y1="70" data-line-x2="0" data-line-y2="0" data-line-color="#000000" data-line-start-type="line-arrow" data-line-end-type="none" style="z-index: 30;" data-line-width="3px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" preserveaspectratio="xMidYMid" width="279.99994999999996" height="70" viewbox="0 0 279.99994999999996 70"><path class="line-element" fill="rgba(0,0,0,0)" stroke="#000000" stroke-width="3" d="M277.09 69.272 L0 0"></path><path stroke="#000000" stroke-width="3" d="M 270.602 74.608 L 278.787 69.697 L 273.876 61.511 L 278.787 69.697" class="line-start"></path><path class="line-skeleton" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" d="M280 70 L0 0"></path><path class="line-hitarea" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" stroke-width="15" d="M280 70 L0 0"></path></svg></div></div>
+<div class="sl-block" data-block-type="line" style="width: auto; height: auto; left: 450.684px; top: 391px;" data-name="line-c0518f" data-block-id="d7df2f7e257126aa5d59021eee35e514"><div class="sl-block-content" data-line-x1="140.48694999999992" data-line-y1="57" data-line-x2="0" data-line-y2="0" data-line-color="#000000" data-line-start-type="line-arrow" data-line-end-type="none" style="z-index: 31;" data-line-width="3px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" preserveaspectratio="xMidYMid" width="140.48694999999992" height="57" viewbox="0 0 140.48694999999992 57"><path class="line-element" fill="rgba(0,0,0,0)" stroke="#000000" stroke-width="3" d="M137.707 55.872 L0 0"></path><path stroke="#000000" stroke-width="3" d="M 130.536 60.247 L 139.329 56.53 L 135.612 47.737 L 139.329 56.53" class="line-start"></path><path class="line-skeleton" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" d="M140.487 57 L0 0"></path><path class="line-hitarea" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" stroke-width="15" d="M140.487 57 L0 0"></path></svg></div></div>
+<div class="sl-block" data-block-type="line" style="width: auto; height: auto; left: 451.171px; top: 328.5px;" data-name="line-735254" data-block-id="6a25e75dd4ed4dcee83573cff1bbaa10"><div class="sl-block-content" data-line-x1="0" data-line-y1="61.663" data-line-x2="140" data-line-y2="0" data-line-color="#000000" data-line-start-type="line-arrow" data-line-end-type="none" style="z-index: 32;" data-line-width="3px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" preserveaspectratio="xMidYMid" width="140" height="61.663" viewbox="0 0 140 61.663"><path class="line-element" fill="rgba(0,0,0,0)" stroke="#000000" stroke-width="3" d="M2.745 60.454 L140 0"></path><path stroke="#000000" stroke-width="3" d="M 4.601 52.261 L 1.144 61.159 L 10.042 64.616 L 1.144 61.159" class="line-start"></path><path class="line-skeleton" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" d="M0 61.663 L140 0"></path><path class="line-hitarea" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" stroke-width="15" d="M0 61.663 L140 0"></path></svg></div></div>
+<div class="sl-block" data-block-type="line" style="width: auto; height: auto; left: 311.684px; top: 328.5px;" data-name="line-c48f9a" data-block-id="db1f906f0307d34742b98b733eca4529"><div class="sl-block-content" data-line-x1="0" data-line-y1="59.5" data-line-x2="279.48699999999997" data-line-y2="0" data-line-color="#000000" data-line-start-type="line-arrow" data-line-end-type="none" style="z-index: 33;" data-line-width="3px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" preserveaspectratio="xMidYMid" width="279.48699999999997" height="59.5" viewbox="0 0 279.48699999999997 59.5"><path class="line-element" fill="rgba(0,0,0,0)" stroke="#000000" stroke-width="3" d="M2.934 58.875 L279.487 0"></path><path stroke="#000000" stroke-width="3" d="M 6.419 51.232 L 1.223 59.24 L 9.23 64.436 L 1.223 59.24" class="line-start"></path><path class="line-skeleton" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" d="M0 59.5 L279.487 0"></path><path class="line-hitarea" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" stroke-width="15" d="M0 59.5 L279.487 0"></path></svg></div></div>
+<div class="sl-block" data-block-type="shape" style="width: 24px; height: 24px; left: 419.171px; top: 501px;" data-name="shape-1f501b" data-block-id="7b08a49cef8f27986c8f10eb119dc8a6"><div class="sl-block-content" data-shape-type="symbol-clock" data-shape-fill-color="rgb(255, 206, 98)" data-shape-stretch="true" style="z-index: 34;"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 32 32"><g class="shape-element" fill="rgb(255, 206, 98)" data-viewbox="0 0 32 32"><path d="M16 4c6.617 0 12 5.383 12 12s-5.383 12-12 12-12-5.383-12-12 5.383-12 12-12zM16 0c-8.836 0-16 7.164-16 16s7.164 16 16 16 16-7.164 16-16-7.164-16-16-16v0zM21.422 18.578l-3.422-3.426v-7.152h-4.023v7.992c0 0.602 0.277 1.121 0.695 1.492l3.922 3.922 2.828-2.828z"></path></g></svg></div></div>
+<div class="sl-block" data-block-type="shape" style="width: 24px; height: 24px; left: 558.699px; top: 304.5px;" data-name="shape-c8b57a" data-block-id="c88bb050df8596c8cff5e4ed55d13017"><div class="sl-block-content" data-shape-type="symbol-clock" data-shape-fill-color="rgb(255, 206, 98)" data-shape-stretch="true" style="z-index: 35;"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 32 32"><g class="shape-element" fill="rgb(255, 206, 98)" data-viewbox="0 0 32 32"><path d="M16 4c6.617 0 12 5.383 12 12s-5.383 12-12 12-12-5.383-12-12 5.383-12 12-12zM16 0c-8.836 0-16 7.164-16 16s7.164 16 16 16 16-7.164 16-16-7.164-16-16-16v0zM21.422 18.578l-3.422-3.426v-7.152h-4.023v7.992c0 0.602 0.277 1.121 0.695 1.492l3.922 3.922 2.828-2.828z"></path></g></svg></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 43.1896px; left: 516.079px; top: 317.5px;" data-name="text-7ef5f4" data-block-id="ee59dc2d0847b4b158bab251700da9ad"><div class="sl-block-style" style="z-index: 36; transform: rotate(-11deg);"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 36; font-size: 50%; text-align: left; color: rgb(68, 68, 68);"><p><code>moi!</code></p></div></div></div>
+<div class="sl-block" data-block-type="text" style="width: 187.368px; left: 381.171px; top: 532px; height: auto;" data-name="text-86e3b3" data-block-id="a77a72725b0d684fa5be8d8d54e14bbd"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 37; text-align: left; font-size: 60%;"><p><em>"Déjà voté pour D"</em></p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 187.368px; left: 597.684px; top: 388px; height: auto;" data-name="text-633ee0" data-block-id="ddbb8fd8c054c3e64e006946907f4cea"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 38; text-align: left; font-size: 60%;"><p><em>"Déjà voté pour D"</em></p></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 43.1896px; left: 359.405px; top: 384.102px;" data-block-id="c314e17096e352b0d41f72488c1529ce" data-name="text-d3e836"><div class="sl-block-style" style="z-index: 39; transform: rotate(14deg);"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 39; font-size: 50%; text-align: left; color: rgb(68, 68, 68);"><p><code>ok</code></p></div></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 43.1896px; left: 500.405px; top: 395.061px;" data-block-id="909470a1cab6d1436db4bd646c2055df" data-name="text-9a12c7"><div class="sl-block-style" style="z-index: 40; transform: rotate(23deg);"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 40; font-size: 50%; text-align: left; color: rgb(68, 68, 68);"><p><code>ok</code></p></div></div></div>
+<div class="sl-block" data-block-type="text" style="width: 187.368px; left: 153.802px; top: 448px; height: auto;" data-block-id="c4caf669a31bb11ae3b06cbce600ff40" data-name="text-d1d6ae"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 41; text-align: left; font-size: 60%;"><p><em>"Déjà voté pour D"</em></p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 875.368px; left: 33.487px; top: 607px; height: auto;" data-name="text-a802ec" data-block-id="693055df40427002ceb8b91b4f1eb134"><div class="sl-block-content fragment" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 42; text-align: left; font-size: 80%;" data-fragment-index="0"><p>Ça peut toujours arriver. Dans ce cas, personne ne sera leader, on ne recevra pas de heartbeat, et on relancera donc une élection.</p></div></div></section></section><section class="stack" data-id="94950e5b70c6475da9c7e24599df3c80"><section data-id="cb16d957fa719832077a7e8e3cf67e81"><div class="sl-block" data-block-type="text" style="width: 806px; left: 109.375px; top: 313px; height: auto;" data-name="text-701913" data-block-id="4fffdda5bbe08a774387015b9a586ed4"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10;"><h2 style="text-align:left">Panne de leader</h2></div></div>
+<div class="sl-block" data-block-type="shape" style="width: 41.5px; height: 41.5px; left: 44.625px; top: 329.25px;" data-name="shape-dcfd9f" data-block-id="18fec4fcf55084373a25d175955241ae"><div class="sl-block-content" data-shape-type="symbol-thin-arrow-down" data-shape-fill-color="rgb(170, 170, 170)" data-shape-stretch="true" style="z-index: 11;"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="4.000251770019531 1.9999980926513672 23.999500274658203 27.999752044677734"><g class="shape-element" fill="rgb(170, 170, 170)" data-viewbox="4.000251770019531 1.9999980926513672 23.999500274658203 27.999752044677734"><path d="M4.586 19.414l10 10c0.781 0.781 2.047 0.781 2.828 0l10-10c0.781-0.781 0.781-2.047 0-2.828s-2.047-0.781-2.828 0l-6.586 6.586v-19.172c0-1.105-0.895-2-2-2s-2 0.895-2 2v19.172l-6.586-6.586c-0.391-0.39-0.902-0.586-1.414-0.586s-1.024 0.195-1.414 0.586c-0.781 0.781-0.781 2.047 0 2.828z"></path></g></svg></div></div>
+<div class="sl-block" data-block-type="text" style="width: 806px; left: 109.375px; top: 387px; height: auto;" data-name="text-28c4bb" data-block-id="0b5394161484b1a7fc6ef86f7517e74b"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 12; color: rgb(136, 136, 136);"><p style="text-align:left">Gestion des incohérences</p></div></div></section><section data-transition="fade" data-id="61103bb48f5cba0240ee576cac137bd2">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="sl-block" data-block-type="text" style="width: 832px; left: 33.487257px; top: 30px; height: auto;" data-name="text-ef6d7c" data-block-id="83f68aa31da00c930fd62de75d6ab206"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10; text-align: left;"><h3>Le problème</h3></div></div>
+
+
+
+
+
+
+
+
+
+<div class="sl-block" data-block-type="text" style="width: 875.368px; left: 33.4873px; top: 149.5px; height: auto;" data-name="text-c9cd87" data-block-id="80e33dc0a363507ee35267bf326d4117"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 11; text-align: left; font-size: 80%;"><p>Seul un sous-ensemble aura alors appliqué la modification.</p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 875.368px; left: 33.4873px; top: 118.5px; height: auto;" data-name="text-a802ec" data-block-id="4e5bacad491ba7c3c2d8552d0fb1af4d"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 12; text-align: left; font-size: 80%;"><p>Le leader peut crash pendant le broadcast d'un <em>Confirm</em>.</p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 875.368px; left: 33.4873px; top: 212.5px; height: auto;" data-name="text-aa8f50" data-block-id="0612c6e83360bc5584d16a0f1a440b0b"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 13; text-align: left; font-size: 80%;"><p>Deux mécanismes</p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 335.368px; left: 33.4873px; top: 408px; height: auto;" data-name="text-66b1bf" data-block-id="371a45a942cde92f07eb8251568c86bc"><div class="sl-block-content fragment" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 17; text-align: left; font-size: 80%;" data-fragment-index="1"><p>L'élu est donc à jour avec la majorité des processus.</p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 388.368px; left: 33.4873px; top: 484.5px; height: auto;" data-name="text-210664" data-block-id="580679e7bd993352fad9d1257acce976"><div class="sl-block-content fragment" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 18; text-align: left; font-size: 80%;" data-fragment-index="2"><p>Tout ce qui a été <em>committed</em> chez l'ancien leader est donc <em>committed</em> chez le nouveau aussi.</p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 388.368px; left: 33.4873px; top: 578.5px; height: auto;" data-name="text-cf6c70" data-block-id="ae234cb2e1598fee7b02fc8ddbbea5c7"><div class="sl-block-content fragment" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 19; text-align: left; font-size: 80%;" data-fragment-index="3"><p><em><strong>Pourquoi ?</strong></em></p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 404.368px; left: 480px; top: 413px; height: auto;" data-block-id="09a9db323963c63faaf2b39fd3e280b6" data-name="text-8e607d"><div class="sl-block-content fragment" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 23; text-align: left; font-size: 80%;" data-fragment-index="6"><p><em><strong>Et donc rollback sa machine ?</strong></em></p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 437.684px; left: 33.4873px; top: 609.5px; height: auto;" data-block-id="0744013734efb9e91e77aa425532ad81" data-name="text-281d28"><div class="sl-block-content fragment" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 24; text-align: left; font-size: 70%;" data-fragment-index="4"><p><em>Le leader ne commit que quand une majorité est au courant, et il me faut une majorité pour être élu.</em></p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 437.684px; left: 480px; top: 444px; height: auto;" data-block-id="1da2b83c8a2ed9f343b74264eeb6e816" data-name="text-67d8c6"><div class="sl-block-content fragment" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 25; text-align: left; font-size: 70%;" data-fragment-index="7">
+<p><em>Non, s'il n'a pas ces logs, c'est qu'une majorité ne les avait pas.</em></p>
+
+<p><em>Si une majorité ne les avait pas, alors il n'avait pas encore été commit par l'ancien leader.</em></p>
+</div></div>
+<div class="sl-block sl-block-group" data-block-type="group" data-name="group-45601d" data-block-id="520b36b1d353fd7f594612878a1ea4c5"><div class="sl-block-content sl-block-group-content fragment" style="transform-origin: 235.671px 327px 0px; z-index: 14;" data-fragment-index="0">
+<div class="sl-block" data-block-type="text" style="width: 404.368px; left: 33.4873px; top: 260.5px; height: auto;" data-name="text-2fee91" data-block-id="412ba5dd21c3cb76503478b797f37028"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 15; text-align: left; font-size: 80%; line-height: 1.43;" data-has-line-height=""><p><strong>Refus de candidature</strong></p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 335.368px; left: 33.4873px; top: 306.5px; height: auto;" data-name="text-c2557a" data-block-id="e158e69e3a3add7a309a1005f58e6642"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 16; text-align: left; font-size: 80%; line-height: 1.04;" data-has-line-height="">
+<p><em>"Si j'ai un log </em>committed</p>
+
+<p><em>plus récent que la candidature,</em></p>
+
+<p><em>je la refuse."</em></p>
+</div></div>
+</div></div>
+<div class="sl-block sl-block-group" data-block-type="group" data-name="group-3dc86a" data-block-id="8d6125fe4f241aa4b57a866bac15f2cf"><div class="sl-block-content sl-block-group-content fragment" style="transform-origin: 682.184px 314.5px 0px; z-index: 20;" data-fragment-index="5">
+<div class="sl-block" data-block-type="text" style="width: 404.368px; left: 480px; top: 260.5px; height: auto;" data-name="text-01db4c" data-block-id="7d64b0ebd7c2b9258593ac8f2464d7a0"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 21; text-align: left; font-size: 80%; line-height: 1.43;" data-has-line-height=""><p><strong>Correction de désaccords</strong></p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 335.368px; left: 480px; top: 306.5px; height: auto;" data-name="text-3e74a8" data-block-id="090d0e6be5b6496060499b8fe4596671"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 22; text-align: left; font-size: 80%;"><p>Le nouvel élu écrase les logs des autres par les siens.</p></div></div>
+</div></div></section></section><section class="stack" data-id="4535c960c3c265394cf9da52ed8a593f"><section data-id="2a1a3e857123008e84b6dc792b3377fc"><div class="sl-block" data-block-type="text" style="width: 806px; left: 109.375px; top: 313px; height: auto;" data-name="text-701913" data-block-id="2110c192765690fd982813ae453e3f80"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10;"><h2 style="text-align:left">Résumé</h2></div></div>
+<div class="sl-block" data-block-type="shape" style="width: 41.5px; height: 41.5px; left: 44.625px; top: 329.25px;" data-name="shape-dcfd9f" data-block-id="596d895e446f32c679ae3d3affd031ba"><div class="sl-block-content" data-shape-type="symbol-thin-arrow-down" data-shape-fill-color="rgb(170, 170, 170)" data-shape-stretch="true" style="z-index: 11;"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="4.000251770019531 1.9999980926513672 23.999500274658203 27.999752044677734"><g class="shape-element" fill="rgb(170, 170, 170)" data-viewbox="4.000251770019531 1.9999980926513672 23.999500274658203 27.999752044677734"><path d="M4.586 19.414l10 10c0.781 0.781 2.047 0.781 2.828 0l10-10c0.781-0.781 0.781-2.047 0-2.828s-2.047-0.781-2.828 0l-6.586 6.586v-19.172c0-1.105-0.895-2-2-2s-2 0.895-2 2v19.172l-6.586-6.586c-0.391-0.39-0.902-0.586-1.414-0.586s-1.024 0.195-1.414 0.586c-0.781 0.781-0.781 2.047 0 2.828z"></path></g></svg></div></div>
+</section><section data-transition="fade" data-id="1c71f0c8b40d8ee892634afcee649c73">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="sl-block" data-block-type="text" style="width: 832px; left: 33.487257px; top: 30px; height: auto;" data-name="text-ef6d7c" data-block-id="9b8bc975eb511c6d2a8b8b47b9e4972e"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10; text-align: left;"><h3>En résumé</h3></div></div>
+
+
+
+
+
+
+
+
+
+<div class="sl-block" data-block-type="text" style="width: 875.368px; left: 33.4873px; top: 116.5px; height: auto;" data-name="text-a802ec" data-block-id="35830ae5381ecba0a0e82e9967d4156d"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 11; text-align: left; font-size: 80%;"><p>Raft est un consensus spécialisé pour la réplication de machine d'état.</p></div></div>
+<div class="sl-block sl-block-group" data-block-type="group" data-name="group-291129" data-block-id="10250978e5ee30d756bbc82913b09baa"><div class="sl-block-content sl-block-group-content fragment" style="transform-origin: 471.171px 256.5px 0px; z-index: 12;" data-fragment-index="0">
+<div class="sl-block" data-block-type="text" style="width: 875.368px; left: 33.4873px; top: 184.5px; height: auto;" data-name="text-c9cd87" data-block-id="b5d69994a816034a67206221ef20acd4"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 13; text-align: left; font-size: 80%;"><p>Le mécanisme d'<strong>élection</strong> assure</p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 860.368px; left: 48.4873px; top: 222.5px; height: auto;" data-block-id="f23ab8c6073926ef75e2c3cdc2497072" data-name="text-b9e2a3"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 14; text-align: left; font-size: 80%;">
+<p>Un seul leader à la fois</p>
+
+<p>La gestion des absences de majorité <em>(via timeouts aléatoires)</em></p>
+
+<p>L'élection d'un processus à jour avec la majorité des autres</p>
+</div></div>
+</div></div>
+<div class="sl-block sl-block-group" data-block-type="group" data-name="group-2cbb0b" data-block-id="0dc73c38c06c8fcd469894b051f49f85"><div class="sl-block-content sl-block-group-content fragment" style="transform-origin: 471.171px 409.5px 0px; z-index: 15;" data-fragment-index="1">
+<div class="sl-block" data-block-type="text" style="width: 875.368px; left: 33.4873px; top: 356.5px; height: auto;" data-block-id="a6536cd508ecae363ce219231df02e88" data-name="text-e9b6e4"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 16; text-align: left; font-size: 80%;"><p>Le mécanisme de <strong>réplication des logs</strong> assure</p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 860.368px; left: 48.4873px; top: 394.5px; height: auto;" data-block-id="41422730277dd7fcebf4cca4da52ea19" data-name="text-433017"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 17; text-align: left; font-size: 80%;">
+<p>Un consensus sur les logs (via le leader central)</p>
+
+<p>Une reprise par le prochain leader là où l'autre est mort</p>
+</div></div>
+</div></div>
+<div class="sl-block sl-block-group" data-block-type="group" data-name="group-1596df" data-block-id="43c402a0a3d1eec635ea20e05d49deff"><div class="sl-block-content sl-block-group-content fragment" style="transform-origin: 471.171px 564.5px 0px; z-index: 18;" data-fragment-index="2">
+<div class="sl-block" data-block-type="text" style="width: 875.368px; left: 33.4873px; top: 492.5px; height: auto;" data-block-id="02b895303c54c346a006a7c9ec7b4501" data-name="text-814a48"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 19; text-align: left; font-size: 80%;"><p>La limite des ⎡N/2⎤-1 pannes est essentielle</p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 860.368px; left: 48.4873px; top: 530.5px; height: auto;" data-block-id="4c9defcac88f6de802a37cd0b6559f78" data-name="text-482568"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 20; text-align: left; font-size: 80%;">
+<p>Un log n'est commit/appliqué que quand une majorité est prête</p>
+
+<p>Une majorité doit accepter les logs d'un candidat pour l'élire</p>
+
+<p>Suffit donc d'une majorité de processus corrects pour avancer</p>
+</div></div>
+</div></div></section><section data-transition="fade" data-id="74244df7a01fb3982ee56981bfabc2bc">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="sl-block" data-block-type="text" style="width: 832px; left: 33.487257px; top: 30px; height: auto;" data-name="text-ef6d7c" data-block-id="120e26287e972077bc6c83c63aa5e1e9"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10; text-align: left;"><h3>Les propriétés formelles</h3></div></div>
+
+
+
+
+
+
+
+
+
+<div class="sl-block" data-block-type="text" style="width: 875.368px; left: 33.4873px; top: 166.125px; height: auto;" data-name="text-c9cd87" data-block-id="50ed2cc22280ea3c9b2bfb5347ada706"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 11; text-align: left; font-size: 80%;"><p><strong>Unicité du leader</strong></p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 860.368px; left: 33.4873px; top: 198.625px; height: auto;" data-name="text-b9e2a3" data-block-id="db9f6d1886cb0bc7536f1573d265dbba"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 12; text-align: left; font-size: 80%;"><p>Un seul leader à la fois</p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 875.368px; left: 33.4873px; top: 251.125px; height: auto;" data-block-id="5b603ca5e3f580ea3d8c4f885189ab83" data-name="text-d0211a"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 13; text-align: left; font-size: 80%;"><p><strong>Progrès uniquement</strong></p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 909.368px; left: 33.4873px; top: 283.625px; height: auto;" data-block-id="c53b48105a1aa66dcdfb1ac3b3a34d50" data-name="text-fd8ec9"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 14; text-align: left; font-size: 80%;"><p>Un leader ne peut qu'ajouter à ses logs, pas en supprimer. Ce qui est fait est fait.</p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 875.368px; left: 33.4873px; top: 331.875px; height: auto;" data-block-id="04cfbfc076de0c2572bd20115a0b86da" data-name="text-4ab04d"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 15; text-align: left; font-size: 80%;"><p><strong>Équivalence des logs</strong></p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 909.368px; left: 33.4873px; top: 365.875px; height: auto;" data-block-id="ad170b0fa49d6b88f42340abcdf2ce61" data-name="text-16542b"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 16; text-align: left; font-size: 80%;"><p>Si deux processus on un même log, tous leurs logs précédents sont identiques.</p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 875.368px; left: 33.4873px; top: 412.875px; height: auto;" data-block-id="46323b72a0e7e1e6e757ba798b69665e" data-name="text-3a08ee"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 17; text-align: left; font-size: 80%;"><p><strong>Complétude du leader</strong></p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 909.368px; left: 33.4873px; top: 446.875px; height: auto;" data-block-id="ed5057c77446e2f0b74e03de622a4b36" data-name="text-71bb91"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 18; text-align: left; font-size: 80%;"><p>Si un leader possède un log <em>committed</em>, les prochains leaders l'auront aussi.</p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 875.368px; left: 33.4873px; top: 497.875px; height: auto;" data-block-id="089aa907c9d43c55f16a01423c3b90e1" data-name="text-bf08f3"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 19; text-align: left; font-size: 80%;"><p><strong>Validité de la machine d'état</strong></p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 909.368px; left: 33.4873px; top: 531.875px; height: auto;" data-block-id="6df3a67646802c14c3c1d3eee13be9d5" data-name="text-cebf81"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 20; text-align: left; font-size: 80%;"><p>Si un leader applique une opération à sa machine d'état, alors aucun autre processus ne peut appliquer une autre opération pour le même log.</p></div></div></section></section>
+			</div>
+		</div>
+
+		<script>
+			var SLConfig = {"deck": {"id":3333992,"slug":"sdr-7-consensus","title":"SDR - 7.1 - Consensus - Raft","description":"","width":960,"height":700,"margin":0.05,"visibility":"all","published_at":"2025-01-12T11:37:20.938Z","sanitize_messages":null,"thumbnail_url":"https://s3.amazonaws.com/media-p.slid.es/thumbnails/28985bd4bfd115692d157c738e8c3654/thumb.jpg?1736681892","view_count":0,"user":{"id":2460573,"username":"olivierlmr","name":null,"description":null,"thumbnail_url":"https://www.gravatar.com/avatar/01e3813de0c4d967d7cbfb536916652f?s=140\u0026d=https%3A%2F%2Fstatic.slid.es%2Fimages%2Fdefault-profile-picture.png","account_type":"lite","team_id":null,"settings":{"id":57053917,"present_controls":false,"present_upsizing":true,"present_pointer":false,"present_notes":false,"default_deck_tag_id":null}},"background_transition":"slide","transition":"slide","theme_id":null,"theme_font":"montserrat","theme_color":"white-blue","auto_slide_interval":0,"comments_enabled":false,"forking_enabled":true,"rolling_links":false,"center":false,"shuffle":false,"should_loop":false,"share_notes":true,"slide_number":true,"slide_count":21,"rtl":false,"version":2,"collaborative":false,"deck_user_editor_limit":1,"data_updated_at":1736845156158,"font_typekit":null,"font_google":null,"time_limit":null,"navigation_mode":"default","upsizing_enabled":true,"language":"en","notes":{"7085a4578f22c1879ca4f1f41d51c1ed":"Dans un contexte où une simple requete signifie envoyer un message à travers un réseau, avec ses instabilités et ses lenteurs, il est naturel d'éviter d'en envoyer trop.\n\nAvec un couplage logiciel faible, moins d'échanges seront faits entre modules, et donc moins de communication sur le réseau. Puisque la communication est couteuse, c'est donc un avantage.","47b5cba34e031f5f7edc955836f18d74":"Slides by Olivier Lemer\n\nBased on\nCachin, Christian, Rachid Guerraoui, and Luís Rodrigues. Introduction to reliable and secure distributed programming. Springer Science \u0026 Business Media, 2011.","13ac205dc3917d4550158cf32924e2e2":"","5de1a7119a55563e929137620358182f":"","a63822ff66e517d57932e29f93db14bb":"","29646935a5f9474f26ab8b461732cd12":"","e7ed6ebb9f12982a99c4350e2f018f4c":"","3cb4b876d6d959642a1bdd995dd928d9":"","9546289016f6485b970dd47a8ff6ebbc":"","4906b57eb549d1981561c9f9f34c5c00":"","c53af428f2c43d5edf4a4fa47d0b75a5":"","f56d9bed1587befbb69938250cb6ee4a":"","989c671b594faba7e70b6ad344d04a2f":"","b0b11aefc27a420bfaae9b0f0ab33c22":"","9d4984c763cd8b0fdf25555e33aeb12a":"","e23f1afe8aad28199e13c0b72503d3a1":"","61b501a48eb41eb148c77887b14b70ef":"","c52ddf99e97fbed44d8d54d326cfa705":"","dc3131e905374b6b022cae3a4d5ba7f4":"","b180b1eebbd4e6f55d251b50ea5b81e6":"","6a9058dd3b6a7df5f799f6944327a9a2":"","a13a83cd2046e62102c6cbbf37034744":"","7f6344e374c1394c36e2f44a36ce01cf":"","c1297e11ec49c887ca05b065a4287540":"L'aptitude d'un processus a le droit de changer à tout moment, ce n'est pas une propriété statique (sinon, l'élu pourrait être choisi de manière statique aussi). Il faut donc prendre une \"snapshot\" de la valeur de l'aptitude du processus au moment ou l'élection commence. Ainsi, tout changement d'aptitude durant une élection n'impactera pas l'algorithme.","8def2ec0e978ad7235b47ce6f7bdf6ce":"","518fcdafe8ed1eb552b7d36c269bc6f4":"","c5c1e7aae303c315ffcf766e29945247":"","3da87d9228386dbc0e2ca412f98a35bd":"","aaa0a70a3b702273903f0df887e29b6d":"","a202d5c694b26b8be561b739cda83dc4":"","6a35d4997eb94e8efed9e63a3535b64f":"","86f860292de6361a470cbb49323f1326":"","07ec760a95eb0eaebb26629249f90c1a":"","e3bbbed40fd88567b1e056c52f6e8583":"","0158f54de1717b5476d80c4620d0f691":"","501d3e98f2a62ca724a329901a6d89b1":"","aca80c2617092b32af765478298945bb":"","43c3f51fb046bdaf08df4b6863b4d58a":"","a11cb7743be87a99f281a4bdda78f93b":"","c691b063443ad24507b7840911d89661":"","d9d4bf5b83942690a77c6d0f736dacf1":"","4d279c4db3e809869401bb00c6989bb6":"","0d8002c98893b8dac366f18a2adedb4c":"","799efea50621c5b8318d8c9279927688":"","2ed5db86f9eeb2a7f8b080849ff71e45":"","d0d13bee2d05402a6ff2b026f0610634":"","6bb91782bd302a83ed05aa4f2986c388":"","b052b4c9ee337ceb742cfee3fa8d0035":"","c193b557656d0c133102fca51526c479":"","319d7374a44912c3ad5e4ce5d189df3e":"","4aaee8cad395b0f0d12fa06a161e0fca":"","6e69d65577e2d07c18b125082dca27aa":"","166a7626cc8ac2c56de2a0cefa71cb2e":"","a5b25875c5d24123518c781a9d6903f5":"","f6e3f6c8b81a46227d62fbd6dafde848":"","f99eb445d26787996ea76085659c75ef":"","e3e295fa4af08b12955d320c36a2c982":"","59a5e2f9aa7ab4e78317910c457b43cc":"","d85924514c05e2dc00f029d3a57b3de7":"","0f9d5035e58f44f14c56dc76d4d68e29":"","5d6279b9225afdffb09e83d00127e143":"","515c41aba732d78a518e86ac46d9635f":"","47c87f5151c58f0726221c3471503a3a":"","3ef5a1958d7e7de933478616329b3e6a":"","10a49aee091730a8bdc22d467580160e":"","71bbdc09f77f8a9a8d451149f59f653d":"","0bec36550e6af2dd04131f2e873e6f50":"","75d8d3064e5af8ddda6f0036cf7195a4":"","be8802aa570c0e2b02ad0c2c651eec76":"","1fc707f1c5580e022bb216804651b3e3":"","486806a77d50835309836b3f18506d84":"","19eaa4382ee8b35fb71a73ba5d988cc8":"","fe280ab40fe3a3aa1efaf74954887cd7":"","98265e36e9a703d0bffe3ea8b516e382":"","a1c70c3f5227a66f30025cceccc400a9":"","01920fbcbe87729f3df13b2d118654df":"","6006c686efbad1fefab4120bc6d83ab6":"","1bd58415e59a3e6013ef24602d9b74ec":"","928aad372b3fb37e4593bcceaf18202f":"","bceb0fd5275434b978edca81df77d9da":"","e38477e853eb8624dce3722476e5b041":"","fb5ff4e68dcbf386d49ccf21a2784639":"","f8081e19b1e5ebaadbd0b0d1373b8cf2":"","897e19586128f8f8258ebc6ec5ac06ca":"","a4321928db90bf3c9c7d8c92367d9972":"","e727199ba635919534b502ce5d994f8a":"","3e52dc6ce8a0f389de6fc233b6548866":"","be898034659780d387f636e8e1fd78e1":"","33687974db4f5162e2e69d1e02a109df":"","54f6b35df4e5643bef1d975889ddfc1f":"","b35cb9b3d234d57ffa5eed1fc49dc3b3":"","a0a576628e78c0bdf261b7a23dd74eda":"","ae3cd27c42794c3d48d0fee4f6e959ee":"","5c769bc8c2df17e7d7c62a9c9f5464c9":"","c5a976963320549db81d3296f66d972b":"","492a7192eb7bcf7f661a8e8910f9ca35":"","e2ee542f4278f06a94f8fe08433fcb55":"","8b7d3894823b629edbd69f7600c74b6b":"","fc5f5138528674ab03478b16a925346e":"","c08f8e53ca6387fe408feef6d92ef80b":"","627a610c46e4bc727aebfce1e72f0f20":"","569dabc49ad48682229ccc3b2e50922a":"","3d0cf416d5e96e7dabcb01c59ac6bf9a":"","08aa422bf130a41bbc3f81e39f859abd":"","3080171d3040005c939e1b539d73b8bb":"Si je ne suis pas en élection, ça veut dire que j'ai déjà accepté un résultat dans le passé. Si j'en reçois un autre et que je n'apparaît pas dans sa liste, c'est que cette élection est nouvelle pour moi, et que je n'y ai pas participé. En effet, si j'y avais participé, soit je serais encore en cours d'élection, soit j'apparaîtrais dans la liste des processus ayant accepté le résultat.\n\nBien sûr, si je n'ai pas participé à l'élection, mais que son résultat correspond à celui que j'ai déjà, pas besoin de relancer une nouvelle élection, et je l'accepte.","78b8cc2e6c7ca23c130ff7adfa452720":"","8c7924da26bdd701474a1ef7caaf4d8d":"","0b1d29449f2ded46fbaa80e98868b7df":"","9ea0d6f7409d906f998446227e1ab064":"","6470707c956b68379f3c6762e17a6a32":"","d88252a66d46dcbd9c2942e25b1d03ed":"","d4002188801022d4fe13e2812789d83c":"","a11ddf282639fd1bea9af18b868babc9":"","294636d00f25418b21ac607e0c877699":"Note : le temps T en question n'est pas nécessairement connu à l'avance. Il s'agit ici d'une définition théorique.","c9569a641fb4b5ede5d4df95dc29d437":"","1a65bd99ec63c4744641914bc9dad15d":"","ad816299d7945af078b42b4a0c69b4c3":"","4a17666cb2a7f332a91332de7d9c435d":"","75b237d6f95665072ec3d2c269788c28":"","d5d4dc6dcf4536c8566e581d09051aba":"","e75c4e9534c9805a206384d8f70b9bc8":"","492a9d867b2c96b135e058f9cd962aba":"","83d0ec2c3aac06040e649b9fabe176e9":"","fb8c2c78ab0b0f08b66a6c3e5a30139c":"","e9c5efbe5120bed9482f0b64d7c43314":"","58a1a045f58c81307f099676ce11a2a4":"Notez : la propriété \"précision un jour\" implique qu'à partir d'un certain instant, toute suspicion faite par un processus correct sera d'un processus qui est soit en panne permanente, soit en panne récupérable sans arrêt (c'est à dire qu'il récupère de ses pannes, mais y tombe à nouveau plus tard).\n\nNotez aussi : la propriété \"complétude\" ne parle que de panne permanente. En effet, ce détecteur n'est pas \"complet\" lorsqu'il s'agit de pannes récupérables : un processus en panne récupérable peut être incorrect mais répondre quand même à tous les pings (souvenez-vous qu'un processus est incorrect en terme de pannes récupérables s'il tombe sans arrêt en panne, même s'il s'en remet à chaque fois, il pourrait donc tomber en panne et s'en remettre suffisamment rapidement pour ne pas avoir laissé passer de pings, et donc sans que ce ne soit remarqué).\n\nEn général, une panne récupérable est le problème de la couche applicative, qui se rend compte de la panne, et peut la traiter correctement. Cette panne peut ainsi être traitée comme une panne permanente à laquelle s'est suivie l'introduction d'un nouveau processus au système. Un détecteur de panne comme celui décrit ici fonctionnerait alors, puisqu'il détecterait bien qu'une panne a eu lieu, puis la couche applicative gérerait l'introduction du nouveau processus dans le système (en réalité, sa réintroduction).","e58cb5d190856c7ae15f1996d06fdcfa":"","454590a5745da5a9732bb3a2d3bbf4a4":"","7cf14c2bc0abe753d68dcdc49191289a":"","307e096db52920ac9af302ac51ad25a7":"","0045dd04201fe302647e6413dd9f77c8":"","6efdfafc05636207bf4d43372eccd6b5":"","e0556b3a75c66a78d08623009f99273c":"","c8d0c419fd3a2273a7aa6beb9d5915db":"","47d9b054ac337caf171ef43a56cb339e":"","bf297752a1d45adf517548d03b694996":"","56426c872d9430dc5b7e29b7a42f09e2":"","beca9996c98e6d9804e189f792d4848a":"Fischer, M., N. Lynch, and M. Paterson (1985). Impossibility of distributed consensus with one faulty process. Journal of the ACM 32(2), 374–382.","913fa6f5aff166cc083484d3e2cff057":"","bbe48211b197981a56de1b36fad58900":"","8088089eba5f0fd3bd579b2dd94dc85e":"","7f4a165964de23b5bbd805655c945f68":"","e90c4f6daa6f9d30e546179061d42af0":"","9ed690fa2839f4df4607dbea16d85a00":"","78a6924e5fd8dee3818e808ecf2de4c4":"","7bc51f425ba78c1f4cb1c290349ce38b":"","c541e2efa46e466e0213d21ae09ce5e0":"","986fb686ed7b4ba37089670c078059cc":"","670b16c1cad444d0ad70d8a791926b60":"","4b0638272318ede7583d82371fd040d0":"La raison pour laquelle un processus attend d'avoir deux rounds de suite à recevoir de la part des mêmes processus :\n\nRegardons d'abord C :\n- À la fin du round 1, C sait que A et B sont up, mais ne sait pas s'il y a un désaccord entre eux ; c'est possible. (et par désaccord j'entends que A et B ne possèdent pas le même ensemble de propositions).\n- À la fin du round 2, C n'a pas reçu les propositions de A car il est tombé en panne. C ne peut donc pas être certain d'avoir toutes les propositions, car A avait peut-être des propositions différentes, et a peut-être eu le temps de les partager avec d'autres avant de tomber en panne. Il ne peut donc pas prendre de décision.\n\nEn revanche, regardons B :\n- À la fin du round 1, comme pour C, B sait que A et C sont up, mais qu'ils sont peut-être en désaccord.\n- À la fin du round 2, B a reçu les valeurs de A et de C ; ce désaccord potentiel entre A et C est donc résolu du point de vue de B, puisque B voit les deux ensembles de propositions.\n\nB peut donc maintenant prétendre avoir une vision globale/complète des propositions \"en lice\" :\n- S'il existe une propositions que B ne connait pas en fin de round 2, mais qu'un autre processus la connait, cela implique que cette proposition était connue par au moins un processus en fin de round 1 (celui qui l'a partagée durant le round 2).\n- Pour que ce processus qui avait cette proposition en fin de round 1 ne l'ait pas envoyée à tout le monde durant le round 2, il faut qu'il soit tombé en panne durant l'envoi du round 2. Cela implique aussi qu'il était up durant le round 1, nécessairement.\n- S'il était up durant le round 1, alors B a reçu ses messages durant le round 1. Or il n'a pas reçu son message durant le round 2, ce qui signifie que B n'a pas reçu les messages des mêmes envoyeurs durant les rounds 1 et 2, et qu'il ne peut donc pas prétendre avoir une vision complete.\n\nC'est une preuve par contradiction : Si B a reçu des mêmes envoyeurs deux fois de suite, mais qu'il n'a pas une vision complete, alors B n'a pas reçu des mêmes envoyeurs deux fois de suite. L'erreur est forcément dans la partie \"il n'a pas une vision complete\" : donc si B a reçu des mêmes envoyeurs deux fois de suite, il a une vision complète.","12ad93be45bc5d4807c419e63022b96a":"","b35136e152ef86e3c1ff4bc48f53b1bb":"","5a3d69d6c7dcad54caed022f2ec1827d":"","ea40ca7127f1da9b10de1beaa00250d4":"","67b40b5d06de68188a10bb891bf1a9c0":"","4ed3c888d55cce9a5530147e0f1a64dd":"","65dbe92fa2cbb86da30b247b2b1d741c":"","d3f40639e1a3b69069487c8cfdfb5abb":"","da0a3019ecdc30992beb4c2843904a0a":"","5df49bc138f0001ead3ba934f948f7f2":"","45fbaa921813e1e86b2b28b5ff67b207":"","f88d21125a869be99dcf5f40485d8b0b":"","be6c294fc656e8e942aacf7a6707681f":"","1a58091bbff35124ef3842f2dc2d1146":"","d9c72555a394ad92da5f5a12f9dab9ee":"","6e5113cb98cc8302a9e60b67f352ade5":"","08c4f0378c1c885a26bf293f2b554030":"","4876c64b21c05f7f37dee3153e3560af":"","182140fadbe20710a689a430892c694e":"","770a7e6d574b40bee1279c4531494c3c":"","d1b7eaeb559fc96e31c9c14125a35e76":"","cc58948c75661cf0ede2d857067d8c99":"","5383cd71eaea8f0f9261e2b77658fdf8":"","c2c1ca693a0cf298dd061053b8cad3e5":"","26ce7a368e392f8af327f91256a69a95":"","9ac51a82e16fca9dfb0cbef13dc9eccc":"","a0c31e33c15b5587c04e5b1d97be482e":"","ea0c8dc3fd712b698a0173b1ea623019":"","90fec12f32425478196c7309cd4499d8":"","0c71c4c5d31f69e62c80035bb57530ba":"","ea4909229aea44740b515adf742ec1ff":"","b5e96735317c913e339e99aff93c6403":"","8bd2340f7439794883ec8e1cc43599fa":"","96ea4224ed93b94c5d89bf5c0d5368c2":"","62436e8175fcdf7ca395f3fa81c5e1df":"","d95ed7e79d79a9fe845efb708c4e331c":"","858e387d2fef3ada3ab68585ec092de3":"","c028dd5d6ec4f0486f6ca560e2855181":"","2800b423eaad75035625563c7016c639":"","22afbae59e47cc27a35fceb735957314":"","cb16d957fa719832077a7e8e3cf67e81":"","23a6b3c5502146fe478d2c5fb8ab3a73":"","35d153d4f6627c533a7636d3d2ffe45a":"","61103bb48f5cba0240ee576cac137bd2":"","2a1a3e857123008e84b6dc792b3377fc":"","1c71f0c8b40d8ee892634afcee649c73":"","74244df7a01fb3982ee56981bfabc2bc":""}}};
+
+
+			// Use local fonts
+			SLConfig.fonts_url = 'lib/fonts/';
+		</script>
+
+		<script src="lib/reveal.js"></script>
+		<script src="lib/reveal-plugins.js"></script>
+		<script src="lib/offline.js"></script>
+
+		<!-- Initialize the presentation -->
+		<!-- Fixed after export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/notes/notes.js"></script>
+    <script src="/slides/script.js"></script>
+    <script>
+			Reveal.initialize({
+				width: 960,
+				height: 700,
+				margin: 0.05,
+				
+
+				hash: true,
+				controls: true,
+				progress: true,
+				mouseWheel: false,
+				showNotes: true,
+				slideNumber: true,
+				fragmentInURL: true,
+
+				autoSlide: 0,
+				autoSlideStoppable: true,
+
+				autoAnimateMatcher: SL.deck.AutoAnimate.matcher,
+
+				scrollActivationWidth: null,
+
+				center: false,
+				shuffle: false,
+				loop: false,
+				rtl: false,
+				navigationMode: "default",
+
+				transition: "slide",
+				backgroundTransition: "slide",
+
+				highlight: {
+					escapeHTML: false
+				},
+
+				plugins: [ RevealZoom, RevealNotes, RevealMarkdown, RevealHighlight ]
+			});
+		</script>
+
+		
+
+
+	</body>
+</html>
