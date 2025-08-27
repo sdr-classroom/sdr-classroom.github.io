@@ -72,9 +72,34 @@ h1, h2 {
     padding-right: .4em;
 }
 
-tab {
-    display: inline;
-    padding: 0 2em;
+.timeline-table th {
+  vertical-align: top;
+}
+
+/* Labos column: 4th column, no wrap */
+.timeline-table th:nth-child(4),
+.timeline-table td:nth-child(4) {
+  white-space: nowrap;
+}
+
+.col-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.05em;
+}
+.col-subtitle {
+  font-size: 1.0em;
+  font-style: italic;
+  color: #888;
+  opacity: 0.8;
+  white-space: nowrap;
+  display: block;
+}
+
+.tab {
+    display: inline-block;
+    width: 2em;
 }
 
 @media screen and (min-width: 1280px) {

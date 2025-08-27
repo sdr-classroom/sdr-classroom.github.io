@@ -1,198 +1,383 @@
 <!doctype html>
 <html lang="en">
-
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Systèmes Distribués et Répartis</title>
 
-    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"
+    />
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"> -->
-    <link rel="stylesheet" href="/style.css">
-</head>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
 
-<body>
-  <main class="container">
-    <hgroup>
-      <h1>Systèmes Distribués et Répartis</h1>
-      <h2>Olivier Lemer</h2>
-    </hgroup>
+  <body>
+    <main class="container">
+      <hgroup>
+        <h1>Systèmes Distribués et Répartis</h1>
+        <h2>Olivier Lemer</h2>
+      </hgroup>
+      <hr />
 
-    <!-- <hr>
-    <hgroup>
-      <h2>Tests</h2>
-      <h3>Suivez le lien suivant pour accéder au test. Il vous faudra être connecté au réseau de l'école.</h3>
-    </hgroup>
-    <ul>
-      <li>
-         <a href="https://eval.iict-heig-vd.in/users/evaluations/cm2q89k8y021du5q1gsjikp66">Test Écrit 1</a>
-      </li>
-    </ul> -->
-<hr>
-    
+      <hgroup>
+        <h2>
+          <i class="fa-solid fa-book"></i>
+          Support de cours
+        </h2>
+        <h3>
+          Les slides sont publiées ici avant le cours. Les lignes grisées sont
+          données à titre indicatif.
+        </h3>
+      </hgroup>
 
-    <hgroup>
-      <h2><i class="fa-solid fa-book"></i> Support de cours</h2>
-      <h3>Les slides sont publiées ici avant le cours. Les lignes grisées sont données à titre indicatif.</h3>
-    </hgroup>
+      <table class="timeline-table" style="width: 100%">
+        <thead>
+          <tr class="inline-note">
+            <th><span class="col-title">Sem</span></th>
+            <th>
+              <span class="col-title">Date</span>
+              <span class="col-subtitle">Mardi</span>
+            </th>
+            <th style="text-align: left; width: 100%">
+              <span class="col-title">Cours</span>
+              <!--              <span class="col-subtitle">Mardi (J+1)</span>-->
+            </th>
+            <th>
+              <span class="col-title">Labos</span>
+              <span class="col-subtitle">Mercredi (J+1)</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="tentative">
+            <td class="inline-note">1</td>
+            <td class="inline-note">16.09.25</td>
+            <td>
+              <a href="./slides/0-intro.html">Introduction</a>
+              <span class="inline-note">
+                (
+                <a href="./slides/0-intro.html?print-pdf">pdf</a>
+                ,
+                <a href="./slides/0-intro-solutions.pdf">solutions</a>
+                )
+              </span>
+              et
+              <a href="./slides/0-1-pannes.html">Pannes</a>
+              <span class="inline-note">
+                (
+                <a href="./slides/0-1-pannes.html?print-pdf">pdf</a>
+                )
+              </span>
+            </td>
+            <td>
+              <a href="./slides/1-go.html">Go</a>
+              <span class="inline-note">
+                (
+                <a href="./slides/1-go.html?print-pdf">pdf</a>
+                )
+              </span>
+            </td>
+          </tr>
+          <tr class="tentative">
+            <td>2</td>
+            <td>23.09.25</td>
+            <td>
+              <span class="tab"></span>
+            </td>
+            <td>
+              <a href="#TODO">Échauffement</a>
+            </td>
+          </tr>
+          <tr class="tentative">
+            <td>3</td>
+            <td>30.09.25</td>
+            <td>
+              <span class="tab"></span>
+              <a href="./slides/2-1-horloges.html">Horloges Logiques</a>
+              <span class="inline-note">
+                (
+                <a href="./slides/2-1-horloges.html?print-pdf">pdf</a>
+                ,
+                <a href="./slides/2-1-solutions.pdf">solutions</a>
+                )
+              </span>
+            </td>
+            <td>
+              <a href="#TODO">Labo 1</a>
+            </td>
+          </tr>
+          <tr class="tentative">
+            <td>4</td>
+            <td>07.10.25</td>
+            <td>
+              <span class="tab"></span>
+              <a href="./slides/2-2-mutex-lamport.html">Mutex de Lamport</a>
+              <span class="inline-note">
+                (
+                <a href="./slides/2-2-mutex-lamport.html?print-pdf">pdf</a>
+                ,
+                <a href="./slides/2-2-solutions.pdf">solutions</a>
+                )
+              </span>
+            </td>
+            <td></td>
+          </tr>
+          <tr class="tentative">
+            <td>5</td>
+            <td>14.10.25</td>
+            <td>
+              <span class="tab"></span>
+              <a href="#">Entrainement au Test Écrit 1</a>
+            </td>
+            <td>
+              <a href="#TODO">Labo 2</a>
+            </td>
+          </tr>
+          <tr class="vacances">
+            <td>-</td>
+            <td>21.10.25</td>
+            <td>Activités interdisciplinaires</td>
+            <td></td>
+          </tr>
+          <tr class="tentative">
+            <td>6</td>
+            <td>28.10.25</td>
+            <td>
+              <a href="./slides/3-1-mutex-jetons-multiples">
+                Mutex par jetons (Ricart et Agrawala, Carvalho et Roucairol)
+              </a>
+              <span class="inline-note">
+                (
+                <a href="./slides/3-1-mutex-jetons-multiples?print-pdf">pdf</a>
+                ,
+                <a href="./slides/3-1-solutions.pdf">solutions</a>
+                )
+              </span>
+            </td>
+            <td></td>
+          </tr>
+          <tr class="tentative">
+            <td>7</td>
+            <td>04.11.25</td>
+            <td>TBD</td>
+            <td></td>
+          </tr>
+          <tr class="tentative">
+            <td>8</td>
+            <td>11.11.25</td>
+            <td>
+              <a href="./slides/3-2-mutex-jeton-unique">
+                Mutex par jeton unique (Raymond)
+              </a>
+              <span class="inline-note">
+                (
+                <a href="./slides/3-2-mutex-jeton-unique?print-pdf">pdf</a>
+                )
+              </span>
+            </td>
+            <td></td>
+          </tr>
+          <tr class="tentative">
+            <td>9</td>
+            <td>18.11.25</td>
+            <td>Diffusion</td>
+            <td>
+              <a href="#TODO">Labo 3</a>
+            </td>
+          </tr>
+          <tr class="tentative">
+            <td>10</td>
+            <td>25.11.25</td>
+            <td>
+              Élections (
+              <a href="./slides/4-1-diffusion-elections-bully">Bully</a>
+              <span class="inline-note">
+                (
+                <a href="./slides/4-1-diffusion-elections-bully?print-pdf">
+                  pdf
+                </a>
+                )
+              </span>
+              , Chang et Roberts
+              <a href="./slides/4-2-diffusion-elections-cr">sans pannes</a>
+              <span class="inline-note">
+                (
+                <a href="./slides/4-2-diffusion-elections-cr?print-pdf">pdf</a>
+                )
+              </span>
+              ,
+              <a href="./slides/4-3-diffusion-elections-cr-pannes">
+                avec pannes
+              </a>
+              <span class="inline-note">
+                (
+                <a href="./slides/4-3-diffusion-elections-cr-pannes?print-pdf">
+                  pdf
+                </a>
+                )
+              </span>
+            </td>
+            <td></td>
+          </tr>
+          <tr class="tentative">
+            <td>11</td>
+            <td>02.12.25</td>
+            <td>
+              <a href="./slides/5-1-sondes-echos/">Sondes et Échos</a>
+              <span class="inline-note">
+                (
+                <a href="./slides/5-1-sondes-echos?print-pdf">pdf</a>
+                )
+              </span>
+            </td>
+            <td></td>
+          </tr>
+          <tr class="tentative">
+            <td>12</td>
+            <td>09.12.25</td>
+            <td>
+              <a href="./slides/5-2-synchronisation/">Synchronisation</a>
+              <span class="inline-note">
+                (
+                <a href="./slides/5-2-synchronisation?print-pdf">pdf</a>
+                )
+              </span>
+            </td>
+            <td></td>
+          </tr>
+          <tr class="tentative">
+            <td>13</td>
+            <td>16.12.25</td>
+            <td>TBD</td>
+            <td><a href="#TODO">Labo 4</a></td>
+          </tr>
+          <tr class="vacances">
+            <td>-</td>
+            <td>23.12.25</td>
+            <td>Vacances d'hiver</td>
+            <td></td>
+          </tr>
+          <tr class="vacances">
+            <td>-</td>
+            <td>30.12.25</td>
+            <td>Vacances d'hiver</td>
+            <td></td>
+          </tr>
+          <tr class="tentative">
+            <td>14</td>
+            <td>06.01.26</td>
+            <td>
+              <a href="./slides/7-consensus/">Consensus</a>
+              <span class="inline-note">
+                (
+                <a href="./slides/7-consensus?print-pdf">pdf</a>
+                )
+              </span>
+            </td>
+            <td></td>
+          </tr>
+          <tr class="tentative">
+            <td>15</td>
+            <td>13.01.26</td>
+            <td>
+              <a href="./slides/7-1-consensus-raft/">Raft</a>
+              <span class="inline-note">
+                (
+                <a href="./slides/7-1-consensus-raft?print-pdf">pdf</a>
+                )
+              </span>
+              et Révisions
+              <span class="italic">
+                (
+                <a
+                  target="_blank"
+                  href="https://framaforms.org/seance-de-revision-du-te3-de-sdr-1736158992"
+                >
+                  Quoi réviser ?
+                </a>
+                )
+              </span>
+            </td>
+            <td></td>
+          </tr>
+          <tr class="tentative">
+            <td>16</td>
+            <td>20.01.26</td>
+            <td><span>TBD</span></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
 
-    <table class="timeline-table">
-      <thead>
-        <tr class="inline-note">
-          <th>Sem</th>
-          <th>Date</th>
-          <th>Support</th>
-        </tr>
-      </thead>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="inline-note">1</td>
-          <td class="inline-note">17.09.24</td>
-          <td><a href="./slides/0-intro.html">Introduction</a> <span class="inline-note">(<a href="./slides/0-intro.html?print-pdf">pdf</a>, <a href="./slides/0-intro-solutions.pdf">solutions</a>)</span> et <a href="./slides/0-1-pannes.html">Pannes</a> <span class="inline-note">(<a href="./slides/0-1-pannes.html?print-pdf">pdf</a>)</span></td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>24.09.24</td>
-          <td><a href="./slides/1-go.html">Go</a> <span class="inline-note">(<a href="./slides/1-go.html?print-pdf">pdf</a>)</span></td>
-        </tr>
-        <tr>
-          <td></td><td></td>
-          <td>
-            Estampilles
-          </td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>01.10.24</td>
-          <td><tab/><a href="./slides/2-1-horloges.html">Horloges Logiques</a> <span class="inline-note">(<a href="./slides/2-1-horloges.html?print-pdf">pdf</a>, <a href="./slides/2-1-solutions.pdf">solutions</a>)</span> et <a href="https://classroom.github.com/a/GtLSlMxT">Entrainement Go</a> <span class="inline-note">(<a href="https://github.com/sdr-classroom/go_training/branches/active">solutions</a>)</span></td>
-        </tr>
-        <tr class="">
-          <td>4</td>
-          <td>08.10.24</td>
-          <td><tab/><a href="./slides/2-2-mutex-lamport.html">Mutex de Lamport</a> <span class="inline-note">(<a href="./slides/2-2-mutex-lamport.html?print-pdf">pdf</a>, <a href="./slides/2-2-solutions.pdf">solutions</a>)</span></td>
-        </tr>
-        <tr>
-          <td>5</td>
-          <td>15.10.24</td>
-          <td><a href="https://eval.iict-heig-vd.in/users/evaluations/cm2a3w9vd0151u5q1ogkxrkpz">Entrainement au Test Écrit 1</a></td>
-        </tr>
-        <tr class="vacances">
-          <td>-</td>
-          <td>22.10.24</td>
-          <td>
-            Activités interdisciplinaires
-          </td>
-        </tr>
-        <tr>
-          <td></td><td></td>
-          <td>
-            Jetons
-          </td>
-        </tr>
-        <tr>
-          <td>6</td>
-          <td>29.10.24</td>
-          <td><tab/><a href="./slides/3-1-mutex-jetons-multiples">Mutex par jetons (Ricard et Agrawala, Carvalho et Roucairol)</a> <span class="inline-note">(<a href="./slides/3-1-mutex-jetons-multiples?print-pdf">pdf</a>, <a href="./slides/3-1-solutions.pdf">solutions</a>)</td>
-        </tr>
-        <tr>
-          <td>7</td>
-          <td>05.11.24</td>
-          <td class="italic">
-            <span class="yellow">Test Écrit 1</span> (<a href="https://eval.iict-heig-vd.in/users/evaluations/cm2q89k8y021du5q1gsjikp66">Lien</a>)
-          </td>
-        </tr>
-        <tr>
-          <td>8</td>
-          <td>12.11.24</td>
-          <td><tab/><a href="./slides/3-2-mutex-jeton-unique">Mutex par jeton unique (Raymond)</a> <span class="inline-note">(<a href="./slides/3-2-mutex-jeton-unique?print-pdf">pdf</a>)</td>
-        </tr>
-        <tr>
-          <td></td><td></td>
-          <td>
-            Diffusion
-          </td>
-        </tr>
-        <tr>
-          <td>9</td>
-          <td>19.11.24</td>
-          <td><tab/>Élections (<a href="./slides/4-1-diffusion-elections-bully">Bully</a> <span class="inline-note">(<a href="./slides/4-1-diffusion-elections-bully?print-pdf">pdf</a>)</span>, Chang et Roberts <a href="./slides/4-2-diffusion-elections-cr">sans pannes</a> <span class="inline-note">(<a href="./slides/4-2-diffusion-elections-cr?print-pdf">pdf</a>)</span>, <a href="./slides/4-3-diffusion-elections-cr-pannes">avec pannes</a>)</a> <span class="inline-note">(<a href="./slides/4-3-diffusion-elections-cr-pannes?print-pdf">pdf</a>)</span></td>
-        </tr>
-        <tr>
-          <td>10</td>
-          <td>26.11.24</td>
-          <td><tab/><a href="./slides/5-1-sondes-echos/">Sondes et Échos</a> <span class="inline-note">(<a href="./slides/5-1-sondes-echos?print-pdf">pdf</a>)</span></td>
-        </tr>
-        <tr>
-          <td>11</td>
-          <td>03.12.24</td>
-          <td><tab/><a href="./slides/5-2-synchronisation/">Synchronisation</a> <span class="inline-note">(<a href="./slides/5-2-synchronisation?print-pdf">pdf</a>)</span></td>
-        </tr>
-        <tr>
-          <td>12</td>
-          <td>10.12.24</td>
-          <td class="italic">
-            <span class="yellow">Test Écrit 2</span> (<a href="https://eval.iict-heig-vd.in/users/evaluations/cm45t9g6502c8jdfqp10kvh1s">Lien</a>) <span class="inline-note">(Semaines 8 à 10 incl. : Algorithme de Raymond, Élections, Sondes et Échos)</span>
-          </td>
-        </tr>
-        <tr>
-          <td>13</td>
-          <td>17.12.24</td>
-          <td>
-            <a href="./slides/6-battements/">Algorithmes par battement</a> <span class="inline-note">(<a href="./slides/6-battements?print-pdf">pdf</a>)</span>
-          </td>
-        </tr>
-        <tr class="vacances">
-          <td>-</td>
-          <td>-</td>
-          <td>
-            Vacances d'hiver
-          </td>
-        </tr>
-        <tr>
-          <td>14</td>
-          <td>07.01.25</td>
-          <td><a href="./slides/7-consensus/">Consensus</a> <span class="inline-note">(<a href="./slides/7-consensus?print-pdf">pdf</a>)</span></td>
-        </tr>
-        <tr>
-          <td>15</td>
-          <td>14.01.25</td>
-          <td><a href="./slides/7-1-consensus-raft/">Raft</a> <span class="inline-note">(<a href="./slides/7-1-consensus-raft?print-pdf">pdf</a>)</span> et Révisions <span class="italic">(<a target="_blank" href="https://framaforms.org/seance-de-revision-du-te3-de-sdr-1736158992">Quoi réviser ?</a>)</span></td>
-        </tr>
-        <tr>
-          <td>16</td>
-          <td>21.01.25</td>
-          <td class="italic">
-            <span class="yellow">Test Écrit 3</span> (<a href="https://eval.iict-heig-vd.in/users/evaluations/cm5m6c12e01ramox1jszbc2v8">Lien</a>, <a href="labos/te3.html">Format et contenu</a>)</span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    
-    <hgroup>
-      <h2><i class="fa-solid fa-flask"></i> Laboratoires</h2>
-    </hgroup>
+      <hgroup>
+        <h2>
+          <i class="fa-solid fa-flask"></i>
+          Laboratoires
+        </h2>
+      </hgroup>
 
-    <p><a href="/labos/labos.html">Quatre labos</a> se succèderont tout au long du semestre dans le but de développer ChatsApp, une application de messagerie instantanée de groupe distribuée.</p>
+      <p>
+        <a href="#TODO">Quatre labos</a>
+        se succèderont tout au long du semestre dans le but de développer
+        ChatsApp, une application de messagerie instantanée de groupe
+        distribuée.
+      </p>
 
-    <ol start="0">
-      <li><span class="li-date">17.09.24</span><a href="https://go.dev/tour/list">A Tour of Go</a> <i>(skip Readers, Images, Generics, Mutex, Web Croaler)</i></li>
-      <li><span class="li-date">24.09.24 - 27.10.24</span><a href="labos/1-request-reply">Résilience face aux pannes</a> <span>(<a href="https://classroom.github.com/a/A3qqFHHt">Lien vers repo</a>)</span></li>
-      <li><span class="li-date">29.10.24 - 19.11.24</span><a href="labos/2-total-order">Garantie d'ordre total</a></li>
-      <li><span class="li-date">19.11.24</span><a href="labos/3-load-balancing">Distribution de charges</a> (<a href="https://classroom.github.com/a/fbc8Rn9l">Lien vers repo</a>)</li>
-      <li><span class="li-date">17.12.24</span><a href="labos/4-routing.html">Routage</a> (<a href="https://classroom.github.com/a/N2dTrFgo">Lien vers repo</a>)</li>
-    </ol>
+      <ol start="0">
+        <li>
+          <span class="li-date">17.09.24</span>
+          <a href="#TODO">A Tour of Go</a>
+          <i>(skip Readers, Images, Generics, Mutex, Web Croaler)</i>
+        </li>
+        <li>
+          <span class="li-date">24.09.24 - 27.10.24</span>
+          <a href="#TODO">Résilience face aux pannes</a>
+          <span>
+            (
+            <a href="#TODO">Lien vers repo</a>
+            )
+          </span>
+        </li>
+        <li>
+          <span class="li-date">29.10.24 - 19.11.24</span>
+          <a href="#TODO">Garantie d'ordre total</a>
+        </li>
+        <li>
+          <span class="li-date">19.11.24</span>
+          <a href="#TODO">Distribution de charges</a>
+          (
+          <a href="#TODO">Lien vers repo</a>
+          )
+        </li>
+        <li>
+          <span class="li-date">17.12.24</span>
+          <a href="#TODO">Routage</a>
+          (
+          <a href="#TODO">Lien vers repo</a>
+          )
+        </li>
+      </ol>
 
-    <!-- Garantie d'ordre total des messages (algorithme d'exclusion mutuelle de Lamport)
+      <!-- Garantie d'ordre total des messages (algorithme d'exclusion mutuelle de Lamport)
 - **Labo 3** : Distribution de charge entre serveurs (algorithme d'élection avec gestion de pannes de Chang et Roberts)
 - **Labo 4** : Tolérance de réseau incomplètement connecté (ut -->
-    
-    <hgroup>
-      <h2><i class="fa-solid fa-comments"></i> Discussions</h2>
-    </hgroup>
 
-    <p>Toute question, feedback, remarque est <b>très bienvenue</b> sur <a href="https://teams.microsoft.com/l/team/19%3ANUVlpzvRkcwQxUVzQgvlGnc1FOdoFTo9lORD-pbxW6Y1%40thread.tacv2/conversations?groupId=562bbed0-3595-4dc3-bc99-b79c33a174f2&tenantId=a372f724-c0b2-4ea0-abfb-0eb8c6f84e40">Teams</a>.</p>
+      <hgroup>
+        <h2>
+          <i class="fa-solid fa-comments"></i>
+          Discussions
+        </h2>
+      </hgroup>
 
-  </main>
-</body>
+      <p>
+        Toute question, feedback, remarque est
+        <b>très bienvenue</b>
+        sur
+        <a href="#TODO">Teams</a>
+        .
+      </p>
+    </main>
+  </body>
 </html>
