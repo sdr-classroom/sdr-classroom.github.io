@@ -22,8 +22,9 @@
     }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
     /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -34,7 +35,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -135,27 +136,27 @@ supplémentaires</a></li>
 <col style="width: 91%" />
 </colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th>Date</th>
 <th>Changement</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>30.10</td>
 <td>Ajout lien vers tests automatisés du labo 1 dans section <a
 href="#tests">Tests</a></td>
 </tr>
-<tr class="even">
+<tr>
 <td>06.11</td>
 <td>Changement de deadline : à rendre le 22 novembre, 23:59 CEST.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>06.11</td>
 <td>Possibilité de partir du code de solution <a
 href="https://github.com/sdr-classroom/lab1-solution">ici</a>.</td>
 </tr>
-<tr class="even">
+<tr>
 <td>06.11</td>
 <td>Changement de deadline : à rendre le 27 novembre, 13:15 CEST.</td>
 </tr>

@@ -4,6 +4,20 @@ css:
     - "/labos/style.css"
 ---
 
+## Format des labos
+
+Le cœur des labos de ce cours sera un projet unique divisé en quatre laboratoires qui construiront chacun sur le précédent. Excepté pour le premier, qui sera plus petit, chacun s'étendra sur quatre semaines.
+
+- Séance 1 : **Conception**
+  - Réfléchissez aux abstractions à définir, leur API, et comment elles intéragiront entre elles et avec le code existant.
+  - En échange avec nous, *clarifiez et créez une confiance en la solution que vous allez choisir*.
+- Séance 2 : **Validation et implémentation**
+  - Dernière chance pour valider votre conception.
+  - Début de l'implémentation.
+- Séances 3 et 4 : **Implémentation**
+
+Avec chaque labo, sera attendu un *document d'architecture logicielle* décrivant votre solution.
+
 ## Introduction
 
 La partie pratique du cours de SDR se divise en quatre labos consécutifs, construisant chacun sur le précédent. Il s'agira de construire une application distribuée de messagerie instantanée de groupe, dont la spécification fonctionnelle est fournie avec [l'énoncé du labo 1](/labos/1-request-reply.html). Les labos se diviseront comme suit.

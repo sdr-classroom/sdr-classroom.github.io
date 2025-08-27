@@ -22,8 +22,9 @@
     }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
     /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -34,7 +35,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -140,31 +141,31 @@ supplémentaires</a></li>
 <col style="width: 91%" />
 </colgroup>
 <thead>
-<tr class="header">
+<tr>
 <th>Date</th>
 <th>Changement</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>02.10</td>
 <td>Fix exemple d’exécution : graphe doit être simplifié.</td>
 </tr>
-<tr class="even">
+<tr>
 <td>02.10</td>
 <td>Ajout section <a href="#gestion-des-erreurs">Gestion des erreurs</a>
 pour le serveur.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>06.10</td>
 <td><a href="#change_sequential_commands">Ajout précision</a> : Les
 commandes d’un même client apparaissent séquentielles.</td>
 </tr>
-<tr class="even">
+<tr>
 <td>09.10</td>
 <td>Modification de la deadline : Rendu le 22 octobre.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>16.10</td>
 <td>Fix typo dans preuve : nouvelle dette vaut <span
 class="math inline"><em>d</em>(<em>v</em>, <em>w</em>) = <em>m</em><em>i</em><em>n</em>(<em>d</em>(<em>v</em>), −<em>d</em>(<em>w</em>))</span>.</td>
