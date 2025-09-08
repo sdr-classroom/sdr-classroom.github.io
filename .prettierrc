@@ -5,7 +5,8 @@
       "options": {
         "tabWidth": 2,
         "useTabs": false,
-        "htmlWhitespaceSensitivity": "ignore"
+        "printWidth": 120,
+        "htmlWhitespaceSensitivity": "css"
       }
     }
   ]
