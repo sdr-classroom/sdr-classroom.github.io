@@ -107,3 +107,8 @@ h1, h2 {
         max-width: 1000px;
     }
 }
+
+.chapter {
+    font-style: italic;
+    font-size: 0.75em;
+}
