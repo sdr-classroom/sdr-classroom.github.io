@@ -53,3 +53,8 @@ span.remark {
     font-style: italic;
     opacity: 0.6;
 }
+
+details {
+    padding: 10px 20px;
+    border-left: 3px solid #8c8c8c;
+}
