@@ -103,28 +103,26 @@
 </header>
 <nav id="TOC" role="doc-toc">
 <ul>
-<li><a href="#quatre-labos" id="toc-quatre-labos">Quatre labos</a>
-<ul>
-<li><a href="#objectif-global" id="toc-objectif-global">Objectif
-global</a></li>
-<li><a href="#chronologie-de-chaque-labo"
-id="toc-chronologie-de-chaque-labo">Chronologie de chaque labo</a></li>
-</ul></li>
 <li><a href="#informations-générales"
 id="toc-informations-générales">Informations Générales</a></li>
-<li><a href="#objectifs-du-labo-1"
-id="toc-objectifs-du-labo-1">Objectifs du labo 1</a></li>
-<li><a href="#liens-utiles" id="toc-liens-utiles">Liens utiles</a></li>
-<li><a href="#spécifications-fonctionnelles"
-id="toc-spécifications-fonctionnelles">Spécifications fonctionnelles</a>
+<li><a href="#chatsapp" id="toc-chatsapp">ChatsApp</a>
 <ul>
-<li><a href="#lancement-de-lapplication"
-id="toc-lancement-de-lapplication">Lancement de l’application</a></li>
-<li><a href="#garanties" id="toc-garanties">Garanties</a></li>
-<li><a href="#modifications-attendues"
-id="toc-modifications-attendues">Modifications attendues</a></li>
+<li><a href="#format-des-labos" id="toc-format-des-labos">Format des
+labos</a></li>
 </ul></li>
-<li><a href="#rendu" id="toc-rendu">Rendu</a></li>
+<li><a href="#labo-1" id="toc-labo-1">Labo 1</a>
+<ul>
+<li><a href="#introduction" id="toc-introduction">Introduction</a></li>
+<li><a href="#état-actuel" id="toc-état-actuel">État actuel</a></li>
+<li><a href="#rr" id="toc-rr">RR</a></li>
+<li><a href="#tests" id="toc-tests">Tests</a></li>
+<li><a href="#document-darchitecture"
+id="toc-document-darchitecture">Document d’architecture</a></li>
+<li><a href="#contraintes" id="toc-contraintes">Contraintes</a></li>
+<li><a href="#résumé" id="toc-résumé">Résumé</a></li>
+<li><a href="#timeline-et-indications"
+id="toc-timeline-et-indications">Timeline et indications</a></li>
+</ul></li>
 </ul>
 </nav>
 <!---
@@ -133,46 +131,9 @@ id="toc-modifications-attendues">Modifications attendues</a></li>
 | Date  | Changement                                            |
 | ----- | ----------------------------------------------------- |
 -->
-<h2 id="quatre-labos">Quatre labos</h2>
-<h3 id="objectif-global">Objectif global</h3>
-<p>Ce cours contiendra quatre labos consécutifs, construisant chacun sur
-le précédent. L’objectif final sera d’avoir construit une application de
-messagerie instantanée décentralisée, baptisée ChatsApp, qui sera telle
-que</p>
-<ul>
-<li>la communication entre serveurs sera tolérante aux pannes, pertes de
-messages, duplications, et réordonnancements (protocole RR, <em>labo
-1</em>) ;</li>
-<li>l’ordre des messages sera le même pour tous les utilisateur.ices
-(mutex, <em>labo 2</em>) ;</li>
-<li>la charge sera distribuée uniformément entre les serveurs (élection,
-<em>labo 3</em>) ;</li>
-<li>le réseau pourra être incomplet (sondes et échos, <em>labo
-4</em>).</li>
-</ul>
-<h3 id="chronologie-de-chaque-labo">Chronologie de chaque labo</h3>
-<p>Chaque labo durera quatre semaines de cours (excepté le labo 1, qui
-en durera deux). Chacun se divisera en deux phases.</p>
-<ul>
-<li><strong>Conception</strong> - Semaine 1
-<ul>
-<li>Réfléchissez aux abstractions à définir, leur API, et comment elles
-intéragiront entre elles et avec le code existant.</li>
-<li>En échange avec nous, <em>clarifiez et créez une confiance en la
-solution que vous allez choisir</em>.</li>
-</ul></li>
-<li><strong>Validation et implémentation</strong> - Semaines 2 à 4
-<ul>
-<li>Dernière chance pour valider votre conception lors de la séance de
-semaine 2, puis implémentation.</li>
-<li>Le rendu final se fera sur GitHub Classroom, 1 minute avant le début
-du labo suivant.</li>
-</ul></li>
-</ul>
-<p>Avec chaque labo, sera attendu un <em>document d’architecture
-logicielle</em> décrivant votre solution.</p>
 <h2 id="informations-générales">Informations Générales</h2>
 <ul>
+<li><a href="#todo"><strong>Lien vers votre repo</strong></a></li>
 <li><strong>Groupes</strong> : à réaliser par groupes de deux.</li>
 <li><strong>Plagiat</strong> : nous intégrerons au processus
 d’évaluation des outils de détection de plagiat (entre groupe, mais
@@ -204,24 +165,22 @@ leur échappent encore.</li>
 toujours légitimes et bienvenu.e.s à nous poser des questions, sur Go,
 la théorie, vos idées, vos blocages. Si vous vous sentez perdu.e.s ou
 coincé.e.s, c’est qu’il faut nous demander.</p>
-<h2 id="objectifs-du-labo-1">Objectifs du labo 1</h2>
-<p>Ce labo a les objectifs suivants.</p>
+<h2 id="chatsapp">ChatsApp</h2>
+<p>Ce cours contiendra quatre labos consécutifs, construisant chacun sur
+le précédent. L’objectif final sera d’avoir construit une application de
+messagerie instantanée décentralisée, baptisée ChatsApp, qui sera telle
+que</p>
 <ul>
-<li>Implémentation d’un protocole de communication RR
-(Request-Reply).</li>
-<li>Intégration d’un module strictement défini dans une base de code
-existante.</li>
+<li>la communication entre serveurs sera tolérante aux pannes, pertes de
+messages, duplications, et réordonnancements (protocole RR, <em>labo
+1</em>) ;</li>
+<li>l’ordre des messages sera le même pour tous les utilisateur.ices
+(mutex, <em>labo 2</em>) ;</li>
+<li>la charge sera distribuée uniformément entre les serveurs (élection,
+<em>labo 3</em>) ;</li>
+<li>le réseau pourra être incomplet (sondes et échos, <em>labo
+4</em>).</li>
 </ul>
-<h2 id="liens-utiles">Liens utiles</h2>
-<ul>
-<li><a href="">Votre repo GitHub</a></li>
-</ul>
-<h2 id="spécifications-fonctionnelles">Spécifications
-fonctionnelles</h2>
-<p>Nous décrivons ici l’état de l’application ChatsApp telle qu’elle est
-fournie, puis détaillerons les modifications que nous attendons de votre
-part.</p>
-<h3 id="lancement-de-lapplication">Lancement de l’application</h3>
 <p>ChatsApp est une application distribuée. Chaque utilisateur.ice lance
 l’exécutable du serveur et lui fournit sa configuration. Durant le
 développement, la commande <code>go run</code> peut être utilisée.</p>
@@ -258,19 +217,46 @@ l’envoyeur affichera un message de la forme
 <code>[&lt;neighbor_address&gt; received: &lt;message&gt;]</code> dès
 que le voisin d’adresse IP <code>&lt;neighbor_address&gt;</code>
 l’informe avoir reçu et traité ce message.</p>
-<h3 id="garanties">Garanties</h3>
-<p>ChatsApp doit offrir les garanties suivantes :</p>
-<ol type="1">
-<li>Entre tous deux serveurs sans panne, aucun message ne doit être
-perdu, dupliqué, ou réordonnancé.</li>
-<li>Un accusé de réception doit être reçu exactement une fois pour
-chaque voisin correct au sens de pannes récupérables.</li>
-</ol>
-<h3 id="modifications-attendues">Modifications attendues</h3>
+<h3 id="format-des-labos">Format des labos</h3>
+<p>Chaque labo durera quatre semaines de cours (excepté le labo 1, qui
+en durera deux). Chacun se divisera en deux phases.</p>
+<ul>
+<li><strong>Conception</strong> - Semaine 1
+<ul>
+<li>Réfléchissez aux abstractions à définir, leur API, et comment elles
+intéragiront entre elles et avec le code existant.</li>
+<li>En échange avec nous, <em>clarifiez et créez une confiance en la
+solution que vous allez choisir</em>.</li>
+</ul></li>
+<li><strong>Validation et implémentation</strong> - Semaines 2 à 4
+<ul>
+<li>Dernière chance pour valider votre conception lors de la séance de
+semaine 2, puis implémentation.</li>
+<li>Le rendu final se fera sur GitHub Classroom, 1 minute avant le début
+du labo suivant.</li>
+</ul></li>
+</ul>
+<p>Avec chaque labo, sera attendu un <em>document d’architecture
+logicielle</em> décrivant votre solution.</p>
+<hr />
+<h2 id="labo-1">Labo 1</h2>
+<h3 id="introduction">Introduction</h3>
+<p>Ce labo a les objectifs suivants.</p>
+<ul>
+<li>Implémentation d’un protocole de communication RR
+(Request-Reply).</li>
+<li>Intégration de RR dans le module UDP de ChatsApp.</li>
+</ul>
+<p>L’intégration devra permettre de fournir un accusé de réception pour
+chaque message envoyé et correctement reçu par le destinataire.</p>
+<h3 id="état-actuel">État actuel</h3>
 <p>Dans le passé, ChatsApp utilisait TCP pour la communication entre
 serveurs. Considéré trop lourd, le responsable du projet a décidé de le
 remplacer par UDP. Une implémentation fonctionnelle existe, mais elle
-fait perdre certaines des garanties ci-dessus.</p>
+fait perdre certaines des garanties offertes par TCP, notamment
+l’absence de perte de messages. L’implémentation de TCP reste disponible
+dans le code pour votre curiosité, mais ne sera pas utilisée dans les
+labos de ce cours.</p>
 <details>
 <summary>
 <span class="remark">Architecture du module UDP</span>
@@ -296,6 +282,21 @@ celles-ci ne sont lues que par une seule goroutine, mais peuvent être
 écrites par plusieurs.</p>
 <p><img src="./imgs/1-udp.svg"></p>
 </details>
+<p>La base de code fournie inclut également un module
+<code>utils</code>, qui contient quelques utilitaires, notamment</p>
+<ul>
+<li><code>BufferedChan</code> - un type représentant une channel de
+capacité variable (à la différence des channels natives de Go, dont la
+capacité est finie et fixée à la création)</li>
+<li><code>Option</code> - l’implémentation d’un type optionnel,
+similaire à <code>Option</code> en Rust ou <code>Maybe</code> en
+Haskell.</li>
+<li><code>UIDGenerator</code> - un générateur de nombres uniques
+consécutifs de valeur initiale zéro.</li>
+</ul>
+<p>Vous serez libres d’utiliser ces utilitaires, mais aussi d’en ajouter
+d’autres si vous le jugez nécessaire.</p>
+<h3 id="rr">RR</h3>
 <p>Pour combler les lacunes du module <code>udp</code>, vous êtes
 chargé.e.s de</p>
 <ul>
@@ -306,7 +307,8 @@ et</li>
 garanties attendues. En particulier, toute demande d’envoi via le module
 <code>udp</code> doit aboutir à la réception du message par le
 destinataire même s’il peut être en panne récupérable, et l’envoyeur
-doit ensuite recevoir un accusé de réception.</li>
+doit ensuite recevoir un accusé de réception. Il faudra aussi s’assurer
+qu’aucun réordonnancement ou duplication ne puisse avoir lieu.</li>
 </ul>
 <p>Le module RR doit implémenter les deux cotés du protocole RR vu en
 cours.</p>
@@ -331,7 +333,68 @@ et</li>
 <li><code>FromNet</code> est une channel sur laquelle le module RR
 pourra lire tout message reçu de la part du destinataire.</li>
 </ul>
-<h2 id="rendu">Rendu</h2>
+<h3 id="tests">Tests</h3>
+<p>La plupart des modules du projet incluent des tests unitaires. C’est
+notamment le cas des modules <code>rr</code> et <code>udp</code>, qui ne
+passent pas tous dans l’état actuel du code.</p>
+<p>L’évaluation de votre travail inclura le passage de tous les tests
+fournis, y inclus ceux des autres modules pour détecter toute
+régression, notamment ceux de <code>server</code>, qui dépendent
+d’<code>udp</code>.</p>
+<p>Nous vous encourageons à écrire vos propres tests, mais vous ne devez
+pas modifier ceux fournis. Dans les prochains labos, nous nous
+réserverons le droit de ne pas vous fournir tous les tests utilisés pour
+l’évaluation.</p>
+<h3 id="document-darchitecture">Document d’architecture</h3>
+<p>Votre rendu final devra inclure un document d’architecture logicielle
+décrivant votre solution. Son objectif sera de décrire de manière
+complète le fonctionnement conceptuel de votre code. Cela signifie qu’il
+devra notamment décrire</p>
+<ul>
+<li>toute abstraction supplémentaire que vous aurez définie (ses
+responsabilités, son API, etc) ;</li>
+<li>les différentes goroutines qui coexistent, ainsi que leur
+responsabilité, leur état, les channels qu’elles écoutent et d’où
+proviennent les messages qu’elles y lisent</li>
+</ul>
+<p>Votre objectif avec ce document est de nous permettre, en le lisant,
+d’avoir une idée claire et complète de l’architecture de votre code, et
+de la manière dont ses différentes parties fonctionnent ensemble pour
+offrir les fonctionnalités attendues. Nous l’utiliserons comme point
+d’entrée à votre rendu, veillez donc à nommer clairement les objets,
+goroutines et channels que vous mentionnez, afin de nous permettre de
+les retrouver facilement dans votre code.</p>
+<h3 id="contraintes">Contraintes</h3>
+<ul>
+<li>Aucun état variable ne doit être partagé entre goroutines. Cela
+inclue toutes les abstractions fournies par le package <code>sync</code>
+de Go (mutex, waitgroup, etc). Toute synchronisation entre goroutine
+doit se faire via des channels.</li>
+<li>Vous êtes libres (et encouragés) d’ajouter des tests, mais ne devez
+pas modifier ceux fournis.</li>
+<li>Vous pouvez ajouter des fichiers et modifier du code existant, tant
+que les tests fournis continuent de passer <em>sans
+modification</em>.</li>
+<li>Vous êtes libres d’ajouter des fichiers ou du code, et de modifier
+tout code fourni, à condition de ne pas modifier l’API ou le
+comportement observable des abstractions déjà présentes, ni les tests
+fournis.</li>
+</ul>
+<p>En cas de doute, n’hésitez pas à nous demander.</p>
+<h3 id="résumé">Résumé</h3>
+<p>En résumé, vous devrez dans ce labo</p>
+<ul>
+<li>Implémenter le module RR tel que décrit ici et dans le cours ;</li>
+<li>L’intégrer dans le module UDP de ChatsApp afin de garantir l’absence
+de perte de messages et la réception d’un accusé de réception pour
+chaque message envoyé, ainsi que l’absence de duplication et de
+réordonnancement ;</li>
+<li>Faire passer tous les tests du projet, avec la liberté d’en ajouter
+;</li>
+<li>Rédiger un document d’architecture logicielle décrivant votre
+solution.</li>
+</ul>
+<h3 id="timeline-et-indications">Timeline et indications</h3>
 <p>Durant la première semaine, il est attendu que vous réfléchissiez à
 l’approche que vous souhaitez adopter pour implémenter ce labo. Il vous
 faudra notamment réfléchir à la manière de résoudre les problèmes
@@ -341,36 +404,21 @@ suivants.</p>
 réseau, même lorsqu’un appel à <code>SendRequest</code> est bloqué sur
 l’attente de réponse du destinataire ?</li>
 <li>Où et comment insérer le module RR dans le module UDP ?</li>
-<li>Votre solution garantit-elle qu’un message dont l’envoi échoue
-(e.g. en cas de connexion perdue) ne sera pas perdu et sera
-réessayé ?</li>
 <li>Comment garantir que le module UDP sera capable de recevoir d’autres
 messages du réseau, même lorsqu’un appel à <code>SendRequest</code> sur
 une instance de RR est bloqué ?</li>
+<li>Votre solution garantit-elle qu’un message dont l’envoi échoue
+(e.g. en cas de connexion perdue) ne sera pas perdu et sera
+réessayé ?</li>
+<li>Votre solution garantit-elle que les messages ne seront jamais
+réordonnancés (ou dupliqués) ?</li>
 </ul>
-<p><strong>Important</strong> – Aucun état variable ne doit être partagé
-entre goroutines. Toute synchronisation entre goroutine doit se faire
-via des channels.</p>
 <p>La deuxième séance de labo sera votre dernière occasion de valider
 auprès de nous votre proposition de solution. Une fois ce délai passé,
 il sera attendu que vous ayez une vision claire de votre solution, dont
 vous pourrez aussitôt commencer l’implémentation.</p>
 <p>Le rendu aura lieu une minute avant le début du labo 2. Vous aurez
-donc trois semaines exactement. Il devra</p>
-<ul>
-<li>être contenu dans le dernier commit soumis avant la deadline sur
-votre repo dédié ;</li>
-<li>inclure le document d’architecture logicielle décrivant votre
-solution ;</li>
-<li>inclure tout votre code, sachant que
-<ul>
-<li>vous êtes libres (et encouragés) d’ajouter des tests, mais ne devez
-pas modifier ceux fournis, et</li>
-<li>vous pouvez ajouter des fichiers et modifier du code existant, tant
-que les tests fournis continuent de passer <em>sans
-modification</em>.</li>
-</ul></li>
-</ul>
+donc trois semaines exactement</p>
 </main>
 </body>
 </html>
