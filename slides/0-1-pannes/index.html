@@ -15,7 +15,8 @@
 
 
 
-	</head>
+	<script src="/print.js" defer></script>
+</head>
 	<body class="reveal-viewport theme-font-montserrat theme-color-white-blue">
 		<div class="reveal">
 			<div class="slides">
@@ -449,7 +450,10 @@
 		<script src="lib/offline.js"></script>
 
 		<!-- Initialize the presentation -->
-		<script>
+		<!-- Fixed after export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/notes/notes.js"></script>
+    <script src="/slides/script.js"></script>
+    <script>
 			Reveal.initialize({
 				width: 960,
 				height: 700,
