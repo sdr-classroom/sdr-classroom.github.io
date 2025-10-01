@@ -90,7 +90,7 @@ Dans le passé, ChatsApp utilisait TCP pour la communication entre serveurs. Con
 
 <details>
 
-<summary><span class="remark">Architecture du module UDP</span></summary>
+<summary><span class="remark">Pour plus de détails sur l'architecture du module UDP...</span></summary>
 
 Le module UDP se compose des goroutines suivantes.
 
