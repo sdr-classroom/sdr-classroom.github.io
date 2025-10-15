@@ -14,7 +14,7 @@ back: "/"
 
 ## Informations Générales
 
-- [**Lien vers votre repo**](#todo)
+- [**Lien vers votre repo**](https://classroom.github.com/a/v8SKh8le)
 - **Groupes** : à réaliser par groupes de deux.
 - **Plagiat** : nous intégrerons au processus d'évaluation des outils de détection de plagiat (entre groupe, mais aussi avec les rendus des années précédentes et la solution officielle).
   En cas de suspicion, vous y serez confronté.e.s, et l'incident pourra être rapporté au responsable de la filière, avec un risque d'échec immédiat au cours.
@@ -60,7 +60,7 @@ Si `PrintReadAck` est configuré à `true`, l'envoyeur affichera un message de l
 
 ### Format des labos
 
-Chaque labo durera quatre semaines de cours (excepté le labo 1, qui en durera deux). Chacun se divisera en deux phases.
+Chaque labo durera quatre semaines de cours (excepté le labo 1, qui en durera trois). Chacun se divisera en deux phases.
 
 - **Conception** - Semaine 1
     - Réfléchissez aux abstractions à définir, leur API, et comment elles intéragiront entre elles et avec le code existant.
@@ -90,7 +90,7 @@ Dans le passé, ChatsApp utilisait TCP pour la communication entre serveurs. Con
 
 <details>
 
-<summary><span class="remark">Architecture du module UDP</span></summary>
+<summary><span class="remark">Pour plus de détails sur l'architecture du module UDP...</span></summary>
 
 Le module UDP se compose des goroutines suivantes.
 
