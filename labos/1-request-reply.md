@@ -2,7 +2,7 @@
 title: Labo 1 - Résilience face aux pannes
 css:
     - "/labos/style.css"
-back: "/labos/labos.html"
+back: "/"
 ---
 
 <!---

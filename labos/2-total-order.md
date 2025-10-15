@@ -2,7 +2,7 @@
 title: Labo 2 - Ordre total des messages
 css:
     - "/labos/style.css"
-back: "/labos/labos.html"
+back: "/"
 ---
 
 ## Informations Générales

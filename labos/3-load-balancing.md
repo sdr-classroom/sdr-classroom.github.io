@@ -2,7 +2,7 @@
 title: Labo 3 - Load balancing
 css:
     - "/labos/style.css"
-back: "/labos/labos.html"
+back: "/"
 ---
 <!-- 
 ## Changelog

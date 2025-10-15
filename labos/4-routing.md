@@ -2,7 +2,7 @@
 title: Labo 4 - Routing
 css:
     - "/labos/style.css"
-back: "/labos/labos.html"
+back: "/"
 ---
 <!-- 
 ## Changelog
