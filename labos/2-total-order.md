@@ -24,14 +24,7 @@ Notez enfin que l'objectif étant pour vous d'apprendre, vous serez toujours lé
 
 Ce labo a pour objectif de compléter l'application ChatsApp pour garantir un ordre total des messages.
 
-Vous aurez accès, comme point de départ à l'implémentation, à la solution au labo 1.
-
-## Liens utiles
-
-- [Repo GitHub de la phase 1](https://classroom.github.com/a/rK7JoECZ)
-- [Repo GitHub de la phase 2](https://classroom.github.com/a/vQc2DytO)
-- [Protocole de rendu des labos de SDR](/labos/labos.html#chronologie-de-chaque-labo)
-- [Document d'Architecture Logicielle de la solution au labo 1](/labos/design-specs/1-tcp-rr.html)
+Vous aurez accès, comme point de départ à l'implémentation, à la solution au labo 1, qui inclut aussi un document d'architecture logicielle tel qu'il était attendu de votre part.
 
 ## Objectif : Ordre global des messages
 
@@ -48,12 +41,14 @@ Le code fourni introduit un `Dispatcher`, responsable de faciliter les échanges
 
 // Enregistrement d'un handler pour les messages de type ChatMessage
 dispatcher.Register(ChatMessage{}, func(m Message, source Address) {
-    chatMessage := m.(ChatMessage) // Conversion on ChatMessage
+    // Code exécuté à la réception d'un ChatMessage
+    chatMessage := m.(ChatMessage) // Conversion en ChatMessage
     fmt.Printf("Message %v reçu de la part de %v.\n", chatMessage, source)
 })
 
 // Enregistrement d'un handler pour les messages de type Mutex
 dispatcher.Register(mutex.Message{}, func(m Message, source Address) {
+    // Code exécuté à la réception d'un mutex.Message
     mutex := m.(mutex.Message) // Conversion en mutex.Message
     fmt.Printf("Message de type mutex %v reçu de la part de %v.\n", mutex, source)
 })
@@ -75,7 +70,7 @@ Des tests sont fournis pour vérifier le bon fonctionnement de votre Mutex, ains
 Contrairement au labo 1, nous n'avons pas fourni tous les tests utilisés pour évaluer votre rendu. Nous attendons de votre part que vous implémentiez des tests additionnels, pour vérifier au moins les propriétés suivantes (mais plus si vous le souhaitez) :
 
 - Lorsqu'un processus qui n'est pas en SC et qui ne souhaite pas y entrer reçoit une requête, il doit répondre avec un `ACK`, au processus demandeur uniquement.
-- Lorsqu'un processus est en SC et reçoit une requête, il doit envoyer son `ACK` immédiatement, puis un `REL` ou moment de sortir de SC.
+- Lorsqu'un processus est en SC et reçoit une requête, il doit envoyer son `ACK` immédiatement, puis un `REL` au moment de sortir de SC.
 
 Votre note dépendra en grande partie des résultats des tests (les votres, ceux que nous n'avons pas fournis, et ceux fournis, y inclus ceux des autres modules pour détecter toute régression). La qualité de vos tests sera également prise en compte dans l'évaluation.
 
