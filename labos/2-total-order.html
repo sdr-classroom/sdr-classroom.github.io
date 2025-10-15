@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Labo 2 - Ordre total des messages</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #cccccc; background-color: #303030; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ffcfaf; } /* Alert */
+    code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+    code span.at { } /* Attribute */
+    code span.bn { color: #dca3a3; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #f0dfaf; } /* ControlFlow */
+    code span.ch { color: #dca3a3; } /* Char */
+    code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+    code span.co { color: #7f9f7f; } /* Comment */
+    code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+    code span.do { color: #7f9f7f; } /* Documentation */
+    code span.dt { color: #dfdfbf; } /* DataType */
+    code span.dv { color: #dcdccc; } /* DecVal */
+    code span.er { color: #c3bf9f; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #c0bed1; } /* Float */
+    code span.fu { color: #efef8f; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+    code span.kw { color: #f0dfaf; } /* Keyword */
+    code span.op { color: #f0efd0; } /* Operator */
+    code span.ot { color: #efef8f; } /* Other */
+    code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+    code span.sc { color: #dca3a3; } /* SpecialChar */
+    code span.ss { color: #cc9393; } /* SpecialString */
+    code span.st { color: #cc9393; } /* String */
+    code span.va { } /* Variable */
+    code span.vs { color: #cc9393; } /* VerbatimString */
+    code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/labos/style.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+    <main>
+<header id="title-block-header">
+    <nav>
+        <a href="/"><i class="fa fa-angle-left"></i> Back</a>
+      </nav>
+<h1 class="title">Labo 2 - Ordre total des messages</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#informations-générales"
+id="toc-informations-générales">Informations Générales</a></li>
+<li><a href="#introduction" id="toc-introduction">Introduction</a></li>
+<li><a href="#objectif-ordre-global-des-messages"
+id="toc-objectif-ordre-global-des-messages">Objectif : Ordre global des
+messages</a></li>
+<li><a href="#état-actuel" id="toc-état-actuel">État actuel</a></li>
+<li><a href="#tests" id="toc-tests">Tests</a></li>
+<li><a href="#document-darchitecture-logicielle-et-contraintes"
+id="toc-document-darchitecture-logicielle-et-contraintes">Document
+d’architecture logicielle et Contraintes</a></li>
+<li><a href="#timeline-et-indications"
+id="toc-timeline-et-indications">Timeline et indications</a></li>
+</ul>
+</nav>
+<h2 id="informations-générales">Informations Générales</h2>
+<ul>
+<li><a href="#todo"><strong>Lien vers votre repo</strong></a></li>
+<li><strong>Groupes</strong> : à réaliser par groupes de deux,
+potentiellement différents de ceux du labo 1.</li>
+<li><strong>Plagiat</strong> : nous intégrerons au processus
+d’évaluation des outils de détection de plagiat (entre groupe, mais
+aussi avec les rendus des années précédentes et la solution officielle).
+En cas de suspicion, vous y serez confronté.e.s, et l’incident pourra
+être rapporté au responsable de la filière, avec un risque d’échec
+immédiat au cours.</li>
+<li><strong>IA Générative</strong> : Nous ferons les suppositions
+suivantes.
+<ul>
+<li>Vous avez des objectifs qui vous sont clairs (que nous espérons être
+d’acquérir des compétences d’ingénieur.e).</li>
+<li>Vous avez conscience que les compétences d’un.e ingénieur.e incluent
+une capacité de compréhension, d’évaluation et de créativité technique,
+qui sont aussi celles recherchées et valorisées dans l’industrie
+<em>(lire : vous visez des jobs inatteignables par des vibe-coders
+autodidactes)</em>.</li>
+<li>Vous êtes des personnes responsables et adultes, capables d’agir
+intentionnellement, dans l’intérêt de vos objectifs.</li>
+</ul>
+Par conséquent, nous supposerons que vous agirez de manière réfléchie,
+et avec conscience des implications de vos choix. Par ailleurs et à
+titre d’information, nous avons pu constater que les meilleurs outils en
+date ne sont pas encore capables d’atteindre nos exigences sur ces
+labos, qui sont suffisamment complexes pour contenir des subtilités qui
+leur échappent encore.</li>
+</ul>
+<p>Notez enfin que l’objectif étant pour vous d’apprendre, vous serez
+toujours légitimes et bienvenu.e.s à nous poser des questions, sur Go,
+la théorie, vos idées, vos blocages. Si vous vous sentez perdu.e.s ou
+coincé.e.s, c’est qu’il faut nous demander.</p>
+<h2 id="introduction">Introduction</h2>
+<p>Ce labo a pour objectif de compléter l’application ChatsApp pour
+garantir un ordre total des messages.</p>
+<p>Vous aurez accès, comme point de départ à l’implémentation, à la
+solution au labo 1, qui inclut aussi un document d’architecture
+logicielle tel qu’il était attendu de votre part.</p>
+<h2 id="objectif-ordre-global-des-messages">Objectif : Ordre global des
+messages</h2>
+<p>Le but de ce labo est de compléter l’application distribuée ChatsApp
+avec la garantie que l’ordre des messages est le même pour tous les
+serveurs. Cela signifie que, pour tous deux messages <code>m1</code> et
+<code>m2</code>, peu importe leur source, si un serveur <code>A</code>
+affiche <code>m1</code> avant <code>m2</code>, alors tous les autres
+serveurs afficheront <code>m1</code> avant <code>m2</code>.</p>
+<p>Il vous faudra pour cela implémenter et intégrer dans le code actuel
+une Mutex distribuée de Lamport, telle que présentée en cours. L’unique
+différence est que votre Mutex ne doit jamais s’envoyer de message à
+elle-même à travers le réseau.</p>
+<h2 id="état-actuel">État actuel</h2>
+<p>Le code fourni introduit un <code>Dispatcher</code>, responsable de
+faciliter les échanges avec le réseau : (1) en gérant la traduction
+entre <code>[]byte</code> et <code>Message</code>, et (2) en
+répartissant les messages venant du réseau en fonction du type de
+message reçu. L’extrait suivant illustre l’utilisation de ce
+dispatcher.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// dispatcher étant une instance de Dispatcher.</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">// Enregistrement d&#39;un handler pour les messages de type ChatMessage</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>dispatcher<span class="op">.</span>Register<span class="op">(</span>ChatMessage<span class="op">{},</span> <span class="kw">func</span><span class="op">(</span>m Message<span class="op">,</span> source Address<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Code exécuté à la réception d&#39;un ChatMessage</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    chatMessage <span class="op">:=</span> m<span class="op">.(</span>ChatMessage<span class="op">)</span> <span class="co">// Conversion en ChatMessage</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    fmt<span class="op">.</span>Printf<span class="op">(</span><span class="st">&quot;Message %v reçu de la part de %v.</span><span class="ch">\n</span><span class="st">&quot;</span><span class="op">,</span> chatMessage<span class="op">,</span> source<span class="op">)</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="op">})</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">// Enregistrement d&#39;un handler pour les messages de type Mutex</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>dispatcher<span class="op">.</span>Register<span class="op">(</span>mutex<span class="op">.</span>Message<span class="op">{},</span> <span class="kw">func</span><span class="op">(</span>m Message<span class="op">,</span> source Address<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Code exécuté à la réception d&#39;un mutex.Message</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    mutex <span class="op">:=</span> m<span class="op">.(</span>mutex<span class="op">.</span>Message<span class="op">)</span> <span class="co">// Conversion en mutex.Message</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    fmt<span class="op">.</span>Printf<span class="op">(</span><span class="st">&quot;Message de type mutex %v reçu de la part de %v.</span><span class="ch">\n</span><span class="st">&quot;</span><span class="op">,</span> mutex<span class="op">,</span> source<span class="op">)</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="op">})</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">// Envoi de messages</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>chatMsg <span class="op">:=</span> ChatMessage<span class="op">{</span>Content<span class="op">:</span> <span class="st">&quot;Hello, world!&quot;</span><span class="op">}</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>dispatcher<span class="op">.</span>Send<span class="op">(</span>chatMsg<span class="op">,</span> dstAddr<span class="op">)</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>mtxMsg <span class="op">=</span> mutex<span class="op">.</span>Message<span class="op">{</span>Type<span class="op">:</span> mutex<span class="op">.</span>Request<span class="op">,</span> TS<span class="op">:</span> ts<span class="op">}</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>dispatcher<span class="op">.</span>Send<span class="op">(</span>mtxMsg<span class="op">,</span> dstAddr<span class="op">)</span></span></code></pre></div>
+<p>Le serveur initialise et met en place un dispatcher auprès duquel
+vous ne devriez avoir qu’à enregistrer vos nouveaux types de
+messages.</p>
+<h2 id="tests">Tests</h2>
+<p>Des tests sont fournis pour vérifier le bon fonctionnement de votre
+Mutex, ainsi que l’ordre total des messages dans l’application
+ChatsApp.</p>
+<p>Contrairement au labo 1, nous n’avons pas fourni tous les tests
+utilisés pour évaluer votre rendu. Nous attendons de votre part que vous
+implémentiez des tests additionnels, pour vérifier au moins les
+propriétés suivantes (mais plus si vous le souhaitez) :</p>
+<ul>
+<li>Lorsqu’un processus qui n’est pas en SC et qui ne souhaite pas y
+entrer reçoit une requête, il doit répondre avec un <code>ACK</code>, au
+processus demandeur uniquement.</li>
+<li>Lorsqu’un processus est en SC et reçoit une requête, il doit envoyer
+son <code>ACK</code> immédiatement, puis un <code>REL</code> au moment
+de sortir de SC.</li>
+</ul>
+<p>Votre note dépendra en grande partie des résultats des tests (les
+votres, ceux que nous n’avons pas fournis, et ceux fournis, y inclus
+ceux des autres modules pour détecter toute régression). La qualité de
+vos tests sera également prise en compte dans l’évaluation.</p>
+<p>Tous les tests devront passer sans <em>et avec</em> le <a
+href="https://go.dev/doc/articles/race_detector">data race detector</a>
+de Go (<code>go test -race</code>).</p>
+<h2 id="document-darchitecture-logicielle-et-contraintes">Document
+d’architecture logicielle et Contraintes</h2>
+<p>Les mêmes exigences que <a
+href="/labos/1-request-reply.html#document-darchitecture">pour le labo
+1</a> s’appliquent ici concernant le document d’architecture logicielle,
+et les contraintes.</p>
+<h2 id="timeline-et-indications">Timeline et indications</h2>
+<p>Durant la première semaine, il est attendu que vous réfléchissiez à
+l’approche que vous souhaitez adopter pour implémenter ce labo. Il vous
+faudra notamment réfléchir à la manière de résoudre les problèmes
+suivants.</p>
+<ul>
+<li>De combien de Goroutines aurez-vous besoin au minimum pour garantir
+l’absence de deadlocks, et quelles seront leurs responsabilités ?</li>
+<li>Comment garantirez-vous qu’aucun état ne sera accédé concurremment
+par plusieurs goroutines ?</li>
+<li>Comment utiliser l’abstraction de Mutex pour permettre un ordre
+total des messages dans l’application ChatsApp ?</li>
+<li>Comment la méthode <code>Request</code> pourra-t-elle bloquer
+jusqu’à l’entrée en section critique ?</li>
+</ul>
+<p>Après cette semaine, la séance de labo sera votre dernière occasion
+de valider auprès de nous votre proposition de solution. Une fois ce
+délai passé, il sera attendu que vous ayez une vision claire de votre
+solution, dont vous pourrez aussitôt commencer l’implémentation.</p>
+<p>Le rendu aura lieu une minute avant le début du labo 3. Vous aurez
+donc quatre semaines (vacances exclues).</p>
+</main>
+</body>
+</html>
