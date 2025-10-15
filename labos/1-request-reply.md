@@ -176,4 +176,4 @@ Durant la première semaine, il est attendu que vous réfléchissiez à l'approc
 
 La deuxième séance de labo sera votre dernière occasion de valider auprès de nous votre proposition de solution. Une fois ce délai passé, il sera attendu que vous ayez une vision claire de votre solution, dont vous pourrez aussitôt commencer l'implémentation.
 
-Le rendu aura lieu une minute avant le début du labo 2. Vous aurez donc trois semaines exactement
+Le rendu aura lieu une minute avant le début du labo 2. Vous aurez donc trois semaines exactement.
