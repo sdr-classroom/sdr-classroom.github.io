@@ -30,7 +30,7 @@ h1, h2 {
 }
 
 .timeline-table tr > * {
-    padding: .1em .5em;
+    padding: .1rem .5rem;
     border: none;
 }
 
@@ -58,6 +58,11 @@ h1, h2 {
     opacity: .8;
 }
 
+.red {
+    color: var(--red);
+    opacity: .8;
+}
+
 .italic {
     font-style: italic;
 }
@@ -69,7 +74,7 @@ h1, h2 {
 }
 
 .li-date {
-    padding-right: .4em;
+    padding-right: .4rem;
 }
 
 .timeline-table th {
@@ -99,7 +104,7 @@ h1, h2 {
 
 .tab {
     display: inline-block;
-    width: 2em;
+    width: 2rem;
 }
 
 @media screen and (min-width: 1280px) {
