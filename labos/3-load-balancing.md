@@ -14,7 +14,7 @@ back: "/"
 
 ## Informations Générales
 
-- [**Lien vers votre repo**](#TODO)
+- [**Lien vers votre repo**](https://classroom.github.com/a/f9IhmNU9)
 - **Groupes** : à réaliser par groupes de deux, potentiellement différents de ceux du labo précédent.
 - **Plagiat** : nous intégrerons au processus d'évaluation des outils de détection de plagiat (entre groupe, mais aussi avec les rendus des années précédentes et la solution officielle).
   En cas de suspicion, vous y serez confronté.e.s, et l'incident pourra être rapporté au responsable de la filière, avec un risque d'échec immédiat au cours.
@@ -31,7 +31,7 @@ Notez enfin que l'objectif étant pour vous d'apprendre, vous serez toujours lé
 
 Ce labo a pour objectif de compléter l'application ChatsApp pour permettre à des clients de s'y connecter sans surcharger un serveur en particulier.
 
-Vous aurez accès, comme point de départ, à la solution au labo 2 ainsi qu'à un client et aux interfaces des abstractions à implémenter.
+Vous aurez accès, comme point de départ, à la solution du labo 2 ainsi qu'à un client et aux interfaces des abstractions à implémenter.
 
 ## État actuel
 
