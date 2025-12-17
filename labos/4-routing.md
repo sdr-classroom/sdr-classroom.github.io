@@ -14,7 +14,7 @@ back: "/"
 
 ## Informations Générales
 
-<!-- - [**Lien vers votre repo**](#TODO) -->
+- [**Lien vers votre repo**](https://classroom.github.com/a/bGrCBxMI)
 - **Groupes** : à réaliser par groupes de deux, potentiellement différents de ceux du labo précédent.
 - **Plagiat** : nous intégrerons au processus d'évaluation des outils de détection de plagiat (entre groupe, mais aussi avec les rendus des années précédentes et la solution officielle).
   En cas de suspicion, vous y serez confronté.e.s, et l'incident pourra être rapporté au responsable de la filière, avec un risque d'échec immédiat au cours.
