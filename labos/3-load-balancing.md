@@ -4,6 +4,7 @@ css:
     - "/labos/style.css"
 back: "/"
 ---
+
 <!-- 
 ## Changelog
 
@@ -11,29 +12,36 @@ back: "/"
 | ----- | ----------------------------------------------------- |
 -->
 
+## Informations Générales
+
+- [**Lien vers votre repo**](https://classroom.github.com/a/f9IhmNU9)
+- **Groupes** : à réaliser par groupes de deux, potentiellement différents de ceux du labo précédent.
+- **Plagiat** : nous intégrerons au processus d'évaluation des outils de détection de plagiat (entre groupe, mais aussi avec les rendus des années précédentes et la solution officielle).
+  En cas de suspicion, vous y serez confronté.e.s, et l'incident pourra être rapporté au responsable de la filière, avec un risque d'échec immédiat au cours.
+- **IA Générative** : Nous ferons les suppositions suivantes.
+    - Vous avez des objectifs qui vous sont clairs (que nous espérons être d'acquérir des compétences d'ingénieur.e).
+    - Vous avez conscience que les compétences d'un.e ingénieur.e incluent une capacité de compréhension, d'évaluation et de créativité technique, qui sont aussi celles recherchées et valorisées dans l'industrie *(lire : vous visez des jobs inatteignables par des vibe-coders autodidactes)*.
+    - Vous êtes des personnes responsables et adultes, capables d'agir intentionnellement, dans l'intérêt de vos objectifs.
+
+  Par conséquent, nous supposerons que vous agirez de manière réfléchie, et avec conscience des implications de vos choix. Par ailleurs et à titre d'information, nous avons pu constater que les meilleurs outils en date ne sont pas encore capables d'atteindre nos exigences sur ces labos, qui sont suffisamment complexes pour contenir des subtilités qui leur échappent encore.
+
+Notez enfin que l'objectif étant pour vous d'apprendre, vous serez toujours légitimes et bienvenu.e.s à nous poser des questions, sur Go, la théorie, vos idées, vos blocages. Si vous vous sentez perdu.e.s ou coincé.e.s, c'est qu'il faut nous demander.
+
 ## Introduction
 
 Ce labo a pour objectif de compléter l'application ChatsApp pour permettre à des clients de s'y connecter sans surcharger un serveur en particulier.
 
-Vous aurez accès, comme point de départ, à la solution au labo 2 ainsi qu'à un client et aux interfaces des abstractions à implémenter.
+Vous aurez accès, comme point de départ, à la solution du labo 2 ainsi qu'à un client et aux interfaces des abstractions à implémenter.
 
-### Informations Générales
-- **Groupes** : à réaliser par groupes de deux.
-- **Plagiat** : en cas de copie manifeste, vous y serez confrontés, vous obtiendrez la note de 1, et l'incident sera reporté au responsable de la filière, avec un risque d'échec critique immédiat au cours. Ne trichez pas. <span class="remark">(Notez que les IAs génératives se trouvent aujourd'hui dans une zone qui est encore juridiquement floue pour ce qui est du plagiat, mais des arguments se valent à en considérer l'utilisation comme tel. Quoiqu'il en soit, nous vous proposons une autre vision sur la question : votre ambition est d'apprendre et d'acquérir des compétences, et votre utilisation éventuelle de cet outil doit refléter cela. Tout comme StackOverflow peut être autant un outil d'enrichissement qu'une banque de copy-paste, faites un choix intentionnel et réfléchi, vos propres intérêts en tête, de l'outil que vous ferez de l'IA générative)</span>
+## État actuel
 
-### Liens utiles
-
-- [Repo GitHub de la phase 3](https://classroom.github.com/a/fbc8Rn9l)
-
-## Client
-
-Dans le code de départ de ce labo, l'utilisateur ne communique plus directement avec l'exécutable du serveur, mais à travers un client. Les modifications que nous vous fournissons par rapport au labo 2 sont les suivantes :
+Dans le code de départ de ce labo, l'utilisateur.ice ne communique plus directement avec l'exécutable du serveur, mais à travers un client. Les modifications que nous vous fournissons par rapport au labo 2 sont les suivantes :
 
 - Un package `/internal/client` implémente un client qui se connecte à un serveur donné, écoute la ligne de commande, envoie les entrées de l'utilisateur au serveur, et affiche les messages reçus de la part du serveur. Il est utilisé par le package exécutable `cmd/client`, qui prend en arguments le nom d'utilisateur, l'adresse du client, et l'adresse du serveur auquel se connecter.
 - Le serveur, au lieu d'échanger avec la ligne de commande, utilise maintenant un `clientsManager`, responsable de
-  - écouter et répondre aux demandes de connexion des clients,
-  - transmettre les messages reçus de la part des clients connectés au serveur,
-  - transmettre les messages reçus par le serveur aux clients connectés.
+    - écouter et répondre aux demandes de connexion des clients,
+    - transmettre les messages reçus de la part des clients connectés au serveur,
+    - transmettre les messages reçus par le serveur aux clients connectés.
 
 Afin de gérer la connexion des clients, le protocole de communication client-serveur suivant est mis en place :
 
@@ -48,44 +56,50 @@ _**Notez que, pour des raisons de simplicité, un seul client par nom d'utilisat
 
 Actuellement, le serveur répond à tout `ConnRequestMessage` par un `ConnResponseMessage` contenant sa propre adresse. En d'autres termes, il accepte toute demande de connexion, sans condition.
 
-Le but de ce labo est d'implémenter un algorithme d'élection utilisé par les serveurs pour élire celui ayant le moins de clients connectés. Lorsqu'un client envoie un `ConnRequestMessage`, le serveur doit alors répondre par un `ConnResponseMessage` contenant l'adresse de cet élu.
+Le but de ce labo est d'implémenter un algorithme d'élection utilisé par les serveurs pour élire celui ayant le moins de clients connectés. Lorsqu'un client envoie un `ConnRequestMessage`, le serveur doit répondre par un `ConnResponseMessage` contenant l'adresse de cet élu.
 
 Pour ce faire, vous devrez implémenter :
 
-- Un mainteneur d'anneau dont l'interface est fournie dans `ringManager.go`. Cette abstraction est définie par
-  - la méthode `SendToNext(msg dispatcher.Message)`, qui envoie un message au prochain processus valide dans l'anneau de manière non bloquante,
-  - la méthode `ReceiveFromPrev() dispatcher.Message`, qui bloque jusqu'à la réception d'un message du processus valide précédent dans l'anneau,
-  - le constructeur prenant en arguments, notamment, le dispatcher, l'adresse `self`, et une liste d'adresses `ring`, qui doit contenir `self` et être dans l'ordre de l'anneau.
-- L'algorithme d'élection de Chang et Roberts, dont l'interface est fournie dans `crElector.go`. Cette abstraction est définie par
-  - la méthode `GetLeader() transport.Address`, qui bloque si une élection est en cours, puis retourne l'adresse de l'élu,
-  - la méthode `UpdateAbility(ability int)`, qui met à jour l'aptitude du processus et déclenche une nouvelle élection,
-  - le constructeur prenant en arguments, notamment, le dispatcher, l'adresse `self`, et une liste d'adresses `ring` définie comme pour le mainteneur d'anneau.
+- Un mainteneur d'anneau dont l'interface est fournie dans `election/ring/maintainer.go`. Cette abstraction est définie par
+    - la méthode `SendToNext(msg dispatcher.Message)`, qui envoie un message au prochain processus valide dans l'anneau de manière non bloquante,
+    - la méthode `ReceiveFromPrev() dispatcher.Message`, qui bloque jusqu'à la réception d'un message du processus valide précédent dans l'anneau,
+    - le constructeur prenant en arguments, notamment, le dispatcher, l'adresse `self`, et une liste d'adresses `ring`, qui doit contenir `self` et être dans l'ordre de l'anneau.
+- L'algorithme d'élection de Chang et Roberts, dont l'interface est fournie dans `election/crElector.go`. Cette abstraction est définie par
+    - la méthode `GetLeader() transport.Address`, qui bloque si une élection est en cours, puis retourne l'adresse de l'élu,
+    - la méthode `UpdateAbility(ability int)`, qui met à jour l'aptitude du processus et déclenche une nouvelle élection,
+    - le constructeur prenant en arguments, notamment, le dispatcher, l'adresse `self`, et une liste d'adresses `ring` définie comme pour le mainteneur d'anneau.
 
 Le `crElector` créera donc et utilisera un mainteneur d'anneau pour implémenter l'algorithme d'élection de Chang et Roberts. Il devra déclencher une nouvelle élection à chaque changement d'aptitude, *et non au moment d'un appel à `GetLeader`* (sauf si aucun leader n'a encore été déterminé). L'électeur sera ensuite utilisé par le `clientsManager` pour répondre correctement aux demandes de connexion des clients.
 
-## Validation de votre solution
+## Tests
 
-Vous êtes encouragés à réfléchir à votre approche avant de commencer le développement. Durant la première semaine, vous pourrez me partager votre idée de solution pour obtenir un retour.
+Des tests sont fournis pour vérifier le bon fonctionnement de votre `maintainer`, `crElector`, et `clientsManager`.
 
-## Rendu
+Comme au labo 2, nous n'avons pas fourni tous les tests utilisés pour évaluer votre rendu. Nous attendons de votre part que vous implémentiez des tests additionnels, pour vérifier notamment les propriétés suivantes, et possiblement d'autres (sachant que nous nous permettrons d'exécuter des tests couvrant plus de propriétés que celles listées ci-dessous, lors de l'évaluation) :
 
-Votre rendu doit contenir les modifications listées ci-dessus. Notez également que :
+- Pour le mainteneur d'anneau,
+  - Lorsqu'un envoi ne reçoit pas de réponse avant le timeout, le prochain processus dans l'anneau est essayé.
+  - À chaque nouvelle demande d'envoi de message via `SendToNext`, le prochain processus dans l'anneau est à nouveau essayé, même s'il n'avait pas répondu pour un message précédent.
+- Pour l'électeur,
+  - Le comportement respecte l'algorithme de Chang et Roberts lorsque le résultat d'une élection est reçu.
+  - Lorsque l'aptitude est mise à jour *durant une élection*, une nouvelle élection est déclenchée après la fin de la première.
 
-- Les tests fournis ne doivent pas être modifiés, mais vous êtes encouragés à en ajouter.
-- Tous les tests doivent passer sans *et avec* le [data race detector](https://go.dev/doc/articles/race_detector) de Go (`go test -race`).
-- Vous ne devez en aucun cas utiliser les abstractions fournies par le package `sync` de Go. Toute gestion de la concurrence doit être gérée par des goroutines et des channels.
+Votre note dépendra en grande partie des résultats des tests (les votres, ceux que nous n'avons pas fournis, et ceux fournis, y inclus ceux des autres modules pour détecter toute régression). La qualité de vos tests sera également prise en compte dans l'évaluation.
 
-Enfin, votre rendu doit contenir un document d'architecture logicielle décrivant votre solution. Celui-ci devra couvrir les points suivants :
+Tous les tests devront passer sans *et avec* le [data race detector](https://go.dev/doc/articles/race_detector) de Go (`go test -race`).
 
-- Toute abstraction supplémentaire créée, s'il y en a, auquel cas
-  - ses responsabilités (que fait-elle, que délègue-t-elle, que sait-elle, que ne sait-elle pas),
-  - son API exact (constructeur, méthodes). N'hésitez pas à en donner des exemples d'utilisation.
-- Toute goroutine nécessaire, ainsi que
-  - l'état dont elle est responsable, et
-  - quand et par qui elle est créée.
-- Pour toute channel nécessaire à la communication entre goroutines,
-  - où elle est stockée, et
-  - quelle goroutine y écrit ou y lit.
-- Tout changement à `clientsManager.go` permettant de répartir la charge entre serveurs.
+## Document d'architecture logicielle et Contraintes
 
-Votre rendu doit être intégralement compris dans le commit le plus récent avant la deadline. Cela inclue non seulement le code, mais également le document d'architecture logicielle décrivant votre travail.
+Les mêmes exigences que [pour le labo 1](/labos/1-request-reply.html#document-darchitecture) s'appliquent ici concernant le document d'architecture logicielle, et les contraintes.
+
+## Timeline et indications
+
+Durant la première semaine, il est attendu que vous réfléchissiez à l'approche que vous souhaitez adopter pour implémenter ce labo. Il vous faudra notamment réfléchir à la manière de résoudre les problèmes suivants.
+
+- De combien de Goroutines aurez-vous besoin au minimum pour garantir l'absence de deadlocks, et quelles seront leurs responsabilités ?
+- Comment garantirez-vous qu'aucun état ne sera accédé concurremment par plusieurs goroutines ?
+- Comment utiliser l'abstraction d'électeur pour permettre une répartition de charge entre serveurs ?
+
+Après cette semaine, la séance de labo sera votre dernière occasion de valider auprès de nous votre proposition de solution. Une fois ce délai passé, il sera attendu que vous ayez une vision claire de votre solution, dont vous pourrez aussitôt commencer l'implémentation.
+
+Le rendu aura lieu une minute avant le début du labo 4. Vous aurez donc quatre semaines (vacances exclues).

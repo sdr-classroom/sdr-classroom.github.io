@@ -6,6 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Labo 4 - Routing</title>
   <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -39,19 +42,22 @@
 </header>
 <nav id="TOC" role="doc-toc">
 <ul>
-<li><a href="#introduction" id="toc-introduction">Introduction</a>
-<ul>
 <li><a href="#informations-générales"
 id="toc-informations-générales">Informations Générales</a></li>
-<li><a href="#liens-utiles" id="toc-liens-utiles">Liens utiles</a></li>
-</ul></li>
+<li><a href="#introduction" id="toc-introduction">Introduction</a></li>
+<li><a href="#modifications-attendues"
+id="toc-modifications-attendues">Modifications attendues</a>
+<ul>
 <li><a href="#pulsar" id="toc-pulsar">Pulsar</a></li>
 <li><a href="#router" id="toc-router">Router</a></li>
+</ul></li>
 <li><a href="#intégration" id="toc-intégration">Intégration</a></li>
-<li><a href="#validation-de-votre-solution"
-id="toc-validation-de-votre-solution">Validation de votre
-solution</a></li>
-<li><a href="#rendu" id="toc-rendu">Rendu</a></li>
+<li><a href="#tests" id="toc-tests">Tests</a></li>
+<li><a href="#document-darchitecture-logicielle-et-contraintes"
+id="toc-document-darchitecture-logicielle-et-contraintes">Document
+d’architecture logicielle et Contraintes</a></li>
+<li><a href="#timeline-et-indications"
+id="toc-timeline-et-indications">Timeline et indications</a></li>
 </ul>
 </nav>
 <!-- 
@@ -60,6 +66,42 @@ solution</a></li>
 | Date  | Changement                                            |
 | ----- | ----------------------------------------------------- |
 -->
+<h2 id="informations-générales">Informations Générales</h2>
+<ul>
+<li><a href="https://classroom.github.com/a/bGrCBxMI"><strong>Lien vers
+votre repo</strong></a></li>
+<li><strong>Groupes</strong> : à réaliser par groupes de deux,
+potentiellement différents de ceux du labo précédent.</li>
+<li><strong>Plagiat</strong> : nous intégrerons au processus
+d’évaluation des outils de détection de plagiat (entre groupe, mais
+aussi avec les rendus des années précédentes et la solution officielle).
+En cas de suspicion, vous y serez confronté.e.s, et l’incident pourra
+être rapporté au responsable de la filière, avec un risque d’échec
+immédiat au cours.</li>
+<li><strong>IA Générative</strong> : Nous ferons les suppositions
+suivantes.
+<ul>
+<li>Vous avez des objectifs qui vous sont clairs (que nous espérons être
+d’acquérir des compétences d’ingénieur.e).</li>
+<li>Vous avez conscience que les compétences d’un.e ingénieur.e incluent
+une capacité de compréhension, d’évaluation et de créativité technique,
+qui sont aussi celles recherchées et valorisées dans l’industrie
+<em>(lire : vous visez des jobs inatteignables par des vibe-coders
+autodidactes)</em>.</li>
+<li>Vous êtes des personnes responsables et adultes, capables d’agir
+intentionnellement, dans l’intérêt de vos objectifs.</li>
+</ul>
+Par conséquent, nous supposerons que vous agirez de manière réfléchie,
+et avec conscience des implications de vos choix. Par ailleurs et à
+titre d’information, nous avons pu constater que les meilleurs outils en
+date ne sont pas encore capables d’atteindre nos exigences sur ces
+labos, qui sont suffisamment complexes pour contenir des subtilités qui
+leur échappent encore.</li>
+</ul>
+<p>Notez enfin que l’objectif étant pour vous d’apprendre, vous serez
+toujours légitimes et bienvenu.e.s à nous poser des questions, sur Go,
+la théorie, vos idées, vos blocages. Si vous vous sentez perdu.e.s ou
+coincé.e.s, c’est qu’il faut nous demander.</p>
 <h2 id="introduction">Introduction</h2>
 <p>Ce labo a pour objectif de permettre à l’application ChatsApp de
 fonctionner sur un réseau incomplet, dans lequel chaque server ne
@@ -70,31 +112,10 @@ du système.</p>
 intégrés au <code>Dispatcher</code>, afin que l’incomplétude du réseau
 soit invisible aux modules utilisateurs, tels que la mutex ou le
 mainteneur d’anneau.</p>
-<p>Vous aurez accès, comme point de départ, à la solution au labo 3
+<p>Vous aurez accès, comme point de départ, à la solution du labo 3
 ainsi qu’aux interfaces des abstractions à implémenter.</p>
-<h3 id="informations-générales">Informations Générales</h3>
-<ul>
-<li><strong>Groupes</strong> : à réaliser par groupes de deux.</li>
-<li><strong>Plagiat</strong> : en cas de copie manifeste, vous y serez
-confrontés, vous obtiendrez la note de 1, et l’incident sera reporté au
-responsable de la filière, avec un risque d’échec critique immédiat au
-cours. Ne trichez pas. <span class="remark">(Notez que les IAs
-génératives se trouvent aujourd’hui dans une zone qui est encore
-juridiquement floue pour ce qui est du plagiat, mais des arguments se
-valent à en considérer l’utilisation comme tel. Quoiqu’il en soit, nous
-vous proposons une autre vision sur la question : votre ambition est
-d’apprendre et d’acquérir des compétences, et votre utilisation
-éventuelle de cet outil doit refléter cela. Tout comme StackOverflow
-peut être autant un outil d’enrichissement qu’une banque de copy-paste,
-faites un choix intentionnel et réfléchi, vos propres intérêts en tête,
-de l’outil que vous ferez de l’IA générative)</span></li>
-</ul>
-<h3 id="liens-utiles">Liens utiles</h3>
-<ul>
-<li><a href="https://classroom.github.com/a/N2dTrFgo">Repo GitHub de la
-phase 4</a></li>
-</ul>
-<h2 id="pulsar">Pulsar</h2>
+<h2 id="modifications-attendues">Modifications attendues</h2>
+<h3 id="pulsar">Pulsar</h3>
 <p>Le premier module à implémenter est le Pulsar, qui offre le
 comportement de sondes et échos générique tel que présenté en cours. Son
 unique méthode, <code>StartPulse</code>, déclenche une sonde, puis
@@ -128,19 +149,19 @@ fois sur tous les processus, feuilles comprises, excepté la racine
 (source de la sonde), qui ne l’exécutera pas.</li>
 <li>Le <code>EchoHandler</code> est appelé lorsque tous les échos sont
 reçus, <strong>même s’il n’y en a aucun à recevoir</strong> : il est
-donc appelé exactement une fois par chaque processus, feuilles comprises
-(ces dernières l’appelant alors avec une slice vide).</li>
+donc appelé exactement une fois par chaque processus, racine et feuilles
+comprises (ces dernières l’appelant alors avec une slice vide).</li>
 </ul>
-<h2 id="router">Router</h2>
+<h3 id="router">Router</h3>
 <p>Le Router est le seul utilisateur du Pulsar, dans deux buts :
 broadcasting et construction d’une table de routage. Il offre trois
 méthodes.</p>
 <ul>
-<li><code>Broadcast</code> prend un message en arguments et garantit son
+<li><code>Broadcast</code> prend un message en argument et garantit son
 envoi à tous les processus du système (et non seulement ses voisins
 directs). Elle retourne une slice contenant tous les processus ayant
 reçu le message.</li>
-<li><code>Send</code> s’assure de l’envoi du message donné au
+<li><code>Send</code> s’assure de l’envoi du message donné, au
 destinataire donné. Pour ce faire, elle utilise une table de routage
 construite en interne par le Router à l’aide de messages d’explorations
 dont nous reparlons plus bas.</li>
@@ -163,7 +184,7 @@ est lancée, permettant de construire une table de routage.</li>
 l’origine), alors il met à jour sa table de routage avec les données
 récoltées par les échos qu’il agrège durant la phase de
 contraction.</li>
-<li>Pour tout message n’ayant pas pu être servi du fait d’une table de
+<li>Pour tout message n’ayant pas pu être servi du fait d’une table de
 routage incomplète, le message est envoyé à la prochaine mise à jour de
 cette dernière permettant son envoi, <strong>tout en maintenant l’ordre
 des demandes d’envoi</strong>, afin d’éviter de briser la garantie
@@ -187,56 +208,63 @@ tables de routage de chacun d’eux.</li>
 gagne donc une nouvelle méthode, <code>Broadcast</code>. Toute demande
 d’envoi par <code>Broadcast</code> ou par <code>Send</code> <strong>doit
 donc passer par le Router</strong>.</p>
-<p>Les modules utilisateurs du dispatcher ont été modifiés pour appeler
-<code>Broadcast</code> lorsque pertinent. Ils n’ont donc pas
+<p>Les modules utilisateurs du dispatcher ont déjà été modifiés pour
+appeler <code>Broadcast</code> lorsque pertinent. Ils n’ont donc pas
 connaissance du fait que le réseau est maintenant incomplet, et doivent
 continuer de fonctionner inchangés.</p>
-<h2 id="validation-de-votre-solution">Validation de votre solution</h2>
-<p>Vous êtes encouragés à réfléchir à votre approche avant de commencer
-le développement. Durant la première semaine, vous pourrez me partager
-votre idée de solution pour obtenir un retour.</p>
-<h2 id="rendu">Rendu</h2>
-<p>Votre rendu doit contenir les modifications listées ci-dessus. Notez
-également que :</p>
+<h2 id="tests">Tests</h2>
+<p>Des tests sont fournis pour vérifier le bon fonctionnement de votre
+Pulsar et de votre Router, ainsi que leur intégration dans le reste du
+programme.</p>
+<p>Comme au labo 3, nous n’avons pas fourni tous les tests utilisés pour
+évaluer votre rendu. Nous attendons de votre part que vous implémentiez
+des tests additionnels, pour vérifier notamment les propriétés
+suivantes, et possiblement d’autres (sachant que nous nous permettrons
+d’exécuter des tests couvrant plus de propriétés que celles listées
+ci-dessous, lors de l’évaluation) :</p>
 <ul>
-<li>Les tests fournis ne doivent pas être modifiés, mais vous êtes
-encouragés à en ajouter.</li>
-<li>Tous les tests doivent passer sans <em>et avec</em> le <a
+<li>Pour le Pulsar, le comportement correct lors d’une réception de
+sonde, et la bonne agrégation des échos associés.</li>
+<li>Pour le Router, le comportement correct de
+<code>Broadcast</code>.</li>
+</ul>
+<p>Votre note dépendra en grande partie des résultats des tests (les
+votres, ceux que nous n’avons pas fournis, et ceux fournis, y inclus
+ceux des autres modules pour détecter toute régression). La qualité de
+vos tests sera également prise en compte dans l’évaluation.</p>
+<p>Tous les tests devront passer sans <em>et avec</em> le <a
 href="https://go.dev/doc/articles/race_detector">data race detector</a>
-de Go (<code>go test -race</code>).</li>
-<li>Vous ne devez en aucun cas utiliser les abstractions fournies par le
-package <code>sync</code> de Go, excepté le <code>WaitGroup</code>.
-Toute autre gestion de la concurrence doit être gérée par des goroutines
-et des channels.</li>
-</ul>
-<p>Enfin, votre rendu doit contenir un document d’architecture
-logicielle décrivant votre solution. Celui-ci devra décrire</p>
+de Go (<code>go test -race</code>).</p>
+<h2 id="document-darchitecture-logicielle-et-contraintes">Document
+d’architecture logicielle et Contraintes</h2>
+<p>Les mêmes exigences que <a
+href="/labos/1-request-reply.html#document-darchitecture">pour le labo
+1</a> s’appliquent ici concernant le document d’architecture logicielle,
+et les contraintes.</p>
+<h2 id="timeline-et-indications">Timeline et indications</h2>
+<p>Durant la première semaine, il est attendu que vous réfléchissiez à
+l’approche que vous souhaitez adopter pour implémenter ce labo. Il vous
+faudra notamment réfléchir à la manière de résoudre les problèmes
+suivants.</p>
 <ul>
-<li>toutes les goroutines utilisées, et la responsabilité de chacune
-(comportement, état),</li>
-<li>toute channel permettant la coopération entre goroutines, <em>y
-compris celles passées aux constructeurs du Pulsar et du
-Routeur</em>.</li>
+<li>De combien de Goroutines aurez-vous besoin au minimum pour garantir
+l’absence de deadlocks, et quelles seront leurs responsabilités ?</li>
+<li>Comment les sondes seront-elles maintenues, sans problèmes de
+concurrence ?</li>
+<li>Comment garantirez-vous que la méthode <code>StartPulse</code> du
+Pulsar bloquera jusqu’à la fin de la sonde correspondante ?</li>
+<li>Comment garantirez-vous que les demandes d’envoi via le Router
+seront traitées en parallèle de sondes en cours ?</li>
+<li>Comment garantirez-vous que les demandes d’envoi nécessitant une
+exploration seront mises en attente jusqu’à mise à jour de la table de
+routage, sans bloquer les autres opérations du Router ?</li>
 </ul>
-<p>De ce document, il devra donc être possible de comprendre la solution
-que vous aurez choisie pour les difficultés suivantes posées par ce
-labo :</p>
-<ul>
-<li>Comment les sondes en cours sont maintenues, et ce sans problèmes de
-concurrence,</li>
-<li>Comment la méthode <code>StartPulse</code> du Pulsar bloquera
-jusqu’à la fin de la sonde correspondante,</li>
-<li>Comment la méthode <code>Send</code> du Router bloquera jusqu’à mise
-à jour de la table de routage si cette dernière ne permet pas l’envoi
-immédiat,</li>
-<li>Comment l’appel bloquant à <code>StartPulse</code> par le Router
-n’empêchera pas au Router de recevoir et propager des messages, et de
-mettre à jour sa table de routage.</li>
-</ul>
-<p>Votre rendu doit être intégralement compris dans le commit le plus
-récent avant la deadline. Cela inclue non seulement le code, mais
-également le document d’architecture logicielle décrivant votre
-travail.</p>
+<p>Après cette semaine, la séance de labo sera votre dernière occasion
+de valider auprès de nous votre proposition de solution. Une fois ce
+délai passé, il sera attendu que vous ayez une vision claire de votre
+solution, dont vous pourrez aussitôt commencer l’implémentation.</p>
+<p>Le rendu aura lieu à la fin de la dernière séance de labo du
+semestre. Vous aurez donc quatre semaines (vacances exclues).</p>
 </main>
 </body>
 </html>
