@@ -6,6 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>Labo 4 - Agrégation d’informations distribuées</title>
   <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -198,15 +201,15 @@ inclure les champs suivants, en supposant que celui-ci n’a le droit de
 contacter que les serveurs <code>3334</code> et <code>3335</code> pour
 l’envoi et la réception de sondes et d’échos :</p>
 <div class="sourceCode" id="cb2"><pre
-class="sourceCode json"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>    <span class="er">&quot;port&quot;:</span> <span class="er">3333,</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="er">&quot;servers&quot;:</span> <span class="ot">[</span></span>
+class="sourceCode json"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;port&quot;</span><span class="er">:</span> <span class="dv">3333</span><span class="er">,</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;servers&quot;</span><span class="er">:</span> <span class="ot">[</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;localhost:3333&quot;</span><span class="ot">,</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;localhost:3334&quot;</span><span class="ot">,</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;localhost:3335&quot;</span><span class="ot">,</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;localhost:3336&quot;</span><span class="ot">,</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;localhost:3337&quot;</span></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span><span class="er">,</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="er">&quot;neighbors&quot;:</span> <span class="ot">[</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;neighbors&quot;</span><span class="er">:</span> <span class="ot">[</span></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;localhost:3334&quot;</span><span class="ot">,</span></span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">&quot;localhost:3335&quot;</span></span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span></span></code></pre></div>
