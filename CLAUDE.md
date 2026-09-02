@@ -123,13 +123,18 @@ Le reste — colonnes, `assigned:`, forme des descriptions, boucle de collaborat
 Pour le board slides et `website-private`. Le chantier labos applique les mêmes, mais en garde sa
 propre copie dans [../sdr-labs/CLAUDE.md](../sdr-labs/CLAUDE.md), pour que chaque dépôt se suffise.
 
-**Trois axes indépendants.** Aucun ne pilote l'autre ; déplacer une carte ne change aucun label.
+**Quatre axes indépendants.** Aucun ne pilote l'autre ; déplacer une carte ne change aucun label.
 
 - **Colonne** = quel *type* de travail est requis. Valeur unique, égale à l'état le plus bloquant :
   `Needs thinking` → `Actionable` → `In progress` → `Reviewable by Olivier` → `Done`.
 - **Labels `assigned: Olivier` / `assigned: Claude`** = *qui* travaille. Peuvent coexister ; le
   détail de la répartition se lit dans la description, où les items marqués ❓ sont pour Olivier.
 - **Axe de tri thématique** = `deck: <n>-<nom>`, décrit plus haut.
+- **Jalon `S<nn> — <contenu>`** = *avant quelle séance* le travail doit être fait. Les jalons
+  reprennent la numérotation de la colonne `Sem` du planning (`index.html`) : `S01` à `S16`, les
+  semaines sans cours ne consommant pas de numéro. **Tout ticket reçoit son jalon dès qu'un est
+  pertinent** — celui de la séance qui a besoin du deck touché. Restent sans jalon les tickets
+  explicitement sans échéance (« nice to have ») et ceux qui ne se rattachent à aucune séance.
 
 **La description d'un ticket est la source de vérité.** Courte, complète, actionnable, à jour en
 tout temps. Elle ne contient que des **Observations**, des **Décisions** et des **Propositions**,
