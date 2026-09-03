@@ -172,3 +172,19 @@ applique chaque changement. Une décision actée dans un ticket ne vaut pas feu 
 
 **Le compte `gh` est celui d'Olivier** : les commentaires de Claude apparaissent sous son nom. Les
 préfixer de `> 🤖 *Rédigé par Claude.*`.
+
+
+## Le HTML des labos est généré, et committé
+
+`./mdToHtml.sh` passe chaque `labos/*.md` dans pandoc et écrit le `.html` à côté ; **les deux sont
+versionnés**, parce que GitHub Pages sert ce dépôt tel quel, sans étape de build. Le bloc YAML en
+tête des `.md` est donc des métadonnées **pandoc**, pas du front-matter Jekyll : `title:` remplit le
+`<title>` et le `<h1>`, `css:` ajoute une feuille, `back:` l'URL du lien « Back ».
+
+Le mode de panne est silencieux : éditer un `.md`, oublier `mdToHtml.sh`, et le site publie
+l'ancienne version sans que rien ne le signale. `tools/check-html-fresh.sh` le refuse.
+
+- `tools/install-hooks.sh` — à lancer **une fois par clone** ; branche `core.hooksPath` sur
+  `tools/hooks/`, ce qui active la vérification avant chaque commit.
+- `tools/check-html-fresh.sh` — la vérification seule, sur tout le dossier. Sans pandoc installé,
+  elle se saute au lieu d'échouer.
