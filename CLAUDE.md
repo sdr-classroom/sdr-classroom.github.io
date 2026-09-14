@@ -28,6 +28,10 @@ dont relève **le fichier à modifier**.
 
 - **[slides-editor/](slides-editor/)** — éditeur visuel des decks et rendu headless. Voir
   [Éditer les decks](#éditer-les-decks).
+- **[slides-editor/CLAUDE.md](slides-editor/CLAUDE.md)** — les conventions de l'éditeur :
+  invariants (jamais de re-sérialisation, toute opération réversible, écriture sous contrôle de
+  révision), découpage en couches, règles que le compilateur ne peut pas imposer, et les cinq
+  portes de test. **À lire avant de toucher à `slides-editor/`.**
 - **[SLIDES-REVIEW.md](SLIDES-REVIEW.md)** — revue des slides du site public : liste
   d'observations (bugs de pseudocode, incohérences de modèle, trous de couverture) triée par
   importance, chacune avec une ligne `**Solution :**` à compléter. Ajouter les nouvelles
