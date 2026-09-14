@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Labo 1 - Diffusion fiable et exclusion mutuelle</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/labos/style.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+    <main>
+<header id="title-block-header">
+    <nav>
+        <a href="/"><i class="fa fa-angle-left"></i> Back</a>
+      </nav>
+<h1 class="title">Labo 1 - Diffusion fiable et exclusion mutuelle</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#informations-générales"
+id="toc-informations-générales">Informations Générales</a></li>
+<li><a href="#le-fil-rouge-du-semestre"
+id="toc-le-fil-rouge-du-semestre">Le fil rouge du semestre</a></li>
+<li><a href="#les-suppositions" id="toc-les-suppositions">Les
+suppositions</a></li>
+<li><a href="#partie-a-diffusion-fiable"
+id="toc-partie-a-diffusion-fiable">Partie A — Diffusion fiable</a></li>
+<li><a href="#partie-b-exclusion-mutuelle-de-lamport"
+id="toc-partie-b-exclusion-mutuelle-de-lamport">Partie B — Exclusion
+mutuelle de Lamport</a></li>
+<li><a href="#une-contrainte-technique"
+id="toc-une-contrainte-technique">Une contrainte technique</a></li>
+<li><a href="#linterface-avec-loutillage"
+id="toc-linterface-avec-loutillage">L’interface avec
+l’outillage</a></li>
+<li><a href="#tests" id="toc-tests">Tests</a></li>
+<li><a href="#évaluation" id="toc-évaluation">Évaluation</a></li>
+</ul>
+</nav>
+<h2 id="informations-générales">Informations Générales</h2>
+<ul>
+<li><p><a href="TODO"><strong>Lien vers votre repo</strong></a></p></li>
+<li><p><strong>Groupes de deux</strong> : si vous êtes seul.e, venez
+vers nous.</p></li>
+<li><p><strong>Langage</strong> : libre. Boilerplate fournis en Python,
+Java, Go et C++, mais tout autre langage capable de lire et écrire des
+lignes sur <code>stdin</code>/<code>stdout</code> convient
+aussi.</p></li>
+<li><p><strong>Prérequis</strong> : Installation de
+<strong>Rust</strong> (<code>rustup</code>), pour les outils
+d’évaluation.</p></li>
+<li><p><strong>Plagiat</strong> : lors de l’évaluation de vos rendus,
+nous utiliserons des outils de détection de plagiat (entre groupes, mais
+aussi avec les rendus des années précédentes et la solution officielle).
+En cas de suspicion, vous y serez confronté.e.s, et l’incident pourra
+être rapporté au responsable de la filière, avec un risque d’échec
+immédiat au cours.</p></li>
+<li><p><strong>IA générative</strong> : <strong>le moyen d’arriver au
+rendu est entièrement libre.</strong> En revanche, nous attendons un
+ownership complet de votre rendu. Vous devez posséder et savoir défendre
+tous les choix architecturaux et algorithmique de votre solution
+(pourquoi ces choix, pourquoi pas d’autres), ainsi que réfléchir sur la
+base de votre solution (comment vous approcheriez telle ou telle
+nouvelle contrainte).</p>
+<p>Dans cette optique, chaque fin de labo sera suivie dun <em>quiz
+individuel</em> qui testera précisément cette contrainte.</p></li>
+</ul>
+<p>Notez enfin que l’objectif étant pour vous d’apprendre, vous serez
+toujours légitimes et bienvenu.e.s à nous poser des questions : sur la
+théorie, sur vos idées, sur vos blocages. Si vous vous sentez perdu.e.s
+ou coincé.e.s, c’est qu’il faut nous demander.</p>
+<h2 id="le-fil-rouge-du-semestre">Le fil rouge du semestre</h2>
+<p>D’ici la fin du semestre, vous aurez débloqué le boss final du monde
+distribué : le <strong>consensus</strong>. Une fois que le consensus
+peut être atteint, tout devient possible à faible cout
+algorithmique.</p>
+<p>Nous y parviendrons en quatre étapes :</p>
+<ol type="1">
+<li>Permettre une communication robuste entre processus, et l’exclusion
+mutuelle dans un monde sans panne. Le consensus est facile par dessus
+l’exclusion mutuelle, mais nous voulons <em>tolérer les pannes</em>. Ce
+n’est donc que le début.</li>
+<li>Permettre l’élection d’un leader dans un monde où les pannes sont
+possibles.</li>
+<li>Utiliser le leader pour synchroniser les processus.</li>
+<li>Tirer profit de la synchronisation pour atteindre le consensus.</li>
+</ol>
+<p>Ce labo correspond à la première étape. Il se divise en deux parties
+: (A) Reliable Broadcast avec pannes, et (B) Exclusion Mutuelle sans
+pannes.</p>
+<hr />
+<h2 id="les-suppositions">Les suppositions</h2>
+<ul>
+<li><strong>Messages</strong> : aucune perte, duplication et
+réordonnancements.</li>
+<li><strong>Processus</strong> : leur nombre est variable, et le code
+que nous vous fournissons vous y donne accès. Si vous utilisez un
+langage pour lequel nous ne proposons pas de code de départ,
+référez-vous à <code>labs/LAYERS.md</code>, dans le repo qu’on vous
+remet.</li>
+<li><strong>Pannes</strong> :
+<ul>
+<li><strong><em>Partie A</em></strong> <em>(Reliable Broadcast)</em> :
+<strong>Pannes permanentes autorisées</strong> ; un processus peut
+échouer et ne redémarre alors jamais.</li>
+<li><strong><em>Partie B</em></strong> <em>(Mutex)</em> : <strong>Aucune
+panne possible</strong>.</li>
+</ul></li>
+<li><strong>Réseau partiellement synchrone</strong> : Une borne sur la
+durée de transit des messages existe mais vous est inconnue.</li>
+</ul>
+<hr />
+<h2 id="partie-a-diffusion-fiable">Partie A — Diffusion fiable</h2>
+<p>Tout au long du semestre, il arrivera souvent de devoir diffuser
+(broadcast) un message, c’est à dire l’envoyer à tous les autres
+processus du système.</p>
+<p>Or, envoyer simplement à tous ne suffit pas : si l’émetteur tombe en
+panne au milieu de ses envois, seule une partie des processus l’auront
+reçu. Difficile d’imaginer du consensus dans ce contexte.</p>
+<p>Vous implémenterez donc une couche de diffusion fiable (reliable
+broadcast), qui devra garantir les propriétés suivantes :</p>
+<ul>
+<li><strong>Accord</strong> — si un processus correct délivre
+<code>m</code>, alors <strong>tous</strong> les processus corrects
+délivrent <code>m</code>.</li>
+<li><strong>Validité</strong> — si un processus correct diffuse
+<code>m</code>, alors il finit par délivrer <code>m</code>.</li>
+<li><strong>Non-duplication</strong> — chaque message est délivré
+<strong>au plus une fois</strong> par processus.</li>
+<li><strong>Non-création</strong> — un processus ne délivre que des
+messages réellement diffusés.</li>
+</ul>
+<hr />
+<h2 id="partie-b-exclusion-mutuelle-de-lamport">Partie B — Exclusion
+mutuelle de Lamport</h2>
+<p>L’algorithme est celui du cours, et suppose qu’aucune panne
+n’arrivera jamais.</p>
+<p>Votre implémentation doit donc garantir les propriétés suivantes
+:</p>
+<ul>
+<li><strong>Exclusion mutuelle</strong> — jamais deux processus en
+section critique en même temps.</li>
+<li><strong>Progrès</strong> — tout processus correct qui demande la
+section critique finit par l’obtenir.</li>
+</ul>
+<hr />
+<h2 id="une-contrainte-technique">Une contrainte technique</h2>
+<p>Ces labos sont conçus de telle manière que chaque couche que vous
+implémenterez sera utilisable dans le labo suivant.</p>
+<p>Afin d’évaluer chaque labo, nous pourrons remplacer les couches
+implémentées aux labos précédents par nos propres implémentations
+instrumentées pour tester une suffisamment grande variété de
+scénarios.</p>
+<p>Une première conséquence : <strong>votre nœud doit être une fonction
+pure des événements.</strong> Pas d’horloge système, pas de threads, pas
+d’aléatoire non initialisé. C’est ce qui rend une exécution rejouable,
+et c’est vérifié avant tout le reste : si votre code ne se rejoue pas à
+l’identique, rien d’autre n’est évalué.</p>
+<p>Une seconde : <strong>aucune opération n’est autorisée à bloquer en
+attendant une réponse.</strong> Votre processus est un gestionnaire
+d’événements mono-thread, et le temps logique n’avance qu’une fois que
+l’événement est traité. Si une de vos fonctions bloque, alors le temps
+arrête d’avancer.</p>
+<p>En particulier, cela implique que tout est unidirectionnel : un
+événement en entrée ne peut pas répondre, sauf en générant un événement
+en sortie. Concrètement : <code>broadcast(payload)</code> ne retourne
+rien, et la délivrance arrive par abonnement. Un autre exemple est
+<code>request(on_enter)</code> de l’exclusion mutuelle.
+<code>request</code> <em>ne bloque pas</em> en attendant la section
+critique : elle envoit ses messages et stocke <code>on_enter</code> pour
+pouvoir retourner sans attendre. Ce n’est que plus tard, lorsqu’un autre
+événement déclenchera son entrée en section critique, qu’elle appellera
+<code>on_enter</code>.</p>
+<h2 id="linterface-avec-loutillage">L’interface avec l’outillage</h2>
+<p><code>cuelight</code> <strong>est</strong> le réseau : votre
+programme est un processus qui lit et écrit des lignes JSON sur
+<code>stdin</code>/<code>stdout</code>, et l’outil se charge du reste —
+le temps logique, l’acheminement, les pannes.</p>
+<p><strong>Vous n’avez pas à apprendre son protocole pour ce
+labo</strong> : nous fournissons des squelettes qui le parlent déjà pour
+vous. Ce qu’il faut en savoir tient dans son propre README (l’enveloppe,
+les règles de déterminisme, le format des scénarios et des journaux)</p>
+<p>Vous n’écrivez que deux couches ; le squelette fait la liaison avec
+le harnais.</p>
+<p><strong>Ce que vous devez implémenter :</strong></p>
+<ul>
+<li>Pour la diffusion fiable :
+<ul>
+<li><code>broadcast(payload)</code> doit diffuser,</li>
+<li><code>subscribe(fn)</code> doit enregistrer un abonné, appelé à
+chaque délivrance ;</li>
+</ul></li>
+<li>Pour l’exclusion mutuelle :
+<ul>
+<li><code>request(on_enter)</code> doit demander la section critique et
+s’assurer que <code>on_enter</code> sera appelé lorsqu’elle sera
+obtenue,</li>
+<li><code>release()</code> doit quitter la section critique.</li>
+</ul></li>
+</ul>
+<p><strong>Ce que le squelette fait pour vous :</strong></p>
+<ul>
+<li>L’écoute sur <code>stdin</code> des événements
+<code>do_broadcast</code>, et <code>request_cs</code>, et l’appel des
+fonctions listées ci-dessus pour la gestion de ces événements.</li>
+<li>L’envoi sur <code>stdout</code> des événements sortants que votre
+code demande (<code>deliver</code>, <code>enter_cs</code>,
+<code>exit_cs</code>).</li>
+</ul>
+<hr />
+<h2 id="tests">Tests</h2>
+<p>Nous vous fournissons le vérificateur <code>lab1-check</code>, que
+vous construisez vous-même et qui exécute tous les tests fournis avec le
+code. Ces tests sont des scénarios décrivant une séquence d’événements,
+de ralentissements, de pannes, etc. Ceux-ci sont de deux types :</p>
+<ul>
+<li><strong>Quatre scénarios écrits à la main</strong>:
+<code>rb-crash-midsend.json</code>, <code>deadlock.json</code>,
+<code>mutex-tie.json</code> et <code>mutex-late-peer.json</code>, qui
+visent chacun une difficulté précise.</li>
+<li><strong>Des scénarios générés de manière déterministe</strong>: pour
+chaque partie, deux fichiers décrivent les valeurs possibles des
+paramètres. <code>environments/</code> décrit ce que l’exécution subit —
+nombre de processus, délais, pannes — et <code>workloads/</code> ce
+qu’on lui demande — les événements, leur nombre, leurs instants. La
+partie A utilise <code>crashes.json</code> et
+<code>broadcast.json</code>, la partie B <code>no-crash.json</code> et
+<code>mutex.json</code>. À partir d’une graine, <code>lab1-check</code>
+engendre ensuite un scénario autorisé par ces paramètres, toujours le
+même pour la même graine. Il en teste 200 par partie, soit 400 en tout ;
+nous en générerons d’autres lors de l’évaluation de votre rendu.</li>
+</ul>
+<p>Référez-vous au README du repo qu’on vous fournit pour plus de
+détails sur sa construction et son exécution.</p>
+<h2 id="évaluation">Évaluation</h2>
+<p>Votre rendu sera évalué sur ces tests, ainsi que sur un quiz
+individuel juste après le rendu. L’objectif sera de vérifier que vous
+possédez les choix architecturaux, logiques et algorithmiques de votre
+solution, et que vous avez compris leurs enjeux.</p>
+</main>
+</body>
+</html>
