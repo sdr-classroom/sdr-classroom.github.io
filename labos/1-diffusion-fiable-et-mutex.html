@@ -53,12 +53,11 @@ id="toc-partie-a-diffusion-fiable">Partie A — Diffusion fiable</a></li>
 <li><a href="#partie-b-exclusion-mutuelle-de-lamport"
 id="toc-partie-b-exclusion-mutuelle-de-lamport">Partie B — Exclusion
 mutuelle de Lamport</a></li>
-<li><a href="#une-contrainte-technique"
-id="toc-une-contrainte-technique">Une contrainte technique</a></li>
 <li><a href="#linterface-avec-loutillage"
 id="toc-linterface-avec-loutillage">L’interface avec
 l’outillage</a></li>
-<li><a href="#tests" id="toc-tests">Tests</a></li>
+<li><a href="#une-contrainte-technique"
+id="toc-une-contrainte-technique">Une contrainte technique</a></li>
 <li><a href="#évaluation" id="toc-évaluation">Évaluation</a></li>
 </ul>
 </nav>
@@ -121,7 +120,7 @@ réordonnancements.</li>
 <li><strong>Processus</strong> : leur nombre est variable, et le code
 que nous vous fournissons vous y donne accès. Si vous utilisez un
 langage pour lequel nous ne proposons pas de code de départ,
-référez-vous à <code>labs/LAYERS.md</code>, dans le repo qu’on vous
+référez-vous à <code>LAYERS.md</code>, dans le repo qu’on vous
 remet.</li>
 <li><strong>Pannes</strong> :
 <ul>
@@ -169,33 +168,6 @@ section critique en même temps.</li>
 section critique finit par l’obtenir.</li>
 </ul>
 <hr />
-<h2 id="une-contrainte-technique">Une contrainte technique</h2>
-<p>Ces labos sont conçus de telle manière que chaque couche que vous
-implémenterez sera utilisable dans le labo suivant.</p>
-<p>Afin d’évaluer chaque labo, nous pourrons remplacer les couches
-implémentées aux labos précédents par nos propres implémentations
-instrumentées pour tester une suffisamment grande variété de
-scénarios.</p>
-<p>Une première conséquence : <strong>votre nœud doit être une fonction
-pure des événements.</strong> Pas d’horloge système, pas de threads, pas
-d’aléatoire non initialisé. C’est ce qui rend une exécution rejouable,
-et c’est vérifié avant tout le reste : si votre code ne se rejoue pas à
-l’identique, rien d’autre n’est évalué.</p>
-<p>Une seconde : <strong>aucune opération n’est autorisée à bloquer en
-attendant une réponse.</strong> Votre processus est un gestionnaire
-d’événements mono-thread, et le temps logique n’avance qu’une fois que
-l’événement est traité. Si une de vos fonctions bloque, alors le temps
-arrête d’avancer.</p>
-<p>En particulier, cela implique que tout est unidirectionnel : un
-événement en entrée ne peut pas répondre, sauf en générant un événement
-en sortie. Concrètement : <code>broadcast(payload)</code> ne retourne
-rien, et la délivrance arrive par abonnement. Un autre exemple est
-<code>request(on_enter)</code> de l’exclusion mutuelle.
-<code>request</code> <em>ne bloque pas</em> en attendant la section
-critique : elle envoit ses messages et stocke <code>on_enter</code> pour
-pouvoir retourner sans attendre. Ce n’est que plus tard, lorsqu’un autre
-événement déclenchera son entrée en section critique, qu’elle appellera
-<code>on_enter</code>.</p>
 <h2 id="linterface-avec-loutillage">L’interface avec l’outillage</h2>
 <p><code>cuelight</code> <strong>est</strong> le réseau : votre
 programme est un processus qui lit et écrit des lignes JSON sur
@@ -233,7 +205,34 @@ code demande (<code>deliver</code>, <code>enter_cs</code>,
 <code>exit_cs</code>).</li>
 </ul>
 <hr />
-<h2 id="tests">Tests</h2>
+<h2 id="une-contrainte-technique">Une contrainte technique</h2>
+<p>Ces labos sont conçus de telle manière que chaque couche que vous
+implémenterez sera utilisable dans le labo suivant.</p>
+<p>Afin d’évaluer chaque labo, nous pourrons remplacer les couches
+implémentées aux labos précédents par nos propres implémentations
+instrumentées pour tester une suffisamment grande variété de
+scénarios.</p>
+<p>Une première conséquence : <strong>votre nœud doit être une fonction
+pure des événements.</strong> Pas d’horloge système, pas de threads, pas
+d’aléatoire non initialisé. C’est ce qui rend une exécution rejouable,
+et c’est vérifié avant tout le reste : si votre code ne se rejoue pas à
+l’identique, rien d’autre n’est évalué.</p>
+<p>Une seconde : <strong>aucune opération n’est autorisée à bloquer en
+attendant une réponse.</strong> Votre processus est un gestionnaire
+d’événements mono-thread, et le temps logique n’avance qu’une fois que
+l’événement est traité. Si une de vos fonctions bloque, alors le temps
+arrête d’avancer.</p>
+<p>En particulier, cela implique que tout est unidirectionnel : un
+événement en entrée ne peut pas répondre, sauf en générant un événement
+en sortie. Concrètement : <code>broadcast(payload)</code> ne retourne
+rien, et la délivrance arrive par abonnement. Un autre exemple est
+<code>request(on_enter)</code> de l’exclusion mutuelle.
+<code>request</code> <em>ne bloque pas</em> en attendant la section
+critique : elle envoit ses messages et stocke <code>on_enter</code> pour
+pouvoir retourner sans attendre. Ce n’est que plus tard, lorsqu’un autre
+événement déclenchera son entrée en section critique, qu’elle appellera
+<code>on_enter</code>.</p>
+<h2 id="évaluation">Évaluation</h2>
 <p>Nous vous fournissons le vérificateur <code>lab1-check</code>, que
 vous construisez vous-même et qui exécute tous les tests fournis avec le
 code. Ces tests sont des scénarios décrivant une séquence d’événements,
@@ -243,21 +242,19 @@ de ralentissements, de pannes, etc. Ceux-ci sont de deux types :</p>
 <code>rb-crash-midsend.json</code>, <code>deadlock.json</code>,
 <code>mutex-tie.json</code> et <code>mutex-late-peer.json</code>, qui
 visent chacun une difficulté précise.</li>
-<li><strong>Des scénarios générés de manière déterministe</strong>: pour
-chaque partie, deux fichiers décrivent les valeurs possibles des
-paramètres. <code>environments/</code> décrit ce que l’exécution subit —
-nombre de processus, délais, pannes — et <code>workloads/</code> ce
-qu’on lui demande — les événements, leur nombre, leurs instants. La
-partie A utilise <code>crashes.json</code> et
-<code>broadcast.json</code>, la partie B <code>no-crash.json</code> et
-<code>mutex.json</code>. À partir d’une graine, <code>lab1-check</code>
-engendre ensuite un scénario autorisé par ces paramètres, toujours le
-même pour la même graine. Il en teste 200 par partie, soit 400 en tout ;
-nous en générerons d’autres lors de l’évaluation de votre rendu.</li>
+<li><strong>Quatre scénarios paramétriques</strong>, deux par partie. Un
+scénario paramétrique contient plusieurs exécutions, chacune désignée
+par une graine : un fichier de <code>spaces/</code> y décrit les valeurs
+possibles des paramètres — le nombre de processus, les délais, les
+pannes, et les événements qu’on demande aux processus. Pour chaque
+partie, l’un balaie largement et l’autre vise une difficulté précise.
+Une graine y désigne un scénario, toujours le même.
+<code>lab1-check</code> exécute les 200 premières graines de chacun des
+quatre ; nous en exécuterons d’autres lors de l’évaluation de votre
+rendu.</li>
 </ul>
 <p>Référez-vous au README du repo qu’on vous fournit pour plus de
 détails sur sa construction et son exécution.</p>
-<h2 id="évaluation">Évaluation</h2>
 <p>Votre rendu sera évalué sur ces tests, ainsi que sur un quiz
 individuel juste après le rendu. L’objectif sera de vérifier que vous
 possédez les choix architecturaux, logiques et algorithmiques de votre

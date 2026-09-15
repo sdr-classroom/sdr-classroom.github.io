@@ -40,7 +40,7 @@ Ce labo correspond à la première étape. Il se divise en deux parties : (A) Re
 ## Les suppositions
 
 - **Messages** : aucune perte, duplication et réordonnancements.
-- **Processus** : leur nombre est variable, et le code que nous vous fournissons vous y donne accès. Si vous utilisez un langage pour lequel nous ne proposons pas de code de départ, référez-vous à `labs/LAYERS.md`, dans le repo qu'on vous remet.
+- **Processus** : leur nombre est variable, et le code que nous vous fournissons vous y donne accès. Si vous utilisez un langage pour lequel nous ne proposons pas de code de départ, référez-vous à `LAYERS.md`, dans le repo qu'on vous remet.
 - **Pannes** :
   - **_Partie A_** *(Reliable Broadcast)* : **Pannes permanentes autorisées** ; un processus peut échouer et ne redémarre alors jamais.
   - **_Partie B_** *(Mutex)* : **Aucune panne possible**.
@@ -76,18 +76,6 @@ Votre implémentation doit donc garantir les propriétés suivantes :
 
 ---
 
-## Une contrainte technique
-
-Ces labos sont conçus de telle manière que chaque couche que vous implémenterez sera utilisable dans le labo suivant.
-
-Afin d'évaluer chaque labo, nous pourrons remplacer les couches implémentées aux labos précédents par nos propres implémentations instrumentées pour tester une suffisamment grande variété de scénarios.
-
-Une première conséquence : **votre nœud doit être une fonction pure des événements.** Pas d'horloge système, pas de threads, pas d'aléatoire non initialisé. C'est ce qui rend une exécution rejouable, et c'est vérifié avant tout le reste : si votre code ne se rejoue pas à l'identique, rien d'autre n'est évalué.
-
-Une seconde : **aucune opération n'est autorisée à bloquer en attendant une réponse.** Votre processus est un gestionnaire d'événements mono-thread, et le temps logique n'avance qu'une fois que l'événement est traité. Si une de vos fonctions bloque, alors le temps arrête d'avancer.
-
-En particulier, cela implique que tout est unidirectionnel : un événement en entrée ne peut pas répondre, sauf en générant un événement en sortie.  Concrètement : `broadcast(payload)` ne retourne rien, et la délivrance arrive par abonnement. Un autre exemple est `request(on_enter)` de l'exclusion mutuelle. `request` *ne bloque pas* en attendant la section critique : elle envoit ses messages et stocke `on_enter` pour pouvoir retourner sans attendre. Ce n'est que plus tard, lorsqu'un autre événement déclenchera son entrée en section critique, qu'elle appellera `on_enter`.
-
 ## L'interface avec l'outillage
 
 `cuelight` **est** le réseau : votre programme est un processus qui lit et écrit des lignes JSON sur
@@ -113,16 +101,27 @@ Vous n'écrivez que deux couches ; le squelette fait la liaison avec le harnais.
 
 ---
 
-## Tests
+## Une contrainte technique
+
+Ces labos sont conçus de telle manière que chaque couche que vous implémenterez sera utilisable dans le labo suivant.
+
+Afin d'évaluer chaque labo, nous pourrons remplacer les couches implémentées aux labos précédents par nos propres implémentations instrumentées pour tester une suffisamment grande variété de scénarios.
+
+Une première conséquence : **votre nœud doit être une fonction pure des événements.** Pas d'horloge système, pas de threads, pas d'aléatoire non initialisé. C'est ce qui rend une exécution rejouable, et c'est vérifié avant tout le reste : si votre code ne se rejoue pas à l'identique, rien d'autre n'est évalué.
+
+Une seconde : **aucune opération n'est autorisée à bloquer en attendant une réponse.** Votre processus est un gestionnaire d'événements mono-thread, et le temps logique n'avance qu'une fois que l'événement est traité. Si une de vos fonctions bloque, alors le temps arrête d'avancer.
+
+En particulier, cela implique que tout est unidirectionnel : un événement en entrée ne peut pas répondre, sauf en générant un événement en sortie.  Concrètement : `broadcast(payload)` ne retourne rien, et la délivrance arrive par abonnement. Un autre exemple est `request(on_enter)` de l'exclusion mutuelle. `request` *ne bloque pas* en attendant la section critique : elle envoit ses messages et stocke `on_enter` pour pouvoir retourner sans attendre. Ce n'est que plus tard, lorsqu'un autre événement déclenchera son entrée en section critique, qu'elle appellera `on_enter`.
+
+
+## Évaluation
 
 Nous vous fournissons le vérificateur `lab1-check`, que vous construisez vous-même et qui exécute tous les tests fournis avec le code. Ces tests sont des scénarios décrivant une séquence d'événements, de ralentissements, de pannes, etc. Ceux-ci sont de deux types :
 
 - **Quatre scénarios écrits à la main**: `rb-crash-midsend.json`, `deadlock.json`,
   `mutex-tie.json` et `mutex-late-peer.json`, qui visent chacun une difficulté précise.
-- **Des scénarios générés de manière déterministe**: pour chaque partie, deux fichiers décrivent les valeurs possibles des paramètres. `environments/` décrit ce que l'exécution subit — nombre de processus, délais, pannes — et `workloads/` ce qu'on lui demande — les événements, leur nombre, leurs instants. La partie A utilise `crashes.json` et `broadcast.json`, la partie B `no-crash.json` et `mutex.json`. À partir d'une graine, `lab1-check` engendre ensuite un scénario autorisé par ces paramètres, toujours le même pour la même graine. Il en teste 200 par partie, soit 400 en tout ; nous en générerons d'autres lors de l'évaluation de votre rendu.
+- **Quatre scénarios paramétriques**, deux par partie. Un scénario paramétrique contient plusieurs exécutions, chacune désignée par une graine : un fichier de `spaces/` y décrit les valeurs possibles des paramètres — le nombre de processus, les délais, les pannes, et les événements qu'on demande aux processus. Pour chaque partie, l'un balaie largement et l'autre vise une difficulté précise. Une graine y désigne un scénario, toujours le même. `lab1-check` exécute les 200 premières graines de chacun des quatre ; nous en exécuterons d'autres lors de l'évaluation de votre rendu.
 
 Référez-vous au README du repo qu'on vous fournit pour plus de détails sur sa construction et son exécution.
-
-## Évaluation
 
 Votre rendu sera évalué sur ces tests, ainsi que sur un quiz individuel juste après le rendu. L'objectif sera de vérifier que vous possédez les choix architecturaux, logiques et algorithmiques de votre solution, et que vous avez compris leurs enjeux.
