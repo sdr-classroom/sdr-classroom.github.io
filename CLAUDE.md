@@ -26,12 +26,10 @@ dont relève **le fichier à modifier**.
 
 ## Key documents
 
-- **[slides-editor/](slides-editor/)** — éditeur visuel des decks et rendu headless. Voir
-  [Éditer les decks](#éditer-les-decks).
-- **[slides-editor/CLAUDE.md](slides-editor/CLAUDE.md)** — les conventions de l'éditeur :
-  invariants (jamais de re-sérialisation, toute opération réversible, écriture sous contrôle de
-  révision), découpage en couches, règles que le compilateur ne peut pas imposer, et les cinq
-  portes de test. **À lire avant de toucher à `slides-editor/`.**
+- **[sdr-classroom/slides-editor](https://github.com/sdr-classroom/slides-editor)** — dépôt
+  **privé et séparé** : l'éditeur visuel des decks, le rendu headless et le générateur de PDF. Se
+  cloner dans `slides-editor/`, qui est ignoré ici. Son `CLAUDE.md` porte ses conventions ;
+  **le lire avant d'y toucher**. Voir [Éditer les decks](#éditer-les-decks).
 - **[SLIDES-REVIEW.md](SLIDES-REVIEW.md)** — revue des slides du site public : liste
   d'observations (bugs de pseudocode, incohérences de modèle, trous de couverture) triée par
   importance, chacune avec une ligne `**Solution :**` à compléter. Ajouter les nouvelles
@@ -62,6 +60,12 @@ pousse quand le contenu doit sortir.
   public — l'org est sur le plan **free**, où GitHub Pages n'est servi que depuis un dépôt public
   (Pages : branche `main`, racine).
 - Les deux dépôts partagent leur historique : publier = `git push public main`. Ni subtree ni miroir.
+- **Tout ce qui est suivi ici finit donc public.** Il n'existe pas de dossier privé dans ce dépôt :
+  `git push public main` publie l'arbre entier. L'éditeur a vécu ici pendant deux semaines
+  (1er–15 septembre 2026) et s'est retrouvé publié, alors que ce fichier affirmait le contraire.
+  L'historique des deux dépôts a été réécrit le 15 septembre 2026 pour l'en retirer, et il est
+  maintenant dans son propre dépôt privé. **Avant d'ajouter quoi que ce soit ici, se demander si
+  ça peut être public.**
 - Remotes du clone local : `origin` = **website-private** (donc le `git push` par défaut va au
   privé), `public` = le dépôt public. `main` suit `origin/main`.
 - Les corrigés de labo vivent dans `../sdr-labs/` (privé), plus dans ce dépôt. La branche
@@ -104,23 +108,18 @@ Le reste — colonnes, `assigned:`, forme des descriptions, boucle de collaborat
 - Un nouveau deck exporté se complète avec `python3 FixSlidesExportToHtml.py slides/<fichier>`,
   **une seule fois**.
 
-## Éditeur : worktree, serveur, tests
+## Éditeur : dépôt séparé, serveur, tests
 
-- **Le serveur d'édition appartient à Olivier.** Il le lance lui-même depuis son worktree principal :
-  `cd slides-editor && npm run edit` (port 5174, relancer après un rebase). Claude ne le démarre ni
-  ne le tue — pas de `pkill -f "tsx src/server.ts"`. La suite de tests démarre son propre serveur
-  et glisse de port si 5174 est pris.
-- **Claude travaille sur l'éditeur dans le worktree `../wt/editor`, sur la branche
-  `claude/editor`.** `main` reste **libre pour le dépôt principal** : git refuse la même branche
-  dans deux worktrees, donc tant que Claude la tient, Olivier ne peut pas s'y mettre.
-- **Publier depuis ce worktree ne demande pas de sortir de sa branche** : Claude commit sur
-  `claude/editor`, puis `git push origin claude/editor:main` (fast-forward). Inutile — et
-  impossible — de mettre `main` à jour en local pendant qu'elle est sortie ailleurs. Olivier
-  récupère par un `git pull`. Claude **signale chaque fois que `main` bouge**.
-  Le `slides-editor/node_modules` du worktree est un lien symbolique vers celui du principal.
-- Cette liberté de pousser vaut **pour l'outillage seulement** : `slides-editor/` ne part jamais sur
-  le dépôt public et sa suite de tests le couvre. Le *contenu* (slides, labos, pages) reste soumis à
-  la relecture d'Olivier.
+- **L'éditeur est un dépôt privé à part** : `sdr-classroom/slides-editor`, cloné dans
+  `slides-editor/` (ignoré ici). On y commit et pousse normalement, sa suite de tests le couvre.
+  Plus de worktree `../wt/editor` ni de branche `claude/editor` : ils existaient pour travailler
+  sur l'éditeur sans bloquer `main`, et n'ont plus lieu d'être.
+- **Le serveur d'édition appartient à Olivier.** Il le lance lui-même : `cd slides-editor && npm run
+  edit` (port 5174). Claude ne le démarre ni ne le tue — pas de `pkill -f "tsx src/server.ts"`. La
+  suite de tests démarre son propre serveur et glisse de port si 5174 est pris.
+- L'éditeur lit et écrit les decks de **ce** dépôt, par chemin relatif (`../slides/`) : les deux
+  clones doivent donc rester côte à côte, `slides-editor/` à l'intérieur du site.
+- Le *contenu* (slides, labos, pages) reste soumis à la relecture d'Olivier.
 
 ## Conventions de ticket
 

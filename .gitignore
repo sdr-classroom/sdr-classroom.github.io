@@ -3,3 +3,10 @@
 **/.*~
 .vscode/
 .idea/
+
+# slides-editor a son propre dépôt, privé : sdr-classroom/slides-editor.
+#
+# Il vivait ici, et les deux dépôts partageant leur historique, il se retrouvait publié à chaque
+# `git push public main` — alors que le CLAUDE.md affirmait le contraire. La règle est maintenant
+# tenue par git plutôt que par la mémoire : le dossier est un clone à part, et ignoré ici.
+slides-editor/
