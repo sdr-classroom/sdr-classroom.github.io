@@ -82,11 +82,11 @@ immédiat au cours.</p></li>
 <li><p><strong>IA générative</strong> : <strong>le moyen d’arriver au
 rendu est entièrement libre.</strong> En revanche, nous attendons un
 ownership complet de votre rendu. Vous devez posséder et savoir défendre
-tous les choix architecturaux et algorithmique de votre solution
+tous les choix architecturaux et algorithmiques de votre solution
 (pourquoi ces choix, pourquoi pas d’autres), ainsi que réfléchir sur la
 base de votre solution (comment vous approcheriez telle ou telle
 nouvelle contrainte).</p>
-<p>Dans cette optique, chaque fin de labo sera suivie dun <em>quiz
+<p>Dans cette optique, chaque fin de labo sera suivie d’un <em>quiz
 individuel</em> qui testera précisément cette contrainte.</p></li>
 </ul>
 <p>Notez enfin que l’objectif étant pour vous d’apprendre, vous serez
@@ -94,9 +94,9 @@ toujours légitimes et bienvenu.e.s à nous poser des questions : sur la
 théorie, sur vos idées, sur vos blocages. Si vous vous sentez perdu.e.s
 ou coincé.e.s, c’est qu’il faut nous demander.</p>
 <h2 id="le-fil-rouge-du-semestre">Le fil rouge du semestre</h2>
-<p>D’ici la fin du semestre, vous aurez débloqué le boss final du monde
-distribué : le <strong>consensus</strong>. Une fois que le consensus
-peut être atteint, tout devient possible à faible cout
+<p>D’ici la fin du semestre, vous aurez atteint (et vaincu) le boss
+final du monde distribué : le <strong>consensus</strong>. Une fois que
+le consensus est disponible, tout devient possible à faible cout
 algorithmique.</p>
 <p>Nous y parviendrons en quatre étapes :</p>
 <ol type="1">
@@ -115,8 +115,8 @@ pannes.</p>
 <hr />
 <h2 id="les-suppositions">Les suppositions</h2>
 <ul>
-<li><strong>Messages</strong> : aucune perte, duplication et
-réordonnancements.</li>
+<li><strong>Messages</strong> : aucune perte, duplication ou
+réordonnancement.</li>
 <li><strong>Processus</strong> : leur nombre est variable, et le code
 que nous vous fournissons vous y donne accès. Si vous utilisez un
 langage pour lequel nous ne proposons pas de code de départ,
@@ -138,9 +138,10 @@ durée de transit des messages existe mais vous est inconnue.</li>
 <p>Tout au long du semestre, il arrivera souvent de devoir diffuser
 (broadcast) un message, c’est à dire l’envoyer à tous les autres
 processus du système.</p>
-<p>Or, envoyer simplement à tous ne suffit pas : si l’émetteur tombe en
-panne au milieu de ses envois, seule une partie des processus l’auront
-reçu. Difficile d’imaginer du consensus dans ce contexte.</p>
+<p>Or, comme nous l’avons vu en cours, envoyer simplement à tous ne
+suffit pas : si l’émetteur tombe en panne au milieu de ses envois, seule
+une partie des processus l’auront reçu. Difficile d’imaginer du
+consensus dans ce contexte.</p>
 <p>Vous implémenterez donc une couche de diffusion fiable (reliable
 broadcast), qui devra garantir les propriétés suivantes :</p>
 <ul>
@@ -169,17 +170,23 @@ section critique finit par l’obtenir.</li>
 </ul>
 <hr />
 <h2 id="linterface-avec-loutillage">L’interface avec l’outillage</h2>
-<p><code>cuelight</code> <strong>est</strong> le réseau : votre
-programme est un processus qui lit et écrit des lignes JSON sur
-<code>stdin</code>/<code>stdout</code>, et l’outil se charge du reste —
-le temps logique, l’acheminement, les pannes.</p>
-<p><strong>Vous n’avez pas à apprendre son protocole pour ce
-labo</strong> : nous fournissons des squelettes qui le parlent déjà pour
-vous. Ce qu’il faut en savoir tient dans son propre README (l’enveloppe,
-les règles de déterminisme, le format des scénarios et des journaux)</p>
-<p>Vous n’écrivez que deux couches ; le squelette fait la liaison avec
-le harnais.</p>
-<p><strong>Ce que vous devez implémenter :</strong></p>
+<p>Votre programme correspond au comportement du module d’<em>un</em>
+processus du système. Il lit sur <code>stdin</code> les événements qu’il
+doit traiter (e.g. réception d’un message, demande d’entrée en section
+critique), et écrit sur <code>stdout</code> les événements qu’il
+déclenche (e.g. envoyer un message, sortir de section critique).</p>
+<p>Un outil, <code>cuelight</code>, est ensuite chargé de lancer votre
+programme pour chaque processus du système, et lire et écrire sur
+<code>stdin</code> et <code>stdout</code> pour simuler le réseau entre
+les processus, et déclencher les événements qu’ils ont à traiter.</p>
+<p>Afin de vous permettre de vous concentrer sur l’algorithmique, nous
+vous fournissons des squelettes qui gèrent <code>stdin</code> et
+<code>stdout</code> pour vous, et cachent cette complexité derrière des
+interfaces clairement définies. Si vous choisissez de ne pas utiliser un
+de ces squelettes, le README de votre repo contient les informations
+pour créer le vôtre de zéro.</p>
+<p>Si vous utilisez nos squelettes, vous n’aurez donc que les points
+suivants à implémenter dans ce labo.</p>
 <ul>
 <li>Pour la diffusion fiable :
 <ul>
@@ -195,33 +202,26 @@ obtenue,</li>
 <li><code>release()</code> doit quitter la section critique.</li>
 </ul></li>
 </ul>
-<p><strong>Ce que le squelette fait pour vous :</strong></p>
-<ul>
-<li>L’écoute sur <code>stdin</code> des événements
-<code>do_broadcast</code>, et <code>request_cs</code>, et l’appel des
-fonctions listées ci-dessus pour la gestion de ces événements.</li>
-<li>L’envoi sur <code>stdout</code> des événements sortants que votre
-code demande (<code>deliver</code>, <code>enter_cs</code>,
-<code>exit_cs</code>).</li>
-</ul>
 <hr />
 <h2 id="une-contrainte-technique">Une contrainte technique</h2>
-<p>Ces labos sont conçus de telle manière que chaque couche que vous
-implémenterez sera utilisable dans le labo suivant.</p>
+<p>Ces labos sont conçus de manière à ce que chaque couche que vous
+implémentez soit utilisable dans le labo suivant.</p>
 <p>Afin d’évaluer chaque labo, nous pourrons remplacer les couches
 implémentées aux labos précédents par nos propres implémentations
-instrumentées pour tester une suffisamment grande variété de
-scénarios.</p>
-<p>Une première conséquence : <strong>votre nœud doit être une fonction
-pure des événements.</strong> Pas d’horloge système, pas de threads, pas
+instrumentées pour tester une suffisamment grande variété de scénarios.
+Deux conséquences en découlent :</p>
+<ol type="1">
+<li><strong>Votre nœud doit être une fonction pure des
+événements.</strong> Pas d’horloge système, pas de threads, pas
 d’aléatoire non initialisé. C’est ce qui rend une exécution rejouable,
 et c’est vérifié avant tout le reste : si votre code ne se rejoue pas à
-l’identique, rien d’autre n’est évalué.</p>
-<p>Une seconde : <strong>aucune opération n’est autorisée à bloquer en
-attendant une réponse.</strong> Votre processus est un gestionnaire
-d’événements mono-thread, et le temps logique n’avance qu’une fois que
-l’événement est traité. Si une de vos fonctions bloque, alors le temps
-arrête d’avancer.</p>
+l’identique, rien d’autre n’est évalué.</li>
+<li><strong>Aucune opération n’est autorisée à bloquer en attendant une
+réponse.</strong> Votre processus est un gestionnaire d’événements
+mono-thread, et le temps logique n’avance qu’une fois que l’événement
+est traité. Si une de vos fonctions bloque, alors le temps arrête
+d’avancer.</li>
+</ol>
 <p>En particulier, cela implique que tout est unidirectionnel : un
 événement en entrée ne peut pas répondre, sauf en générant un événement
 en sortie. Concrètement : <code>broadcast(payload)</code> ne retourne
@@ -243,18 +243,15 @@ de ralentissements, de pannes, etc. Ceux-ci sont de deux types :</p>
 <code>mutex-tie.json</code> et <code>mutex-late-peer.json</code>, qui
 visent chacun une difficulté précise.</li>
 <li><strong>Quatre scénarios paramétriques</strong>, deux par partie. Un
-scénario paramétrique contient plusieurs exécutions, chacune désignée
-par une graine : un fichier de <code>spaces/</code> y décrit les valeurs
-possibles des paramètres — le nombre de processus, les délais, les
-pannes, et les événements qu’on demande aux processus. Pour chaque
-partie, l’un balaie largement et l’autre vise une difficulté précise.
-Une graine y désigne un scénario, toujours le même.
-<code>lab1-check</code> exécute les 200 premières graines de chacun des
-quatre ; nous en exécuterons d’autres lors de l’évaluation de votre
-rendu.</li>
+scénario paramétrique est un scénario dont les paramètres sont
+variables, et dont l’exécution dépend d’une graine (seed). Pour chaque
+graine, l’exécution sera légèrement différente. Cela permet de tester
+une plus grande variété de scénarios. <code>lab1-check</code> exécute
+les 200 premières graines de chacun des quatre ; nous en exécuterons
+d’autres lors de l’évaluation de votre rendu.</li>
 </ul>
-<p>Référez-vous au README du repo qu’on vous fournit pour plus de
-détails sur sa construction et son exécution.</p>
+<p>Référez-vous au README de votre repo pour plus de détails sur la
+construction et l’exécution de <code>lab1-check</code>.</p>
 <p>Votre rendu sera évalué sur ces tests, ainsi que sur un quiz
 individuel juste après le rendu. L’objectif sera de vérifier que vous
 possédez les choix architecturaux, logiques et algorithmiques de votre
