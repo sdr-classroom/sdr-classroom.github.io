@@ -178,6 +178,29 @@ applique chaque changement. Une décision actée dans un ticket ne vaut pas feu 
 préfixer de `> 🤖 *Rédigé par Claude.*`.
 
 
+## Les PDF des slides sont générés, et committés
+
+Chaque deck a son `slides/<deck>/slides.pdf`, committé, et `index.html` y pointe directement. Le
+site liait auparavant `slides/<deck>/?print-pdf`, qui demandait au navigateur **du lecteur** de
+mettre le deck en page puis de passer par sa propre boîte d'impression : le résultat dépendait de
+son navigateur, de son format de papier et d'un CDN au moment du clic. D'où l'instabilité.
+
+- `cd slides-editor && npm run pdf` — régénère les decks dont le PDF est périmé. `-- --all` force
+  tout, `-- <deck>` un seul, `-- --check` dit ce qui est périmé sans rien écrire. Environ 2,5 s par
+  deck.
+- Une page par **étape de build**, pas par slide : on peut toujours en retirer, pas en inventer.
+- Les slides `data-visibility="hidden"` sont **exclues** — reveal les retire, donc les corrigés
+  masqués ne partent pas dans le PDF. Vérifié.
+
+**Le mode de panne est silencieux**, exactement comme pour le HTML des labos : modifier un deck,
+oublier `npm run pdf`, et le site publie l'ancien PDF sans que rien ne le signale.
+`slides/pdf.manifest` enregistre la somme de contrôle de chaque `index.html` au moment du rendu, et
+`tools/check-pdf-fresh.sh` la compare. Le hook pre-commit (`tools/install-hooks.sh`, **une fois par
+clone**) refuse le commit.
+
+**Donc : toucher à un deck ⇒ `npm run pdf` ⇒ `git add slides/*/slides.pdf slides/pdf.manifest`.**
+Le hook le rappelle, mais il ne tourne que si les hooks sont installés.
+
 ## Le HTML des labos est généré, et committé
 
 `./mdToHtml.sh` passe chaque `labos/*.md` dans pandoc et écrit le `.html` à côté ; **les deux sont
