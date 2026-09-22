@@ -2,9 +2,9 @@
 af1f8bc6d3a0fb37fc5c743c542f7f3ea421f53657f3234aacf42d491be4afed  slides/0-intro/index.html
 47bee5ad61dbcd5791a630c15de7d226d790bcb97544a4dd35ebce4b6fc30c64  slides/1-go/index.html
 a54356ee50057439371e7a1b64591d7ef8ebd4a90aae7a9e3d7eae44d04bdf89  slides/2-1-horloges/index.html
-f25e8cd02a8ada67f90f3cfad713e3259e9a30a87c7c8cc6e6eae3adda207996  slides/2-2-mutex-lamport/index.html
-7327e67f72e1f8f962ca672b26ef06ad40f28da37f5bf88215d9e18772a5b069  slides/3-1-jetons-multiples-mutex/index.html
-8155e35e717f2e06af6d9b099bf32effb4ccd2978ad7784c5e4d4bc3365c4623  slides/3-2-mutex-jeton-unique/index.html
+e5766194700e5f4d6103979f0dc616545d1734a784776411ed9d158a70763e4a  slides/2-2-mutex-lamport/index.html
+bda6301f6d38a4bde8a10587487da52f650ebd92ce22badab52e5016a4f8e29d  slides/3-1-jetons-multiples-mutex/index.html
+aaa7a16657f1aefdb8d37634884f324031667c18cbbe83ef14a4f08d306525cf  slides/3-2-mutex-jeton-unique/index.html
 3280d1e71ea553badc4fea60186729a04fb485dad8f3f79455aa555f7c64c9b2  slides/4-0-diffusion-elections-naif/index.html
 d0f5af2edc25403cd93c994c8ec5f61746074546b258b6d2f64756f4f42268a6  slides/4-1-diffusion-elections-cr/index.html
 33e78a0fffda8baee98dde674995045caec5af3bc5069f9c6c2029a614c7be6c  slides/4-2-diffusion-elections-cr-pannes/index.html
