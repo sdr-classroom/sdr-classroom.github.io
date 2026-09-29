@@ -26,7 +26,9 @@ fi
 if [ "${1:-}" = "--staged" ]; then
     files=$(git diff --cached --name-only --diff-filter=ACM -- 'slides/*/index.html')
 else
-    files=$(find slides -mindepth 2 -maxdepth 2 -name index.html -type f | sort)
+    # Le __ en tête marque un deck de travail (fixture de tests, prévisualisation) :
+    # il n'a pas de PDF et n'a rien à faire dans le manifeste. Doit correspondre à src/pdf.ts.
+    files=$(find slides -mindepth 2 -maxdepth 2 -name index.html -type f | grep -v '/__' | sort)
 fi
 [ -n "$files" ] || exit 0
 
