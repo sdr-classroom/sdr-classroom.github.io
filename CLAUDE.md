@@ -188,6 +188,11 @@ son navigateur, de son format de papier et d'un CDN au moment du clic. D'où l'i
   tout, `-- <deck>` un seul, `-- --check` dit ce qui est périmé sans rien écrire. Environ 2,5 s par
   deck.
 - Une page par **étape de build**, pas par slide : on peut toujours en retirer, pas en inventer.
+- Les **notes du présentateur** sont exclues : les decks initialisent reveal avec `showNotes: true`,
+  ce qui est sans effet à l'écran mais imprime un cadre gris « Speaker notes » — sur 18 slides. Le
+  générateur passe `showNotes=false`, donc aucun deck n'est modifié.
+- Le manifeste porte une ligne `# format:` = la version du générateur. Changer le générateur rend
+  tous les PDF périmés sans qu'aucune somme de contrôle ne bouge ; c'est cette ligne qui l'attrape.
 - Les slides `data-visibility="hidden"` sont **exclues** — reveal les retire, donc les corrigés
   masqués ne partent pas dans le PDF. Vérifié.
 

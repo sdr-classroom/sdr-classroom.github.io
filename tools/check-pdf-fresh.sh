@@ -37,6 +37,22 @@ if [ ! -f "$manifest" ]; then
     exit 1
 fi
 
+# La ligne `# format:` dit quelle version du generateur a produit ces PDF. Sans
+# elle, changer le generateur laissait tous les PDF perimes avec des sommes de
+# controle encore justes -- et la verification repondait que tout allait bien.
+want=$(grep -o "FORMAT = \"[^\"]*\"" slides-editor/src/pdf.ts 2>/dev/null | head -1 | sed 's/.*"\(.*\)"/\1/')
+have=$(grep -o "^# format: .*" "$manifest" | head -1 | sed 's/^# format: //')
+if [ -n "$want" ] && [ "$want" != "$have" ]; then
+    echo "" >&2
+    echo "Les PDF ont ete produits par une autre version du generateur :" >&2
+    echo "  manifeste : ${have:-aucune}" >&2
+    echo "  generateur: $want" >&2
+    echo "" >&2
+    echo "  cd slides-editor && npm run pdf" >&2
+    echo "" >&2
+    exit 1
+fi
+
 stale=""
 for src in $files; do
     deck=$(dirname "$src")
