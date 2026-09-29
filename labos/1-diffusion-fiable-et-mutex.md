@@ -118,3 +118,5 @@ Nous vous fournissons le vérificateur `lab1-check`, que vous construisez vous-m
 Référez-vous au README de votre repo pour plus de détails sur la construction et l'exécution de `lab1-check`.
 
 Votre rendu sera évalué sur ces tests, ainsi que sur un quiz individuel juste après le rendu. L'objectif sera de vérifier que vous possédez les choix architecturaux, logiques et algorithmiques de votre solution, et que vous avez compris leurs enjeux.
+
+[Liste des critères](./files/1-criterions.pdf)
