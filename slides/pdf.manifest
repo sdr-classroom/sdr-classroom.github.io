@@ -4,7 +4,7 @@ af1f8bc6d3a0fb37fc5c743c542f7f3ea421f53657f3234aacf42d491be4afed  slides/0-intro
 47bee5ad61dbcd5791a630c15de7d226d790bcb97544a4dd35ebce4b6fc30c64  slides/1-go/index.html
 51f5ff292e64d264f7b1fbbcbf957db805b3e7dcc7bdaa9b12da7cc5c4d32b54  slides/2-1-horloges/index.html
 90cc3ef1415be345b5ecb58d531a908483dfed8efd49f60c15f6b779d3918f30  slides/2-2-mutex-lamport/index.html
-769dbf93963847db0e47cfd231f04f510d15f92584fb4e20864c708111d56f3d  slides/3-1-jetons-multiples-mutex/index.html
+ac325a6ba2e21337db110c5b37491e97bb2e037ec571c2ac12f1c59fd3ce6f2a  slides/3-1-jetons-multiples-mutex/index.html
 aaa7a16657f1aefdb8d37634884f324031667c18cbbe83ef14a4f08d306525cf  slides/3-2-mutex-jeton-unique/index.html
 3280d1e71ea553badc4fea60186729a04fb485dad8f3f79455aa555f7c64c9b2  slides/4-0-diffusion-elections-naif/index.html
 d0f5af2edc25403cd93c994c8ec5f61746074546b258b6d2f64756f4f42268a6  slides/4-1-diffusion-elections-cr/index.html
