@@ -6,7 +6,7 @@ back: "/"
 ---
 
 ## Informations Générales
-- **Lien vers votre repo** : communiqué en séance.
+- [**Lien vers le labo sur Roster**](https://roster.y-software.ch/join/96192a1c9dc0c344b0e09dffa8d8d558)
 - **Groupes de deux**, que vous êtes libres de changer par rapport au labo 1 : si vous êtes seul.e, venez vers nous.
 - **Langage** : libre. Boilerplate fournis en Python, Java, Go et C++, mais tout autre langage capable de lire et écrire des lignes sur `stdin`/`stdout` convient aussi.
 - **Prérequis** : Installation de **Rust** (`rustup`), pour les outils d'évaluation.
