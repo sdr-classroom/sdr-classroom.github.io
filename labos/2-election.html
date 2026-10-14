@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Labo 2 - Élection du processus le plus apte</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/labos/style.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+    <main>
+<header id="title-block-header">
+    <nav>
+        <a href="/"><i class="fa fa-angle-left"></i> Back</a>
+      </nav>
+<h1 class="title">Labo 2 - Élection du processus le plus apte</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#informations-générales"
+id="toc-informations-générales">Informations Générales</a></li>
+<li><a href="#le-fil-rouge-du-semestre"
+id="toc-le-fil-rouge-du-semestre">Le fil rouge du semestre</a></li>
+<li><a href="#les-suppositions" id="toc-les-suppositions">Les
+suppositions</a></li>
+<li><a href="#lélection" id="toc-lélection">L’élection</a></li>
+<li><a href="#contraintes-sur-votre-solution"
+id="toc-contraintes-sur-votre-solution">Contraintes sur votre
+solution</a></li>
+<li><a href="#linterface-avec-loutillage"
+id="toc-linterface-avec-loutillage">L’interface avec
+l’outillage</a></li>
+<li><a href="#une-contrainte-technique"
+id="toc-une-contrainte-technique">Une contrainte technique</a></li>
+<li><a href="#évaluation" id="toc-évaluation">Évaluation</a></li>
+</ul>
+</nav>
+<h2 id="informations-générales">Informations Générales</h2>
+<ul>
+<li><p><strong>Lien vers votre repo</strong> : communiqué en
+séance.</p></li>
+<li><p><strong>Groupes de deux</strong>, que vous êtes libres de changer
+par rapport au labo 1 : si vous êtes seul.e, venez vers nous.</p></li>
+<li><p><strong>Langage</strong> : libre. Boilerplate fournis en Python,
+Java, Go et C++, mais tout autre langage capable de lire et écrire des
+lignes sur <code>stdin</code>/<code>stdout</code> convient
+aussi.</p></li>
+<li><p><strong>Prérequis</strong> : Installation de
+<strong>Rust</strong> (<code>rustup</code>), pour les outils
+d’évaluation.</p></li>
+<li><p><strong>Plagiat</strong> : lors de l’évaluation de vos rendus,
+nous utiliserons des outils de détection de plagiat (entre groupes, mais
+aussi avec les rendus des années précédentes et la solution officielle).
+En cas de suspicion, vous y serez confronté.e.s, et l’incident pourra
+être rapporté au responsable de la filière, avec un risque d’échec
+immédiat au cours.</p></li>
+<li><p><strong>IA générative</strong> : <strong>le moyen d’arriver au
+rendu est entièrement libre.</strong> En revanche, nous attendons un
+ownership complet de votre rendu. Vous devez posséder et savoir défendre
+tous les choix architecturaux et algorithmiques de votre solution
+(pourquoi ces choix, pourquoi pas d’autres), ainsi que réfléchir sur la
+base de votre solution (comment vous approcheriez telle ou telle
+nouvelle contrainte).</p>
+<p>Dans cette optique, chaque fin de labo sera suivie d’un <em>quiz
+individuel</em> qui testera précisément cette contrainte.</p></li>
+</ul>
+<p>Notez enfin que l’objectif étant pour vous d’apprendre, vous serez
+toujours légitimes et bienvenu.e.s à nous poser des questions : sur la
+théorie, sur vos idées, sur vos blocages. Si vous vous sentez perdu.e.s
+ou coincé.e.s, c’est qu’il faut nous demander.</p>
+<h2 id="le-fil-rouge-du-semestre">Le fil rouge du semestre</h2>
+<p>Rappelez-vous le <a
+href="https://sdr-classroom.github.io/labos/1-diffusion-fiable-et-mutex.html#le-fil-rouge-du-semestre">fil
+rouge du semestre</a>. Au labo 1, vous avez implémenté une mutex
+intolérante aux pannes. Nous commençons maintenant, avec ce labo 2, le
+travail qui nous amènera d’ici la fin du semestre à un algorithme de
+consensus.</p>
+<p><strong>Ce labo ne dépend pas du précédent.</strong> Vous n’avez
+besoin d’aucune ligne de votre labo 1, ni de votre diffusion fiable ni
+de votre exclusion mutuelle : vous partez d’un nouveau repo, qui
+contient tout ce qu’il faut.</p>
+<hr />
+<h2 id="les-suppositions">Les suppositions</h2>
+<ul>
+<li><strong>Messages</strong> : aucune perte, duplication ou
+réordonnancement.</li>
+<li><strong>Processus</strong> : leur nombre est variable, et le code
+que nous vous fournissons vous y donne accès. Si vous utilisez un
+langage pour lequel nous ne proposons pas de code de départ,
+référez-vous à <code>LAYERS.md</code>, dans le repo qu’on vous
+remet.</li>
+<li><strong>Pannes</strong> : <strong>permanentes ou récupérables, sans
+amnésie.</strong> Souvenez-vous qu’un processus est dit <em>correct</em>
+en terme de pannes récupérables s’il est tel qu’à partir d’un certain
+instant inconnu il ne tombera plus jamais en panne.</li>
+<li><strong>Réseau partiellement synchrone</strong> : une borne sur la
+durée de transit des messages existe mais vous est inconnue.</li>
+<li><strong>Scission</strong> : le réseau peut être temporairement
+scindé, mais finira toujours par se reconnecter.</li>
+</ul>
+<hr />
+<h2 id="lélection">L’élection</h2>
+<p>Chaque processus a une <strong>aptitude</strong> : un nombre, qui
+vaut 0 au départ et peut changer à tout moment. Ce n’est pas vous qui la
+choisissez ; elle vous est communiquée, et elle peut monter comme
+descendre.</p>
+<p>Vous implémenterez une couche d’élection : à tout instant, chaque
+processus <em>nomme</em> un élu. Si les aptitudes cessent de changer,
+votre couche doit garantir les propriétés suivantes :</p>
+<ul>
+<li><strong>Progrès</strong> — un jour, tout processus correct nomme un
+élu et n’en change plus.</li>
+<li><strong>Sûreté</strong> — un jour, tous les processus corrects
+nomment le même élu.</li>
+<li><strong>Validité</strong> — cet élu est le processus correct de plus
+grande aptitude.</li>
+</ul>
+<p>À aptitude égale, c’est le processus de plus petit identifiant qui
+l’emporte.</p>
+<p>Notez que parce que ces propriétés sont « un jour », il est possible
+d’avoir temporairement deux élus en même temps, notamment durant une
+scission. C’est seulement une fois que le réseau s’est stabilisé que ces
+propriétés doivent tenir.</p>
+<hr />
+<h2 id="contraintes-sur-votre-solution">Contraintes sur votre
+solution</h2>
+<p>Les propriétés ci-dessus disent ce qu’est une élection correcte.
+Elles ne suffisent pas pour que votre solution soit acceptée : nous
+exigeons en plus les deux contraintes suivantes.</p>
+<p><strong>Les algorithmes vus en cours ne les respectent pas.</strong>
+L’objectif de ce labo est que vous en conceviez un autre, en vous
+servant de ce que le cours vous a appris.</p>
+<ol type="1">
+<li><strong>Quand un processus devient le plus apte</strong>, sur un
+réseau sans ralentissements, sans panne, et sans autre changement
+d’aptitude, tous les processus doivent le nommer élu en <strong>au plus
+deux allers-retours</strong>, c’est-à-dire quatre fois la durée de
+transit d’un message, et <strong>au plus <code>4n</code>
+messages</strong> doivent avoir été envoyés entre-temps, <code>n</code>
+étant le nombre de processus.</li>
+<li><strong>Une fois que l’élu est connu de tous, les non-élus
+n’envoient plus de message.</strong></li>
+</ol>
+<p>Enfin, si votre solution utilise des délais d’attente, <strong>leur
+valeur initiale ne doit pas dépasser 400 unités de temps.</strong></p>
+<p>Pour votre information, un ordre de grandeur : sur un réseau calme et
+rapide, un message met <strong>une vingtaine d’unités de temps</strong>
+à arriver. D’autres réseaux peuvent être plus lents, ou connaitre des
+pics de délai. La borne sur la durée de transit reste, quoi qu’il
+arrive, inconnue.</p>
+<p>Notez aussi qu’un processus ne remet pas tous ses messages au réseau
+au même instant : ils partent l’un après l’autre, et écrire à tous les
+autres peut prendre jusqu’à une centaine d’unités de temps. Un processus
+qui écrit plus vite que ses messages ne partent accumule du retard, et
+ce retard continue de s’écouler bien après qu’il a cessé d’écrire.</p>
+<p>Un indice, pour la première contrainte : quand un processus devient
+le plus apte, sans panne, au plus lui et l’élu précédent envoient des
+messages jusqu’à ce que tous le nomment.</p>
+<hr />
+<h2 id="linterface-avec-loutillage">L’interface avec l’outillage</h2>
+<p>L’outillage est celui du labo 1 : votre programme est le comportement
+d’<em>un</em> processus, il lit ses événements sur <code>stdin</code> et
+écrit les siens sur <code>stdout</code>, et <code>cuelight</code> simule
+le réseau entre les processus.</p>
+<p>Si vous utilisez notre squelette, vous n’aurez que les points
+suivants à implémenter :</p>
+<ul>
+<li>le constructeur de la couche est appelé une fois, au démarrage du
+processus, et reçoit <code>on_leader_change</code> ;</li>
+<li><code>leader()</code> doit retourner l’identifiant du processus
+actuellement nommé élu ;</li>
+<li><code>set_ability(v)</code> est appelée chaque fois que l’aptitude
+de ce processus change, et vaut désormais <code>v</code> ;</li>
+<li><code>on_leader_change</code> est une fonction sans argument qui
+vous est fournie, et que <strong>vous</strong> devez appeler chaque fois
+que <code>leader()</code> se met à retourner un autre processus. Ne
+l’appelez pas depuis le constructeur : à ce moment-là, celui qui
+construit votre couche ne la tient pas encore.</li>
+</ul>
+<p>C’est par ce dernier appel que nous apprenons qui vous nommez élu, et
+à quel instant : un changement que vous n’annoncez pas n’est jamais
+vu.</p>
+<hr />
+<h2 id="une-contrainte-technique">Une contrainte technique</h2>
+<p>Elle est la même qu’au labo 1, et pour la même raison : au labo
+suivant, nous pourrons remplacer cette couche par notre propre
+implémentation.</p>
+<ol type="1">
+<li><strong>Votre nœud doit être une fonction pure des
+événements.</strong> Pas d’horloge système, pas de threads, pas
+d’aléatoire non initialisé. C’est ce qui rend une exécution rejouable,
+et c’est vérifié avant tout le reste : si votre code ne se rejoue pas à
+l’identique, rien d’autre n’est évalué.</li>
+<li><strong>Aucune opération n’est autorisée à bloquer en attendant une
+réponse.</strong> Votre processus est un gestionnaire d’événements
+mono-thread, et le temps logique n’avance qu’une fois que l’événement
+est traité. Si une de vos fonctions bloque, alors le temps arrête
+d’avancer.</li>
+</ol>
+<p>Concrètement : <code>leader()</code> répond tout de suite, à partir
+de ce que le processus sait déjà. Elle n’interroge personne. Et attendre
+« pendant une durée limitée » ne veut pas dire bloquer : cela veut dire
+armer un minuteur, retourner, et décider de la suite lorsqu’il se
+déclenche.</p>
+<h2 id="évaluation">Évaluation</h2>
+<p>Nous vous fournissons le vérificateur <code>lab2-check</code>, que
+vous construisez vous-même et qui exécute tous les tests fournis avec le
+code. Ces tests sont des scénarios décrivant une séquence de pannes, de
+ralentissements et de changements d’aptitude. Ceux-ci sont de deux types
+:</p>
+<ul>
+<li><strong>Un scénario écrit à la main</strong>,
+<code>late-crash.json</code>, qui vise une difficulté précise.</li>
+<li><strong>Six scénarios paramétriques.</strong> Leur exécution dépend
+d’une graine (seed) : pour chaque graine, les pannes, les délais et les
+changements d’aptitude sont différents. <code>lab2-check</code> exécute
+les 200 premières graines de chacun ; nous en exécuterons d’autres lors
+de l’évaluation de votre rendu.</li>
+</ul>
+<p>Référez-vous au README de votre repo pour plus de détails sur la
+construction et l’exécution de <code>lab2-check</code>.</p>
+<p>Votre rendu sera évalué sur ces tests, ainsi que sur un quiz
+individuel juste après le rendu. L’objectif sera de vérifier que vous
+possédez les choix architecturaux, logiques et algorithmiques de votre
+solution, et que vous avez compris leurs enjeux. Le quiz sera donné sur
+Opendidac, d’une durée de 30 minutes max et sans accès à votre code.</p>
+<p>Votre note finale sera égale à <code>min(labo, quiz + 1)</code>, où
+<code>labo</code> et <code>quiz</code> sont votre note sur 6 au labo et
+au quiz, respectivement.</p>
+</main>
+</body>
+</html>
