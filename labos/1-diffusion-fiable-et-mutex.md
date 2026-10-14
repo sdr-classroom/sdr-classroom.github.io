@@ -122,3 +122,5 @@ Votre rendu sera évalué sur ces tests, ainsi que sur un quiz individuel juste 
 Votre note finale sera égale à `min(labo, quiz + 1)`, où `labo` et `quiz` sont votre note sur 6 au labo et au quiz, respectivement.
 
 Vous pouvez vous référer à la [liste des critères](./files/1-criterions.pdf) pour un détail des critères pris en compte dans l'évaluation de votre rendu.
+
+**Lien vers le quiz** : <https://opendidac.heig-vd.in/users/evaluations/cmv7xtc3103nhugn0fln6sq07>
