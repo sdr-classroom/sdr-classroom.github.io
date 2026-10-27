@@ -7,8 +7,8 @@ f40d12f26a41f85d82b16a145ee0b915371c15cf078d316ffeae4e9f21c2578c  slides/2-2-mut
 3eceeee78ef0be7d3078868163c0d1f7e4020306b2cb5fb362f5c1daac4a7bff  slides/3-1-jetons-multiples-mutex/index.html
 38c7b7720947cd99a690ea6d272fbcad7ffbe52ed9a1fc7f01b790ac4a175c8a  slides/3-2-mutex-jeton-unique/index.html
 2c4c50343729e74cf1495cd39b080ade3579557bb33e52a740b3ef93bdde9ce1  slides/4-0-diffusion-elections-naif/index.html
-2e936b1c7bacf63160234b0fe53003c83840a32b8cf6e9abdf9ec9f7180d1ec0  slides/4-1-diffusion-elections-cr/index.html
-33e78a0fffda8baee98dde674995045caec5af3bc5069f9c6c2029a614c7be6c  slides/4-2-diffusion-elections-cr-pannes/index.html
+4bbc81e9671206145f27d328399f14d93247c10acd9cff1b6d38d6ab8e85a6f6  slides/4-1-diffusion-elections-cr/index.html
+9468d3a368ded379f00deb89c104206ec43e0f20b0df124929dad2c733ebebc3  slides/4-2-diffusion-elections-cr-pannes/index.html
 ac3906661bcc65719e73df4fb5c41fe7c81d77d30786b9a44bfa64ebc3286d8a  slides/5-1-sondes-echos/index.html
 6a76a41c6903c2a81ee5249f9a4e517c60ce7e91912a4abc854f842236cc4ecd  slides/5-2-synchronisation/index.html
 a62380997dfcd2158942d47fb70e9e1a7d2570a5d64c06175111462c4415c067  slides/6-battements/index.html
