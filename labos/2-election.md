@@ -111,3 +111,5 @@ Référez-vous au README de votre repo pour plus de détails sur la construction
 Votre rendu sera évalué sur ces tests, ainsi que sur un quiz individuel juste après le rendu. L'objectif sera de vérifier que vous possédez les choix architecturaux, logiques et algorithmiques de votre solution, et que vous avez compris leurs enjeux. Le quiz sera donné sur Opendidac, d'une durée de 30 minutes max et sans accès à votre code.
 
 Votre note finale sera égale à `min(labo, quiz + 1)`, où `labo` et `quiz` sont votre note sur 6 au labo et au quiz, respectivement.
+
+Vous pouvez vous référer à la [liste des critères](./files/2-criterions.pdf) pour un détail des critères pris en compte dans l'évaluation de votre rendu.
