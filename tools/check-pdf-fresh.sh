@@ -63,6 +63,11 @@ for src in $files; do
         stale="$stale $pdf(absent)"
         continue
     fi
+    # Les deux PDF sortent du même deck et partagent sa ligne du manifeste.
+    if [ ! -f "$deck/slides-compact.pdf" ]; then
+        stale="$stale $deck/slides-compact.pdf(absent)"
+        continue
+    fi
     recorded=$(grep -F "  $src" "$manifest" | cut -d' ' -f1 || true)
     if [ -z "$recorded" ]; then
         stale="$stale $pdf(non inscrit au manifeste)"
@@ -79,7 +84,7 @@ if [ -n "$stale" ]; then
     echo "" >&2
     echo "Régénérer, puis indexer le résultat :" >&2
     echo "  cd slides-editor && npm run pdf" >&2
-    echo "  git add slides/*/slides.pdf slides/pdf.manifest" >&2
+    echo "  git add slides/*/slides*.pdf slides/pdf.manifest" >&2
     echo "" >&2
     exit 1
 fi

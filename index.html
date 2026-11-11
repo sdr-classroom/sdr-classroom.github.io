@@ -297,5 +297,39 @@
         .
       </p>
     </main>
+    <!-- Le lien « pdf » de chaque deck mène à la version complète, une page par étape. Avec
+         JavaScript, il ouvre d'abord ce choix ; sans, il reste un lien ordinaire. -->
+    <dialog id="pdf-choice">
+      <article>
+        <header>
+          <button aria-label="Fermer" rel="prev"></button>
+          <p><strong>Télécharger les slides</strong></p>
+        </header>
+        <p>
+          <a id="pdf-steps" href="" role="button">Toutes les étapes</a>
+          <a id="pdf-compact" href="" role="button" class="secondary">Slides finales seulement</a>
+        </p>
+        <p class="inline-note">Toutes les étapes : une page par animation, comme en cours. Slides finales : une page par slide, plus court à imprimer.</p>
+      </article>
+    </dialog>
+    <script>
+      (() => {
+        const dialog = document.getElementById("pdf-choice");
+        const steps = document.getElementById("pdf-steps");
+        const compact = document.getElementById("pdf-compact");
+        document.addEventListener("click", (event) => {
+          const link = event.target.closest('a[href$="/slides.pdf"]');
+          if (!link || link === steps || event.metaKey || event.ctrlKey || event.shiftKey) return;
+          event.preventDefault();
+          steps.href = link.href;
+          compact.href = link.href.replace(/slides\.pdf$/, "slides-compact.pdf");
+          dialog.showModal();
+        });
+        // Un clic hors de la boîte la ferme, tout comme la croix et le choix d'un lien.
+        dialog.addEventListener("click", (event) => {
+          if (event.target === dialog || event.target.closest("a, [rel=prev]")) dialog.close();
+        });
+      })();
+    </script>
   </body>
 </html>
