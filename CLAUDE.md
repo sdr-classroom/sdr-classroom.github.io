@@ -57,9 +57,10 @@ issues et les PR. `sdr-classroom/sdr-classroom.github.io` est une **cible de pub
 pousse quand le contenu doit sortir.
 
 - Pas de fork possible : un fork de dépôt privé est toujours privé. Et le dépôt public doit rester
-  public — l'org est sur le plan **free**, où GitHub Pages n'est servi que depuis un dépôt public
-  (Pages : branche `main`, racine).
+  public — l'org est sur le plan **free**, où GitHub Pages n'est servi que depuis un dépôt public.
 - Les deux dépôts partagent leur historique : publier = `git push public main`. Ni subtree ni miroir.
+  Le push déclenche `.github/workflows/pages.yml`, qui génère PDF et HTML puis déploie Pages
+  (source Pages : **GitHub Actions**). Voir [Fichiers générés par la CI](#fichiers-générés-par-la-ci).
 - **Tout ce qui est suivi ici finit donc public.** Il n'existe pas de dossier privé dans ce dépôt :
   `git push public main` publie l'arbre entier. L'éditeur a vécu ici pendant deux semaines
   (1er–15 septembre 2026) et s'est retrouvé publié, alors que ce fichier affirmait le contraire.
@@ -177,45 +178,24 @@ applique chaque changement. Une décision actée dans un ticket ne vaut pas feu 
 préfixer de `> 🤖 *Rédigé par Claude.*`.
 
 
-## Les PDF des slides sont générés, et committés
+## Fichiers générés par la CI
 
-Chaque deck a son `slides/<deck>/slides.pdf`, committé, et `index.html` y pointe directement. Le
-site liait auparavant `slides/<deck>/?print-pdf`, qui demandait au navigateur **du lecteur** de
-mettre le deck en page puis de passer par sa propre boîte d'impression : le résultat dépendait de
-son navigateur, de son format de papier et d'un CDN au moment du clic. D'où l'instabilité.
+Les PDF des slides et le HTML des labos ne sont **plus committés** : `.github/workflows/pages.yml`
+les génère à chaque `git push public main`, puis déploie Pages. Rien à régénérer avant de publier.
+Ils sont dans `.gitignore`. Avant (jusqu'en novembre 2026), ils étaient committés, et l'oubli de
+les régénérer publiait en silence une version périmée ; un hook pre-commit le rattrapait.
 
-- `cd slides-editor && npm run pdf` — régénère les decks dont le PDF est périmé. `-- --all` force
-  tout, `-- <deck>` un seul, `-- --check` dit ce qui est périmé sans rien écrire. Environ 2,5 s par
-  deck.
-- Une page par **étape de build**, pas par slide : on peut toujours en retirer, pas en inventer.
-- Les **notes du présentateur** sont exclues : les decks initialisent reveal avec `showNotes: true`,
-  ce qui est sans effet à l'écran mais imprime un cadre gris « Speaker notes » — sur 18 slides. Le
-  générateur passe `showNotes=false`, donc aucun deck n'est modifié.
-- Le manifeste porte une ligne `# format:` = la version du générateur. Changer le générateur rend
-  tous les PDF périmés sans qu'aucune somme de contrôle ne bouge ; c'est cette ligne qui l'attrape.
-- Les slides `data-visibility="hidden"` sont **exclues** — reveal les retire, donc les corrigés
-  masqués ne partent pas dans le PDF. Vérifié.
-
-**Le mode de panne est silencieux**, exactement comme pour le HTML des labos : modifier un deck,
-oublier `npm run pdf`, et le site publie l'ancien PDF sans que rien ne le signale.
-`slides/pdf.manifest` enregistre la somme de contrôle de chaque `index.html` au moment du rendu, et
-`tools/check-pdf-fresh.sh` la compare. Le hook pre-commit (`tools/install-hooks.sh`, **une fois par
-clone**) refuse le commit.
-
-**Donc : toucher à un deck ⇒ `npm run pdf` ⇒ `git add slides/*/slides.pdf slides/pdf.manifest`.**
-Le hook le rappelle, mais il ne tourne que si les hooks sont installés.
-
-## Le HTML des labos est généré, et committé
-
-`./mdToHtml.sh` passe chaque `labos/*.md` dans pandoc et écrit le `.html` à côté ; **les deux sont
-versionnés**, parce que GitHub Pages sert ce dépôt tel quel, sans étape de build. Le bloc YAML en
-tête des `.md` est donc des métadonnées **pandoc**, pas du front-matter Jekyll : `title:` remplit le
-`<title>` et le `<h1>`, `css:` ajoute une feuille, `back:` l'URL du lien « Back ».
-
-Le mode de panne est silencieux : éditer un `.md`, oublier `mdToHtml.sh`, et le site publie
-l'ancienne version sans que rien ne le signale. `tools/check-html-fresh.sh` le refuse.
-
-- `tools/install-hooks.sh` — à lancer **une fois par clone** ; branche `core.hooksPath` sur
-  `tools/hooks/`, ce qui active la vérification avant chaque commit.
-- `tools/check-html-fresh.sh` — la vérification seule, sur tout le dossier. Sans pandoc installé,
-  elle se saute au lieu d'échouer.
+- **PDF** : `cd slides-editor && npm run pdf` (`-- --all`, `-- <deck>`). Deux par deck :
+  `slides.pdf`, une page par étape de build, et `slides-compact.pdf`, une page par slide avec
+  tous les fragments. `index.html` lie le premier ; un petit menu (script en fin de page) propose
+  les deux. Notes du présentateur et slides `data-visibility="hidden"` exclues.
+- **HTML des labos** : `./mdToHtml.sh` passe chaque `labos/**/*.md` dans pandoc. Le bloc YAML en
+  tête des `.md` est des métadonnées **pandoc** : `title:` remplit le `<title>` et le `<h1>`,
+  `css:` ajoute une feuille, `back:` l'URL du lien « Back ».
+- En local, ces commandes ne servent qu'à **prévisualiser** ; les fichiers produits restent ignorés.
+- La CI tourne sur **macOS** : les decks sont en Helvetica et Courier, absents de Linux, et les
+  polices de remplacement changeraient les retours à la ligne. Elle lit le dépôt privé
+  `slides-editor` avec une clé de déploiement en lecture seule (secret
+  `SLIDES_EDITOR_DEPLOY_KEY` du dépôt public), et le supprime avant l'envoi du site.
+- Pages publie le dossier tel quel, **sans Jekyll** : les `.md` du dépôt sont servis bruts. Ils
+  étaient déjà publics dans le dépôt.

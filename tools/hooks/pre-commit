@@ -1,9 +1,0 @@
-#!/bin/sh
-# Les deux vérifications de fraîcheur : le HTML des labos, et les PDF des slides.
-#
-# Toutes deux gardent le même mode de panne — un fichier généré et committé que l'on oublie de
-# régénérer, et que le site publie périmé sans rien dire.
-set -eu
-root="$(git rev-parse --show-toplevel)"
-"$root/tools/check-html-fresh.sh" --staged
-"$root/tools/check-pdf-fresh.sh" --staged
