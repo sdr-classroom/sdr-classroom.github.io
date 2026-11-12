@@ -1,0 +1,58 @@
+#!/bin/sh
+# Régénère ce que le commit rend périmé, et l'ajoute au commit : les PDF des decks indexés, et le
+# HTML des labos dont le .md est indexé.
+#
+# Ces fichiers sont committés parce que GitHub Pages sert ce dépôt tel quel, sans étape de build.
+# Le générateur de PDF vit dans slides-editor, dépôt privé : le faire tourner ici, plutôt que dans
+# une CI, évite de donner à la CI une clé vers ce dépôt.
+#
+# Le fichier généré l'est depuis la copie de travail. Si elle diffère de ce qui est indexé, le PDF
+# ne correspondrait pas au contenu committé : on refuse, plutôt que de committer un décalage.
+set -eu
+root="$(git rev-parse --show-toplevel)"
+cd "$root"
+
+decks=$(git diff --cached --name-only --diff-filter=ACM -- 'slides/*/index.html' | grep -v '^slides/__' || true)
+mds=$(git diff --cached --name-only --diff-filter=ACM -- 'labos/*.md' 'labos/**/*.md' || true)
+
+unstaged=""
+for f in $decks $mds; do
+    git diff --quiet -- "$f" || unstaged="$unstaged $f"
+done
+if [ -n "$unstaged" ]; then
+    echo "" >&2
+    echo "Ces fichiers ont aussi des modifications non indexées :" >&2
+    for f in $unstaged; do echo "  $f" >&2; done
+    echo "Le fichier généré ne correspondrait pas à ce qui est committé. Les indexer (git add), ou les mettre de côté." >&2
+    echo "" >&2
+    exit 1
+fi
+
+if [ -n "$decks" ]; then
+    if [ ! -d slides-editor/node_modules ]; then
+        echo "pre-commit : slides-editor/ absent ou non installé, impossible de générer les PDF." >&2
+        echo "  git clone git@github.com:sdr-classroom/slides-editor.git && (cd slides-editor && npm ci)" >&2
+        exit 1
+    fi
+    names=$(for f in $decks; do basename "$(dirname "$f")"; done)
+    echo "pre-commit : PDF de $(echo $names | tr ' ' ',')" >&2
+    # shellcheck disable=SC2086
+    (cd slides-editor && npm run --silent pdf -- $names) >&2
+    for n in $names; do git add "slides/$n/slides.pdf" "slides/$n/slides-compact.pdf"; done
+    git add slides/pdf.manifest
+fi
+
+if [ -n "$mds" ]; then
+    if ! command -v pandoc >/dev/null 2>&1; then
+        echo "pre-commit : pandoc introuvable, impossible de générer le HTML des labos." >&2
+        exit 1
+    fi
+    echo "pre-commit : HTML de $(echo $mds | tr ' ' ',')" >&2
+    # shellcheck disable=SC2086
+    ./mdToHtml.sh $mds 2>/dev/null
+    for md in $mds; do git add "${md%.md}.html"; done
+fi
+
+# Garde-fou : un changement du générateur (ligne `# format:`) rend tous les PDF périmés sans
+# qu'aucun deck ne soit indexé. Celui-là, on le signale plutôt que de tout réimprimer en silence.
+"$root/tools/check-pdf-fresh.sh" --staged

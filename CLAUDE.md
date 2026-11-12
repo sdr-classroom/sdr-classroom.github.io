@@ -57,10 +57,9 @@ issues et les PR. `sdr-classroom/sdr-classroom.github.io` est une **cible de pub
 pousse quand le contenu doit sortir.
 
 - Pas de fork possible : un fork de dépôt privé est toujours privé. Et le dépôt public doit rester
-  public — l'org est sur le plan **free**, où GitHub Pages n'est servi que depuis un dépôt public.
+  public — l'org est sur le plan **free**, où GitHub Pages n'est servi que depuis un dépôt public
+  (Pages : branche `main`, racine).
 - Les deux dépôts partagent leur historique : publier = `git push public main`. Ni subtree ni miroir.
-  Le push déclenche `.github/workflows/pages.yml`, qui génère PDF et HTML puis déploie Pages
-  (source Pages : **GitHub Actions**). Voir [Fichiers générés par la CI](#fichiers-générés-par-la-ci).
 - **Tout ce qui est suivi ici finit donc public.** Il n'existe pas de dossier privé dans ce dépôt :
   `git push public main` publie l'arbre entier. L'éditeur a vécu ici pendant deux semaines
   (1er–15 septembre 2026) et s'est retrouvé publié, alors que ce fichier affirmait le contraire.
@@ -178,24 +177,36 @@ applique chaque changement. Une décision actée dans un ticket ne vaut pas feu 
 préfixer de `> 🤖 *Rédigé par Claude.*`.
 
 
-## Fichiers générés par la CI
+## Fichiers générés, committés, régénérés par le hook pre-commit
 
-Les PDF des slides et le HTML des labos ne sont **plus committés** : `.github/workflows/pages.yml`
-les génère à chaque `git push public main`, puis déploie Pages. Rien à régénérer avant de publier.
-Ils sont dans `.gitignore`. Avant (jusqu'en novembre 2026), ils étaient committés, et l'oubli de
-les régénérer publiait en silence une version périmée ; un hook pre-commit le rattrapait.
+Les PDF des slides et le HTML des labos sont **committés** : GitHub Pages sert ce dépôt tel quel,
+sans étape de build. **Le hook pre-commit les régénère** et les ajoute au commit : indexer un
+`slides/<deck>/index.html` réimprime ses deux PDF, indexer un `labos/**/*.md` refait son `.html`.
+Rien à faire à la main avant de publier. Pas de CI : le générateur de PDF vit dans `slides-editor`,
+privé, et une CI aurait besoin d'une clé vers ce dépôt.
 
-- **PDF** : `cd slides-editor && npm run pdf` (`-- --all`, `-- <deck>`). Deux par deck :
-  `slides.pdf`, une page par étape de build, et `slides-compact.pdf`, une page par slide avec
-  tous les fragments. `index.html` lie le premier ; un petit menu (script en fin de page) propose
-  les deux. Notes du présentateur et slides `data-visibility="hidden"` exclues.
-- **HTML des labos** : `./mdToHtml.sh` passe chaque `labos/**/*.md` dans pandoc. Le bloc YAML en
-  tête des `.md` est des métadonnées **pandoc** : `title:` remplit le `<title>` et le `<h1>`,
-  `css:` ajoute une feuille, `back:` l'URL du lien « Back ».
-- En local, ces commandes ne servent qu'à **prévisualiser** ; les fichiers produits restent ignorés.
-- La CI tourne sur **macOS** : les decks sont en Helvetica et Courier, absents de Linux, et les
-  polices de remplacement changeraient les retours à la ligne. Elle lit le dépôt privé
-  `slides-editor` avec une clé de déploiement en lecture seule (secret
-  `SLIDES_EDITOR_DEPLOY_KEY` du dépôt public), et le supprime avant l'envoi du site.
-- Pages publie le dossier tel quel, **sans Jekyll** : les `.md` du dépôt sont servis bruts. Ils
-  étaient déjà publics dans le dépôt.
+- `tools/install-hooks.sh` — **une fois par clone** ; branche `core.hooksPath` sur `tools/hooks/`.
+  Le hook a besoin de `slides-editor/` installé (`npm ci`) et de pandoc ; sans eux, il refuse.
+- Le hook refuse aussi un deck ou un `.md` qui a **en plus des modifications non indexées** : le
+  fichier généré viendrait de la copie de travail, pas de ce qui est committé.
+- Commit plus lent quand un deck est indexé : environ 5 s par deck.
+
+**PDF** — deux par deck, liés depuis `index.html` par un petit menu (script en fin de page) :
+`slides.pdf`, une page par **étape de build**, et `slides-compact.pdf`, une page par slide avec
+tous les fragments. Le site liait auparavant `slides/<deck>/?print-pdf`, qui faisait imprimer le
+navigateur **du lecteur** : résultat dépendant de son navigateur, de son papier et d'un CDN.
+
+- `cd slides-editor && npm run pdf` — à la main : régénère les decks périmés. `-- --all` force
+  tout, `-- <deck>` un seul, `-- --check` dit ce qui est périmé sans rien écrire.
+- **Notes du présentateur exclues** : les decks initialisent reveal avec `showNotes: true`, qui
+  imprimerait un cadre gris « Speaker notes » ; le générateur passe `showNotes=false`.
+- Les slides `data-visibility="hidden"` sont **exclues** — les corrigés masqués ne partent pas.
+- `slides/pdf.manifest` enregistre la somme de contrôle de chaque deck au rendu ;
+  `tools/check-pdf-fresh.sh` la compare. Sa ligne `# format:` = la version du générateur : la
+  changer rend tous les PDF périmés, ce que le hook signale (`npm run pdf -- --all`) au lieu de
+  tout réimprimer en silence.
+
+**HTML des labos** — `./mdToHtml.sh` (tout `labos/`, ou les fichiers passés en argument) passe les
+`.md` dans pandoc. Le bloc YAML en tête des `.md` est des métadonnées **pandoc**, pas du
+front-matter Jekyll : `title:` remplit le `<title>` et le `<h1>`, `css:` ajoute une feuille,
+`back:` l'URL du lien « Back ». `tools/check-html-fresh.sh` vérifie tout le dossier.

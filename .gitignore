@@ -10,10 +10,3 @@
 # `git push public main` — alors que le CLAUDE.md affirmait le contraire. La règle est maintenant
 # tenue par git plutôt que par la mémoire : le dossier est un clone à part, et ignoré ici.
 slides-editor/
-
-# Générés à chaque publication par .github/workflows/pages.yml : ni à committer, ni à régénérer
-# avant de publier. En local : `cd slides-editor && npm run pdf`, et `./mdToHtml.sh`.
-slides/*/slides*.pdf
-slides/pdf.manifest
-labos/**/*.html
-!labos/pandoc-template.html

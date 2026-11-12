@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Labo 1 - Résilience face aux pannes</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #cccccc; background-color: #303030; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ffcfaf; } /* Alert */
+    code span.an { color: #7f9f7f; font-weight: bold; } /* Annotation */
+    code span.at { } /* Attribute */
+    code span.bn { color: #dca3a3; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #f0dfaf; } /* ControlFlow */
+    code span.ch { color: #dca3a3; } /* Char */
+    code span.cn { color: #dca3a3; font-weight: bold; } /* Constant */
+    code span.co { color: #7f9f7f; } /* Comment */
+    code span.cv { color: #7f9f7f; font-weight: bold; } /* CommentVar */
+    code span.do { color: #7f9f7f; } /* Documentation */
+    code span.dt { color: #dfdfbf; } /* DataType */
+    code span.dv { color: #dcdccc; } /* DecVal */
+    code span.er { color: #c3bf9f; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #c0bed1; } /* Float */
+    code span.fu { color: #efef8f; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #7f9f7f; font-weight: bold; } /* Information */
+    code span.kw { color: #f0dfaf; } /* Keyword */
+    code span.op { color: #f0efd0; } /* Operator */
+    code span.ot { color: #efef8f; } /* Other */
+    code span.pp { color: #ffcfaf; font-weight: bold; } /* Preprocessor */
+    code span.sc { color: #dca3a3; } /* SpecialChar */
+    code span.ss { color: #cc9393; } /* SpecialString */
+    code span.st { color: #cc9393; } /* String */
+    code span.va { } /* Variable */
+    code span.vs { color: #cc9393; } /* VerbatimString */
+    code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/labos/style.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+    <main>
+<header id="title-block-header">
+    <nav>
+        <a href="/"><i class="fa fa-angle-left"></i> Back</a>
+      </nav>
+<h1 class="title">Labo 1 - Résilience face aux pannes</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#informations-générales"
+id="toc-informations-générales">Informations Générales</a></li>
+<li><a href="#chatsapp" id="toc-chatsapp">ChatsApp</a>
+<ul>
+<li><a href="#format-des-labos" id="toc-format-des-labos">Format des
+labos</a></li>
+</ul></li>
+<li><a href="#labo-1" id="toc-labo-1">Labo 1</a>
+<ul>
+<li><a href="#introduction" id="toc-introduction">Introduction</a></li>
+<li><a href="#état-actuel" id="toc-état-actuel">État actuel</a></li>
+<li><a href="#rr" id="toc-rr">RR</a></li>
+<li><a href="#tests" id="toc-tests">Tests</a></li>
+<li><a href="#document-darchitecture"
+id="toc-document-darchitecture">Document d’architecture</a></li>
+<li><a href="#contraintes" id="toc-contraintes">Contraintes</a></li>
+<li><a href="#résumé" id="toc-résumé">Résumé</a></li>
+<li><a href="#timeline-et-indications"
+id="toc-timeline-et-indications">Timeline et indications</a></li>
+</ul></li>
+</ul>
+</nav>
+<!---
+## Changelog
+
+| Date  | Changement                                            |
+| ----- | ----------------------------------------------------- |
+-->
+<h2 id="informations-générales">Informations Générales</h2>
+<ul>
+<li><a href="https://classroom.github.com/a/v8SKh8le"><strong>Lien vers
+votre repo</strong></a></li>
+<li><strong>Groupes</strong> : à réaliser par groupes de deux.</li>
+<li><strong>Plagiat</strong> : nous intégrerons au processus
+d’évaluation des outils de détection de plagiat (entre groupe, mais
+aussi avec les rendus des années précédentes et la solution officielle).
+En cas de suspicion, vous y serez confronté.e.s, et l’incident pourra
+être rapporté au responsable de la filière, avec un risque d’échec
+immédiat au cours.</li>
+<li><strong>IA Générative</strong> : Nous ferons les suppositions
+suivantes.
+<ul>
+<li>Vous avez des objectifs qui vous sont clairs (que nous espérons être
+d’acquérir des compétences d’ingénieur.e).</li>
+<li>Vous avez conscience que les compétences d’un.e ingénieur.e incluent
+une capacité de compréhension, d’évaluation et de créativité technique,
+qui sont aussi celles recherchées et valorisées dans l’industrie
+<em>(lire : vous visez des jobs inatteignables par des vibe-coders
+autodidactes)</em>.</li>
+<li>Vous êtes des personnes responsables et adultes, capables d’agir
+intentionnellement, dans l’intérêt de vos objectifs.</li>
+</ul>
+Par conséquent, nous supposerons que vous agirez de manière réfléchie,
+et avec conscience des implications de vos choix. Par ailleurs et à
+titre d’information, nous avons pu constater que les meilleurs outils en
+date ne sont pas encore capables d’atteindre nos exigences sur ces
+labos, qui sont suffisamment complexes pour contenir des subtilités qui
+leur échappent encore.</li>
+</ul>
+<p>Notez enfin que l’objectif étant pour vous d’apprendre, vous serez
+toujours légitimes et bienvenu.e.s à nous poser des questions, sur Go,
+la théorie, vos idées, vos blocages. Si vous vous sentez perdu.e.s ou
+coincé.e.s, c’est qu’il faut nous demander.</p>
+<h2 id="chatsapp">ChatsApp</h2>
+<p>Ce cours contiendra quatre labos consécutifs, construisant chacun sur
+le précédent. L’objectif final sera d’avoir construit une application de
+messagerie instantanée décentralisée, baptisée ChatsApp, qui sera telle
+que</p>
+<ul>
+<li>la communication entre serveurs sera tolérante aux pannes, pertes de
+messages, duplications, et réordonnancements (protocole RR, <em>labo
+1</em>) ;</li>
+<li>l’ordre des messages sera le même pour tous les utilisateur.ices
+(mutex, <em>labo 2</em>) ;</li>
+<li>la charge sera distribuée uniformément entre les serveurs (élection,
+<em>labo 3</em>) ;</li>
+<li>le réseau pourra être incomplet (sondes et échos, <em>labo
+4</em>).</li>
+</ul>
+<p>ChatsApp est une application distribuée. Chaque utilisateur.ice lance
+l’exécutable du serveur et lui fournit sa configuration. Durant le
+développement, la commande <code>go run</code> peut être utilisée.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">go</span> run ./cmd/server/main.go <span class="op">&lt;</span>local_address<span class="op">&gt;</span> <span class="op">&lt;</span>config_file_path<span class="op">&gt;</span></span></code></pre></div>
+<ul>
+<li><code>&lt;local_address&gt;</code> est l’adresse IP sur laquelle ce
+serveur recevra les connexions d’autres serveurs,</li>
+<li><code>&lt;config_file_path&gt;</code> est le chemin d’accès au
+fichier de configuration de ce serveur.</li>
+</ul>
+<p>Ce fichier de configuration est au format JSON, et inclut les champs
+suivants :</p>
+<ul>
+<li><code>Username</code> - pseudonyme au nom duquel ce serveur enverra
+les messages aux autres serveurs</li>
+<li><code>Neighbors</code> - tableau de chaines de caractères listant
+les adresses IP des voisins de ce serveur sur le réseau</li>
+<li><code>PrintReadAck</code> - booléen indiquant si le serveur doit
+afficher un accusé de réception suite à l’envoi de chaque message</li>
+<li><code>Debug</code> - booléen indiquant si les logs doivent être
+affichées sur stdout</li>
+<li><code>LogPath</code> - chemin d’accès à un répertoire dans lequel
+sera créé un fichier contenant les logs</li>
+<li><code>SlowdownMs</code> - en millisecondes, ralentissement
+artificiel du serveur après chaque réception et envoi de message</li>
+</ul>
+<p>Une fois lancé, un serveur attend qu’un message soit entré sur la
+ligne de commande pour l’envoyer à tous ses voisins. Ces derniers
+l’afficheront dans la console sous le format
+<code>&lt;user&gt;: &lt;message&gt;</code>, suivit d’un saut de
+ligne.</p>
+<p>Si <code>PrintReadAck</code> est configuré à <code>true</code>,
+l’envoyeur affichera un message de la forme
+<code>[&lt;neighbor_address&gt; received: &lt;message&gt;]</code> dès
+que le voisin d’adresse IP <code>&lt;neighbor_address&gt;</code>
+l’informe avoir reçu et traité ce message.</p>
+<h3 id="format-des-labos">Format des labos</h3>
+<p>Chaque labo durera quatre semaines de cours (excepté le labo 1, qui
+en durera trois). Chacun se divisera en deux phases.</p>
+<ul>
+<li><strong>Conception</strong> - Semaine 1
+<ul>
+<li>Réfléchissez aux abstractions à définir, leur API, et comment elles
+intéragiront entre elles et avec le code existant.</li>
+<li>En échange avec nous, <em>clarifiez et créez une confiance en la
+solution que vous allez choisir</em>.</li>
+</ul></li>
+<li><strong>Validation et implémentation</strong> - Semaines 2 à 4
+<ul>
+<li>Dernière chance pour valider votre conception lors de la séance de
+semaine 2, puis implémentation.</li>
+<li>Le rendu final se fera sur GitHub Classroom, 1 minute avant le début
+du labo suivant.</li>
+</ul></li>
+</ul>
+<p>Avec chaque labo, sera attendu un <em>document d’architecture
+logicielle</em> décrivant votre solution.</p>
+<hr />
+<h2 id="labo-1">Labo 1</h2>
+<h3 id="introduction">Introduction</h3>
+<p>Ce labo a les objectifs suivants.</p>
+<ul>
+<li>Implémentation d’un protocole de communication RR
+(Request-Reply).</li>
+<li>Intégration de RR dans le module UDP de ChatsApp.</li>
+</ul>
+<p>L’intégration devra permettre de fournir un accusé de réception pour
+chaque message envoyé et correctement reçu par le destinataire.</p>
+<h3 id="état-actuel">État actuel</h3>
+<p>Dans le passé, ChatsApp utilisait TCP pour la communication entre
+serveurs. Considéré trop lourd, le responsable du projet a décidé de le
+remplacer par UDP. Une implémentation fonctionnelle existe, mais elle
+fait perdre certaines des garanties offertes par TCP, notamment
+l’absence de perte de messages. L’implémentation de TCP reste disponible
+dans le code pour votre curiosité, mais ne sera pas utilisée dans les
+labos de ce cours.</p>
+<details>
+<summary>
+<span class="remark">Pour plus de détails sur l’architecture du module
+UDP…</span>
+</summary>
+<p>Le module UDP se compose des goroutines suivantes.</p>
+<ul>
+<li>Une goroutine principale <code>handleState</code>, qui centralise
+tout l’état, c’est à dire la liste des souscrits et la liste des voisins
+connus. Chaque voisin est représenté par une channel sur laquelle cette
+goroutine enverra tout message à lui envoyer.</li>
+<li>Une goroutine <code>handleSends</code> par voisin connu, qui a accès
+à la channel correspondante à ce dernier. Elle y lit tout message
+transmis par la goroutine principale, et l’envoie au voisin via UDP.
+Elle est donc responsable de maintenir la connexion UDP avec ce
+voisin.</li>
+<li>Une goroutine <code>listenIncomingMessages</code>, qui écoute tout
+message reçu via UDP, et les transmet tels quels à la goroutine
+principale. Elle crée une petite goroutine responsable de détecter un
+appel à <code>Close()</code> et de cloturer la connexion UDP.</li>
+</ul>
+<p>Toutes ces transmissions se font via des channels. Comme il se doit,
+celles-ci ne sont lues que par une seule goroutine, mais peuvent être
+écrites par plusieurs.</p>
+<p><img src="./imgs/1-udp.svg"></p>
+</details>
+<p>La base de code fournie inclut également un module
+<code>utils</code>, qui contient quelques utilitaires, notamment</p>
+<ul>
+<li><code>BufferedChan</code> - un type représentant une channel de
+capacité variable (à la différence des channels natives de Go, dont la
+capacité est finie et fixée à la création)</li>
+<li><code>Option</code> - l’implémentation d’un type optionnel,
+similaire à <code>Option</code> en Rust ou <code>Maybe</code> en
+Haskell.</li>
+<li><code>UIDGenerator</code> - un générateur de nombres uniques
+consécutifs de valeur initiale zéro.</li>
+</ul>
+<p>Vous serez libres d’utiliser ces utilitaires, mais aussi d’en ajouter
+d’autres si vous le jugez nécessaire.</p>
+<h3 id="rr">RR</h3>
+<p>Pour combler les lacunes du module <code>udp</code>, vous êtes
+chargé.e.s de</p>
+<ul>
+<li>implémenter un module de communication Request-Reply (RR), dont
+l’API, décrite plus bas, est fournie dans le fichier <code>rr.go</code>,
+et</li>
+<li>l’intégrer dans le module <code>udp</code> pour qu’il retrouve les
+garanties attendues. En particulier, toute demande d’envoi via le module
+<code>udp</code> doit aboutir à la réception du message par le
+destinataire même s’il peut être en panne récupérable, et l’envoyeur
+doit ensuite recevoir un accusé de réception. Il faudra aussi s’assurer
+qu’aucun réordonnancement ou duplication ne puisse avoir lieu.</li>
+</ul>
+<p>Le module RR doit implémenter les deux cotés du protocole RR vu en
+cours.</p>
+<ul>
+<li>Du côté de l’envoyeur, <code>SendRequest</code> doit envoyer un
+message au destinataire, et retourne une channel sur laquelle sera
+envoyée la réponse du destinataire lorsqu’elle sera reçue.</li>
+<li>Du côté du destinataire, le handler configuré via
+<code>SetRequestHandler</code> doit être appelé à chaque fois qu’une
+requête est reçue du réseau. Ce handler a la responsabilité de traiter
+la requête, puis retourner la réponse qui sera renvoyée à
+l’envoyeur.</li>
+</ul>
+<p>Afin de rendre le module RR indépendant du moyen de communication
+entre serveurs (TCP, UDP, channels, …), il prend un
+<code>NetWrapper</code> en paramètre de son constructeur, qui n’est
+autre qu’une paire de channels :</p>
+<ul>
+<li><code>IntoNet</code> est une channel sur laquelle le module RR
+pourra écrire tout message qu’il souhaite envoyer à son destinataire,
+et</li>
+<li><code>FromNet</code> est une channel sur laquelle le module RR
+pourra lire tout message reçu de la part du destinataire.</li>
+</ul>
+<h3 id="tests">Tests</h3>
+<p>La plupart des modules du projet incluent des tests unitaires. C’est
+notamment le cas des modules <code>rr</code> et <code>udp</code>, qui ne
+passent pas tous dans l’état actuel du code.</p>
+<p>L’évaluation de votre travail inclura le passage de tous les tests
+fournis, y inclus ceux des autres modules pour détecter toute
+régression, notamment ceux de <code>server</code>, qui dépendent
+d’<code>udp</code>.</p>
+<p>Nous vous encourageons à écrire vos propres tests, mais vous ne devez
+pas modifier ceux fournis. Dans les prochains labos, nous nous
+réserverons le droit de ne pas vous fournir tous les tests utilisés pour
+l’évaluation.</p>
+<h3 id="document-darchitecture">Document d’architecture</h3>
+<p>Votre rendu final devra inclure un document d’architecture logicielle
+décrivant votre solution. Son objectif sera de décrire de manière
+complète le fonctionnement conceptuel de votre code. Cela signifie qu’il
+devra notamment décrire</p>
+<ul>
+<li>toute abstraction supplémentaire que vous aurez définie (ses
+responsabilités, son API, etc) ;</li>
+<li>les différentes goroutines qui coexistent, ainsi que leur
+responsabilité, leur état, les channels qu’elles écoutent et d’où
+proviennent les messages qu’elles y lisent</li>
+</ul>
+<p>Votre objectif avec ce document est de nous permettre, en le lisant,
+d’avoir une idée claire et complète de l’architecture de votre code, et
+de la manière dont ses différentes parties fonctionnent ensemble pour
+offrir les fonctionnalités attendues. Nous l’utiliserons comme point
+d’entrée à votre rendu, veillez donc à nommer clairement les objets,
+goroutines et channels que vous mentionnez, afin de nous permettre de
+les retrouver facilement dans votre code.</p>
+<h3 id="contraintes">Contraintes</h3>
+<ul>
+<li>Aucun état variable ne doit être partagé entre goroutines. Cela
+inclue toutes les abstractions fournies par le package <code>sync</code>
+de Go (mutex, waitgroup, etc). Toute synchronisation entre goroutine
+doit se faire via des channels.</li>
+<li>Vous êtes libres (et encouragés) d’ajouter des tests, mais ne devez
+pas modifier ceux fournis.</li>
+<li>Vous pouvez ajouter des fichiers et modifier du code existant, tant
+que les tests fournis continuent de passer <em>sans
+modification</em>.</li>
+<li>Vous êtes libres d’ajouter des fichiers ou du code, et de modifier
+tout code fourni, à condition de ne pas modifier l’API ou le
+comportement observable des abstractions déjà présentes, ni les tests
+fournis.</li>
+</ul>
+<p>En cas de doute, n’hésitez pas à nous demander.</p>
+<h3 id="résumé">Résumé</h3>
+<p>En résumé, vous devrez dans ce labo</p>
+<ul>
+<li>Implémenter le module RR tel que décrit ici et dans le cours ;</li>
+<li>L’intégrer dans le module UDP de ChatsApp afin de garantir l’absence
+de perte de messages et la réception d’un accusé de réception pour
+chaque message envoyé, ainsi que l’absence de duplication et de
+réordonnancement ;</li>
+<li>Faire passer tous les tests du projet, avec la liberté d’en ajouter
+;</li>
+<li>Rédiger un document d’architecture logicielle décrivant votre
+solution.</li>
+</ul>
+<h3 id="timeline-et-indications">Timeline et indications</h3>
+<p>Durant la première semaine, il est attendu que vous réfléchissiez à
+l’approche que vous souhaitez adopter pour implémenter ce labo. Il vous
+faudra notamment réfléchir à la manière de résoudre les problèmes
+suivants.</p>
+<ul>
+<li>Comment permettre au module RR de traiter les requêtes reçues du
+réseau, même lorsqu’un appel à <code>SendRequest</code> est bloqué sur
+l’attente de réponse du destinataire ?</li>
+<li>Où et comment insérer le module RR dans le module UDP ?</li>
+<li>Comment garantir que le module UDP sera capable de recevoir d’autres
+messages du réseau, même lorsqu’un appel à <code>SendRequest</code> sur
+une instance de RR est bloqué ?</li>
+<li>Votre solution garantit-elle qu’un message dont l’envoi échoue
+(e.g. en cas de connexion perdue) ne sera pas perdu et sera
+réessayé ?</li>
+<li>Votre solution garantit-elle que les messages ne seront jamais
+réordonnancés (ou dupliqués) ?</li>
+</ul>
+<p>La deuxième séance de labo sera votre dernière occasion de valider
+auprès de nous votre proposition de solution. Une fois ce délai passé,
+il sera attendu que vous ayez une vision claire de votre solution, dont
+vous pourrez aussitôt commencer l’implémentation.</p>
+<p>Le rendu aura lieu une minute avant le début du labo 2. Vous aurez
+donc trois semaines exactement.</p>
+</main>
+</body>
+</html>
