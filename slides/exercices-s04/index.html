@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+	<html class="sl-root decks export offline loaded">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, minimal-ui">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+		<link rel="manifest" href='data:application/manifest+json,{"display": "standalone", "name": "SDR - S04 - Exercices"}' />
+		<title>SDR - S04 - Exercices</title>
+
+
+		<link rel="stylesheet" type="text/css" href="lib/offline-v2.css">
+
+
+
+	<script src="/print.js" defer></script>
+</head>
+	<body class="reveal-viewport theme-font-montserrat theme-color-white-blue">
+		<div class="reveal">
+			<div class="slides">
+				<section data-id="38ceb1965d008b2aecf3fbf29af7139a" data-auto-animate=""><div class="sl-block" data-block-type="text" style="width: 684px; left: 60.5px; top: 238.5px; height: auto;" data-name="text-701913" data-block-id="137857f0331451579ce6b3db4aa18ecb"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10; text-align: left;"><h3>SDR</h3></div></div>
+<div class="sl-block" data-block-type="text" style="width: 839px; left: 60.5px; top: 289.5px; height: auto;" data-name="text-210072" data-block-id="4a9e7029e438258404b46fe17732a631"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 11; text-align: left;"><h1>Jetons</h1></div></div>
+<div class="sl-block" data-block-type="text" style="width: 740px; left: 60.5px; top: 622px; height: auto;" data-name="text-d6e712" data-block-id="0759ad8b577e475da00a1b791c9721c8"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 12; text-align: left;"><p>Olivier Lemer</p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 839px; left: 60.5px; top: 387.5px; height: auto;" data-name="text-b69d41" data-block-id="1a2412ab8ce14d5d2349bad770795519"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 13; text-align: left;"><h2>Mutex par jeton unique (Raymond)</h2></div></div></section><section class="stack" data-id="fbf315fab6a86163c6ef1b42e851ace0"><section data-id="85cd0d0a3d0d26a114730c5a559b95a3"><div class="sl-block" data-block-type="text" style="width: 806px; left: 109.375px; top: 313px; height: auto;" data-name="text-701913" data-block-id="0188b7a761f950b33a5d6a4fa8a3f2af"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10;"><h2 style="text-align:left">Exercice</h2></div></div>
+<div class="sl-block" data-block-type="shape" style="width: 41.5px; height: 41.5px; left: 44.625px; top: 329.25px;" data-name="shape-dcfd9f" data-block-id="252d8bdf752f63f99a185756b0424537"><div class="sl-block-content" data-shape-type="symbol-thin-arrow-down" data-shape-fill-color="rgb(170, 170, 170)" data-shape-stretch="true" style="z-index: 11;"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="4.000251770019531 1.9999980926513672 23.999500274658203 27.999752044677734"><g class="shape-element" fill="rgb(170, 170, 170)" data-viewbox="4.000251770019531 1.9999980926513672 23.999500274658203 27.999752044677734"><path d="M4.586 19.414l10 10c0.781 0.781 2.047 0.781 2.828 0l10-10c0.781-0.781 0.781-2.047 0-2.828s-2.047-0.781-2.828 0l-6.586 6.586v-19.172c0-1.105-0.895-2-2-2s-2 0.895-2 2v19.172l-6.586-6.586c-0.391-0.39-0.902-0.586-1.414-0.586s-1.024 0.195-1.414 0.586c-0.781 0.781-0.781 2.047 0 2.828z"></path></g></svg></div></div>
+</section><section data-transition="fade" data-id="10d09dd4f37f17400b57c68c7973f1ff"><div class="sl-block" data-block-type="text" style="height: auto; width: 918.012px; left: 33px; top: 35.5px;" data-name="text-2b61dd" data-block-id="f926a2e860dfc867a4731bb78508468b"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11;"><h2 style="text-align:left">Algorithme de Raymond</h2></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 918.012px; left: 33px; top: 101.55px;" data-name="text-987026" data-block-id="421cbd9ffb24956bf3061d0395e34425"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12; font-size: 80%;"><h3 style="text-align:left">Exercice</h3></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 918.012px; left: 33px; top: 241.806023px;" data-name="text-51adf9" data-block-id="9c17490421c36a303955bd604efcc9a4"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 10; font-size: 80%; text-align: left; line-height: 1.209;" data-has-line-height="">
+<p>Graphe initial ci-contre.</p>
+
+<p> </p>
+
+<p>Durées :</p>
+
+<ul>
+	<li>1s par transit de message</li>
+	<li>5s par SC</li>
+	<li>1s entre l'envoi de tous 2 messages</li>
+</ul>
+
+<p> </p>
+
+<p>Deux événements arrivant au même moment sont traités dans l'ordre suivant :</p>
+
+<p>demande de SC, fin de SC, message (dans l'ordre des IDs de l'émetteur).</p>
+
+<p> </p>
+
+<ul>
+	<li>
+<code>D</code>, <code>E</code>, <code>B</code> demandent la SC après 1s</li>
+	<li>
+<code>A</code> demande la SC après 2s</li>
+</ul>
+</div></div>
+<div class="sl-block sl-block-group" data-block-type="group" data-name="group-d312e9" data-block-id="1e7aa89aa6ced3b9f6e1e2f131af2345" style="height: auto;"><div class="sl-block-content sl-block-group-content" style="transform-origin: 657.602px 266.253px 0px; z-index: 13;">
+<div class="sl-block" data-block-type="text" style="height: auto; width: 30.943877px; left: 391.49457px; top: 181.961316px;" data-name="text-1fc8d7" data-block-id="9bad9d6aceca481dde89d136380d4c9a"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 21; font-size: 80%; text-align: center; color: rgb(68, 68, 68);"><p><code>A</code></p></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 30.943877px; left: 495.153034px; top: 307.247585px;" data-name="text-acb95c" data-block-id="edc91a27756dd82d14309fcb8709c599"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 22; font-size: 80%; text-align: center; color: rgb(68, 68, 68);"><p><code>B</code></p></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 33.852234px; left: 583.917081px; top: 181.961316px;" data-name="text-8d1ec9" data-block-id="26f7465e0aeaa0b079728a2eee85b2b1"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 23; font-size: 80%; text-align: center; color: rgb(68, 68, 68);"><p><code>C</code></p></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 30.943877px; left: 775.769482px; top: 181.961316px;" data-name="text-63f6a0" data-block-id="ad59d5efe1bda3b9d379f1e29181b1d2"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 24; font-size: 80%; text-align: center; color: rgb(68, 68, 68);"><p><code>D</code></p></div></div>
+<div class="sl-block" data-block-type="shape" style="width: 23.469754px; height: 23.469754px; left: 812.384675px; top: 141.55px;" data-name="shape-f8e785" data-block-id="b269e06f94fe7422c579fcbd03484cee"><div class="sl-block-content" data-shape-type="circle" data-shape-fill-color="#000000" data-shape-stretch="true" style="z-index: 25;"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 23 23"><ellipse rx="11.7349" ry="11.7349" cx="11.7349" cy="11.7349" class="shape-element" fill="#000000"></ellipse></svg></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 105.824845px; left: 448.334579px; top: 209.306023px;" data-name="text-e0653c" data-block-id="d4e32c529245a8c92132ce0e03eb7b24"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 26; font-size: 80%; text-align: left; color: rgb(68, 68, 68);"><p><code>[]</code></p></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 105.824845px; left: 644.159424px; top: 208.806023px;" data-name="text-3d5e66" data-block-id="e89d956ccfde954a641ae5925d7c1935"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 27; font-size: 80%; text-align: left; color: rgb(68, 68, 68);"><p><code>[]</code></p></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 105.824845px; left: 835.854429px; top: 209.306023px;" data-name="text-0e4768" data-block-id="baed2ddcba5002031cd454cdb4bc5107"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 28; font-size: 80%; text-align: left; color: rgb(68, 68, 68);"><p><code>[]</code></p></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 105.824845px; left: 544.066535px; top: 356.821821px;" data-name="text-781a87" data-block-id="63839e894282468b1393eb62040cee3e"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 29; font-size: 80%; text-align: left; color: rgb(68, 68, 68);"><p><code>[]</code></p></div></div>
+<div class="sl-block" data-block-type="shape" style="width: 66.883124px; height: 66.883124px; left: 373.524946px; top: 165.019754px;" data-name="shape-0bff68" data-origin-id="79b71f0886e92dec9e813af129556670" data-block-id="dcc7c9823145258d4351e57df0993b4e"><div class="sl-block-content" data-shape-type="circle" data-shape-fill-color="rgb(255, 255, 255)" data-shape-stretch="true" style="z-index: 14;" data-shape-stroke-color="#000000" data-shape-stroke-width="3px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 67 67"><defs><clippath id="shape-mask-543-1699033953291"><ellipse rx="33.44155" ry="33.44155" cx="33.44155" cy="33.44155" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6"></ellipse></clippath></defs><ellipse rx="33.44155" ry="33.44155" cx="33.44155" cy="33.44155" class="shape-element" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6" clip-path="url(#shape-mask-543-1699033953291)"></ellipse></svg></div></div>
+<div class="sl-block" data-block-type="line" style="width: auto; height: auto; min-width: 0px; min-height: 0px; left: 510.624973px; top: 225.673348px;" data-name="line-7c2066" data-origin-id="2b5a3d50910e27ac3c50dbbc05c04f4e" data-block-id="3dde24bbfbf26871bf389715847fe8fd"><div class="sl-block-content" data-line-x1="73.7387358368452" data-line-y1="0" data-line-x2="0" data-line-y2="98.20691200000002" data-line-color="#000000" data-line-start-type="line-arrow" data-line-end-type="none" style="z-index: 15;" data-line-width="3px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" preserveaspectratio="xMidYMid" width="73.7387358368452" height="98.20691200000002" viewbox="0 0 73.7387358368452 98.20691200000002"><path class="line-element" fill="rgba(0,0,0,0)" stroke="#000000" stroke-width="3" d="M71.937 2.399 L0 98.207"></path><path stroke="#000000" stroke-width="3" d="M 74.333 10.45 L 72.988 1 L 63.537 2.344 L 72.988 1" class="line-start"></path><path class="line-skeleton" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" d="M73.739 0 L0 98.207"></path><path class="line-hitarea" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" stroke-width="15" d="M73.739 0 L0 98.207"></path></svg></div></div>
+<div class="sl-block" data-block-type="shape" style="width: 66.883124px; height: 66.883124px; left: 477.183411px; top: 290.306023px;" data-name="shape-cd6958" data-origin-id="a8e3a3ec9099ccd6531b5fcfa2b7d447" data-block-id="19be511f5406a5ca400820d388f4966d"><div class="sl-block-content" data-shape-type="circle" data-shape-fill-color="rgb(255, 255, 255)" data-shape-stretch="true" style="z-index: 16;" data-shape-stroke-color="#000000" data-shape-stroke-width="3px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 67 67"><defs><clippath id="shape-mask-542-1699033953290"><ellipse rx="33.44155" ry="33.44155" cx="33.44155" cy="33.44155" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6"></ellipse></clippath></defs><ellipse rx="33.44155" ry="33.44155" cx="33.44155" cy="33.44155" class="shape-element" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6" clip-path="url(#shape-mask-542-1699033953290)"></ellipse></svg></div></div>
+<div class="sl-block" data-block-type="shape" style="width: 66.883124px; height: 66.883124px; left: 567.503911px; top: 165.019754px;" data-name="shape-21eeec" data-origin-id="2359bd07d072232fb7cf8bf09e884a63" data-block-id="5ff23976f30a5243650855ccc9cc99c1"><div class="sl-block-content" data-shape-type="circle" data-shape-fill-color="rgb(255, 255, 255)" data-shape-stretch="true" style="z-index: 17;" data-shape-stroke-color="#000000" data-shape-stroke-width="3px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 67 67"><defs><clippath id="shape-mask-541-1699033953290"><ellipse rx="33.44155" ry="33.44155" cx="33.44155" cy="33.44155" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6"></ellipse></clippath></defs><ellipse rx="33.44155" ry="33.44155" cx="33.44155" cy="33.44155" class="shape-element" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6" clip-path="url(#shape-mask-541-1699033953290)"></ellipse></svg></div></div>
+<div class="sl-block" data-block-type="line" style="width: auto; height: auto; min-width: 0px; min-height: 0px; left: 441.247002px; top: 198.461316px;" data-name="line-44dafe" data-origin-id="55b4bcf8c8509db68d5383e2739f5ca5" data-block-id="e237c10d67f477d098584bc95e814af1"><div class="sl-block-content" data-line-x1="126.25690974362402" data-line-y1="0" data-line-x2="0" data-line-y2="0" data-line-color="#000000" data-line-start-type="line-arrow" data-line-end-type="none" style="z-index: 18;" data-line-width="3px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" preserveaspectratio="xMidYMid" width="126.25690974362402" height="1" viewbox="0 0 126.25690974362402 1"><path class="line-element" fill="rgba(0,0,0,0)" stroke="#000000" stroke-width="3" d="M123.257 0 L0 0"></path><path stroke="#000000" stroke-width="3" d="M 118.257 6.75 L 125.007 0 L 118.257 -6.75 L 125.007 0" class="line-start"></path><path class="line-skeleton" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" d="M126.257 0 L0 0"></path><path class="line-hitarea" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" stroke-width="15" d="M126.257 0 L0 0"></path></svg></div></div>
+<div class="sl-block" data-block-type="shape" style="width: 66.883124px; height: 66.883124px; left: 757.799859px; top: 165.019754px;" data-name="shape-45bd39" data-origin-id="04eaab98cbdeee1f3f58ad8e20d988ef" data-block-id="ced10ca623340353cd07df3c8a550d7b"><div class="sl-block-content" data-shape-type="circle" data-shape-fill-color="rgb(255, 255, 255)" data-shape-stretch="true" style="z-index: 19;" data-shape-stroke-color="#000000" data-shape-stroke-width="3px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 67 67"><defs><clippath id="shape-mask-540-1699033953289"><ellipse rx="33.44155" ry="33.44155" cx="33.44155" cy="33.44155" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6"></ellipse></clippath></defs><ellipse rx="33.44155" ry="33.44155" cx="33.44155" cy="33.44155" class="shape-element" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6" clip-path="url(#shape-mask-540-1699033953289)"></ellipse></svg></div></div>
+<div class="sl-block" data-block-type="line" style="width: auto; height: auto; min-width: 0px; min-height: 0px; left: 633.067783px; top: 198.461316px;" data-name="line-6360f9" data-origin-id="ed741d978753e7571e4fee413313fc57" data-block-id="f42a480cee63c7710417d2d9928a7e75"><div class="sl-block-content" data-line-x1="124.73207574362391" data-line-y1="0" data-line-x2="0" data-line-y2="0" data-line-color="#000000" data-line-start-type="line-arrow" data-line-end-type="none" style="z-index: 20;" data-line-width="3px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" preserveaspectratio="xMidYMid" width="124.73207574362391" height="1" viewbox="0 0 124.73207574362391 1"><path class="line-element" fill="rgba(0,0,0,0)" stroke="#000000" stroke-width="3" d="M121.732 0 L0 0"></path><path stroke="#000000" stroke-width="3" d="M 116.732 6.75 L 123.482 0 L 116.732 -6.75 L 123.482 0" class="line-start"></path><path class="line-skeleton" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" d="M124.732 0 L0 0"></path><path class="line-hitarea" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" stroke-width="15" d="M124.732 0 L0 0"></path></svg></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 30.943877px; left: 687.659535px; top: 307.38026px;" data-block-id="c03de6bc8a68d388a660ba9fbe3e4fd9" data-name="text-a44edd"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 32; font-size: 80%; text-align: center; color: rgb(68, 68, 68);"><p><code>E</code></p></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 105.824845px; left: 734.774504px; top: 356.954496px;" data-block-id="d01902aa39f23d7cb8a121a283c1f147" data-name="text-d22045"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 33; font-size: 80%; text-align: left; color: rgb(68, 68, 68);"><p><code>[]</code></p></div></div>
+<div class="sl-block" data-block-type="line" style="width: auto; height: auto; min-width: 0px; min-height: 0px; left: 701.332942px; top: 225.806023px;" data-block-id="d537c5471a2a043d5e1564a2e1420029" data-name="line-659eee"><div class="sl-block-content" data-line-x1="73.7387358368452" data-line-y1="0" data-line-x2="0" data-line-y2="98.07423700000001" data-line-color="#000000" data-line-start-type="line-arrow" data-line-end-type="none" style="z-index: 30;" data-line-width="3px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" preserveaspectratio="xMidYMid" width="73.7387358368452" height="98.07423700000001" viewbox="0 0 73.7387358368452 98.07423700000001"><path class="line-element" fill="rgba(0,0,0,0)" stroke="#000000" stroke-width="3" d="M71.936 2.398 L0 98.074"></path><path stroke="#000000" stroke-width="3" d="M 74.326 10.451 L 72.988 0.999 L 63.536 2.338 L 72.988 0.999" class="line-start"></path><path class="line-skeleton" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" d="M73.739 0 L0 98.074"></path><path class="line-hitarea" fill="rgba(0,0,0,0)" stroke="rgba(0,0,0,0)" stroke-width="15" d="M73.739 0 L0 98.074"></path></svg></div></div>
+<div class="sl-block" data-block-type="shape" style="width: 66.883124px; height: 66.883124px; left: 667.89138px; top: 290.438698px;" data-block-id="521f964651b1a2d2242710707a5c4cd8" data-name="shape-841f10"><div class="sl-block-content" data-shape-type="circle" data-shape-fill-color="rgb(255, 255, 255)" data-shape-stretch="true" style="z-index: 31;" data-shape-stroke-color="#000000" data-shape-stroke-width="3px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 67 67"><defs><clippath id="shape-mask-545-1699034110589"><ellipse rx="33.44155" ry="33.44155" cx="33.44155" cy="33.44155" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6"></ellipse></clippath></defs><ellipse rx="33.44155" ry="33.44155" cx="33.44155" cy="33.44155" class="shape-element" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6" clip-path="url(#shape-mask-545-1699034110589)"></ellipse></svg></div></div>
+</div></div></section></section>
+			</div>
+		</div>
+
+		<script>
+			var SLConfig = {"deck": {"id":3222398,"slug":"exercices-s04","title":"SDR - S04 - Exercices","description":"","width":960,"height":700,"margin":0.05,"visibility":"all","published_at":"2024-07-05T12:31:59.284Z","sanitize_messages":null,"thumbnail_url":"https://s3.amazonaws.com/media-p.slid.es/thumbnails/f14f61f712b270f92d91dddafecfcdb9/thumb.jpg?1720182769","view_count":0,"user":{"id":2460573,"username":"olivierlmr","name":null,"description":null,"thumbnail_url":"https://www.gravatar.com/avatar/01e3813de0c4d967d7cbfb536916652f?s=140\u0026d=https%3A%2F%2Fstatic.slid.es%2Fimages%2Fdefault-profile-picture.png","account_type":"lite","team_id":null,"settings":{"id":57053917,"present_controls":false,"present_upsizing":true,"present_pointer":false,"present_notes":false,"default_deck_tag_id":null}},"background_transition":"slide","transition":"slide","theme_id":null,"theme_font":"montserrat","theme_color":"white-blue","auto_slide_interval":0,"comments_enabled":false,"forking_enabled":true,"rolling_links":false,"center":false,"shuffle":false,"should_loop":false,"share_notes":true,"slide_number":true,"slide_count":75,"rtl":false,"version":2,"collaborative":false,"deck_user_editor_limit":1,"data_updated_at":1761642587212,"font_typekit":null,"font_google":null,"time_limit":null,"navigation_mode":"default","upsizing_enabled":true,"language":"en","notes":{}}};
+
+
+			// Use local fonts
+			SLConfig.fonts_url = 'lib/fonts/';
+		</script>
+
+		<script src="lib/reveal.js"></script>
+		<script src="lib/reveal-plugins.js"></script>
+		<script src="lib/offline.js"></script>
+
+		<!-- Initialize the presentation -->
+		<!-- Fixed after export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/notes/notes.js"></script>
+    <script src="/slides/script.js"></script>
+    <script>
+			Reveal.initialize({
+				width: 960,
+				height: 700,
+				margin: 0.05,
+				
+
+				hash: true,
+				controls: true,
+				progress: true,
+				mouseWheel: false,
+				showNotes: true,
+				slideNumber: true,
+				fragmentInURL: true,
+
+				autoSlide: 0,
+				autoSlideStoppable: true,
+
+				autoAnimateMatcher: SL.deck.AutoAnimate.matcher,
+
+				scrollActivationWidth: null,
+
+				center: false,
+				shuffle: false,
+				loop: false,
+				rtl: false,
+				navigationMode: "default",
+
+				transition: "slide",
+				backgroundTransition: "slide",
+
+				highlight: {
+					escapeHTML: false
+				},
+
+				plugins: [ RevealZoom, RevealNotes, RevealMarkdown, RevealHighlight ]
+			});
+		</script>
+
+		
+
+
+	</body>
+</html>
