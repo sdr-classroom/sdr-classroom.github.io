@@ -34,6 +34,9 @@ dont relève **le fichier à modifier**.
   d'observations (bugs de pseudocode, incohérences de modèle, trous de couverture) triée par
   importance, chacune avec une ligne `**Solution :**` à compléter. Ajouter les nouvelles
   observations ici plutôt que d'ouvrir un autre fichier.
+- **[slides-editor/docs/EXTRACTION.md](slides-editor/docs/EXTRACTION.md)** — procédure pour
+  sortir les exercices des decks de cours vers `exercices-sxx/` et `corriges-sxx/`, avec sa
+  vérification indépendante. La suivre à la lettre pour chaque semaine.
 - [../sdr-labs/docs/fiche-unite.md](../sdr-labs/docs/fiche-unite.md) — official course sheet:
   prerequisites, objectives, lecture content, lab hour budget (32h), grading.
 - **[../sdr-labs/](../sdr-labs/)** — the lab redesign: harness (Rust), templates, reference
