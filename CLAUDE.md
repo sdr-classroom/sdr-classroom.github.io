@@ -194,9 +194,9 @@ privé, et une CI aurait besoin d'une clé vers ce dépôt.
   fichier généré viendrait de la copie de travail, pas de ce qui est committé.
 - Commit plus lent quand un deck est indexé : environ 5 s par deck.
 
-**PDF** — deux par deck, liés depuis `index.html` par un petit menu (script en fin de page) :
-`slides.pdf`, une page par **étape de build**, et `slides-compact.pdf`, une page par slide avec
-tous les fragments. Le site liait auparavant `slides/<deck>/?print-pdf`, qui faisait imprimer le
+**PDF** — deux par deck : `slides.pdf`, une page par **étape de build**, et
+`slides-compact.pdf`, une page par slide avec tous les fragments. **`index.html` ne lie que
+`slides-compact.pdf`**, sans choix (décision d'Olivier, 17.11.2026) ; `slides.pdf` reste généré. Le site liait auparavant `slides/<deck>/?print-pdf`, qui faisait imprimer le
 navigateur **du lecteur** : résultat dépendant de son navigateur, de son papier et d'un CDN.
 
 - `cd slides-editor && npm run pdf` — à la main : régénère les decks périmés. `-- --all` force
