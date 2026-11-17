@@ -308,12 +308,18 @@ graphe, `receptionSonde(s, s_id)` dans la version multi-sources.)
 `5-1-sondes-echos / S10.6`
 
 `Enlever s_id de echos_attendus` laisse les entrées correspondantes dans `echos_reçus` et `parent`
-(fuite mémoire), et surtout : puisque `sonde_reçue` est encodé par la présence de la clé dans
-`echos_attendus` (`S10.3`), une sonde retardataire portant le même `s_id` sera traitée comme une
-sonde neuve après la fin du sondage. Dans le même handler, `Envoyer echo avec s_id à parent`
-devrait lire `parent[s_id]`.
+(fuite mémoire). Dans le même handler, `Envoyer echo avec s_id à parent` devrait lire
+`parent[s_id]`.
 
-**Solution :** la remarque que tu fais sur la sonde retardataire, indique-t-elle qu'il faudrait simplement ne jamais rien supprimer ? Si oui, alors on ne supprime rien. Ou alors on stocke un genre de "last id" pour stocker l'id le plus élevé dont on a fini le traitement, ou qqch comme ça. Et à l'inverse, si on peut supprimer s_id de echos_attendus, alors supprimons-le de toutes les maps, effectivement. pour parent[s_id], agreed.
+*Rectificatif (17.11.2026).* Cette observation affirmait aussi qu'une sonde retardataire pouvait
+arriver après la fin du sondage et passer pour neuve. **C'est faux** : pour un sondage, un nœud
+reçoit exactement un message de chaque voisin (la sonde de son parent, l'écho d'un enfant, la
+sonde croisée d'un autre voisin), et le test `echos_reçus = echos_attendus` ne passe qu'une fois
+tous arrivés. Après la fin, il ne reste rien à recevoir. Le `dernier_id` ajouté pour contrer ce
+cas, et la slide S10.7 qui le justifiait, ont été retirés.
+
+**Solution :** on oublie `s_id` dans les trois structures en fin de sondage (`S10.6`), sans
+autre trace ; l'écho part vers `parent[s_id]`.
 
 ### O23. Raft : la notion de mandat (*term*) est utilisée sans avoir été définie
 `7-1-consensus-raft / S4.9`
