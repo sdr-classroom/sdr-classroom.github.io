@@ -6,7 +6,7 @@ af1f8bc6d3a0fb37fc5c743c542f7f3ea421f53657f3234aacf42d491be4afed  slides/0-intro
 ff838496f016880cf13ef23ac07838dcc66d581ee56bc7f0653276140e10f4f4  slides/2-2-mutex-lamport/index.html
 3eceeee78ef0be7d3078868163c0d1f7e4020306b2cb5fb362f5c1daac4a7bff  slides/3-1-jetons-multiples-mutex/index.html
 38c7b7720947cd99a690ea6d272fbcad7ffbe52ed9a1fc7f01b790ac4a175c8a  slides/3-2-mutex-jeton-unique/index.html
-4912dff2c3f5cadff7462cdf3b7732da6b8324d9e0c332bbb2706ae7de807b9e  slides/4-0-diffusion-elections-naif/index.html
+87ae157d654008cf0aac8f9b7bc56a89b049f54aa02beb5d0003a338a3a8f33b  slides/4-0-diffusion-elections-naif/index.html
 35a3cd69b582068f663842c28dcae3b58ae3de937319e076c9e983d7bcdfcce7  slides/4-1-diffusion-elections-cr/index.html
 83ecaca9cc857a579e7ffed987418c570778990819b3bd237471f1a3bae27942  slides/4-2-diffusion-elections-cr-pannes/index.html
 ac3906661bcc65719e73df4fb5c41fe7c81d77d30786b9a44bfa64ebc3286d8a  slides/5-1-sondes-echos/index.html
@@ -14,3 +14,5 @@ d96fde42f6fee30e1a4a399c8c8c57a7fb75f8a5329043183bc690c3b5e4dbfe  slides/5-2-syn
 a62380997dfcd2158942d47fb70e9e1a7d2570a5d64c06175111462c4415c067  slides/6-battements/index.html
 aa8ad36da6c5ad069dc48d1d56aff15bfb9c3de33838d727369b8ec9b30eb9e3  slides/7-1-consensus-raft/index.html
 c133d2e0ed037dcf4dfd7f30ab61081a9b800c67f91d6339e8f1ca19d5ff3cb4  slides/7-consensus/index.html
+0d44763b4c6856715537b3130344c9527fdf613c72a611cb3f546c6ced74b1ad  slides/corriges-s05/index.html
+4e5948bf3b4d48db5e6a740b8180b4864c0ea54b116b5d165edc569f652fbc4a  slides/exercices-s05/index.html
