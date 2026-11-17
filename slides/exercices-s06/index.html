@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+	<html class="sl-root decks export offline loaded">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, minimal-ui">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+		<link rel="manifest" href='data:application/manifest+json,{"display": "standalone", "name": "SDR - S06 - Exercices"}' />
+		<title>SDR - S06 - Exercices</title>
+
+
+		<link rel="stylesheet" type="text/css" href="lib/offline-v2.css">
+
+
+
+	<script src="/print.js" defer></script>
+</head>
+	<body class="reveal-viewport theme-font-montserrat theme-color-white-blue">
+		<div class="reveal">
+			<div class="slides">
+				<section data-id="90a45bc98affa9f612d895f26e254cc1" data-auto-animate=""><div class="sl-block" data-block-type="text" style="width: 684px; left: 60.5px; top: 238.5px; height: auto;" data-name="text-701913" data-block-id="3b8a5ad78ed806ff6d68cae3bcfe0e00"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10; text-align: left;"><h3>SDR</h3></div></div>
+<div class="sl-block" data-block-type="text" style="width: 839px; left: 60.5px; top: 289.5px; height: auto;" data-name="text-210072" data-block-id="6ebe5775fe18ed32d9aea03a7befa4d3"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 11; text-align: left;"><h1>Diffusion</h1></div></div>
+<div class="sl-block" data-block-type="text" style="width: 740px; left: 60.5px; top: 622px; height: auto;" data-name="text-d6e712" data-block-id="e694965169007873747dc5ea320446ab"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 12; text-align: left;"><p>Olivier Lemer</p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 839px; left: 60.5px; top: 387.5px; height: auto;" data-name="text-b69d41" data-block-id="5f411a44456306241dcaa63f5411fbbd"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 13; text-align: left;"><h2>Algorithme de Chang et Roberts</h2></div></div></section><section class="stack" data-id="b7d1341e90b8f46df1e5348f7113bfe3"><section data-id="ceb9cc896f6d6b4a89bf7049ccd17a9c"><div class="sl-block" data-block-type="text" style="width: 806px; left: 109.375px; top: 313px; height: auto;" data-name="text-701913" data-block-id="088de1d4225fc79b2a98c41107f6ddf3"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10;"><h2 style="text-align:left">Exercices</h2></div></div>
+<div class="sl-block" data-block-type="shape" style="width: 41.5px; height: 41.5px; left: 44.625px; top: 329.25px;" data-name="shape-dcfd9f" data-block-id="a0f943a0bc5d1e8913dd80fdd781f998"><div class="sl-block-content" data-shape-type="symbol-thin-arrow-down" data-shape-fill-color="rgb(170, 170, 170)" data-shape-stretch="true" style="z-index: 11;"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="4.000251770019531 1.9999980926513672 23.999500274658203 27.999752044677734"><g class="shape-element" fill="rgb(170, 170, 170)" data-viewbox="4.000251770019531 1.9999980926513672 23.999500274658203 27.999752044677734"><path d="M4.586 19.414l10 10c0.781 0.781 2.047 0.781 2.828 0l10-10c0.781-0.781 0.781-2.047 0-2.828s-2.047-0.781-2.828 0l-6.586 6.586v-19.172c0-1.105-0.895-2-2-2s-2 0.895-2 2v19.172l-6.586-6.586c-0.391-0.39-0.902-0.586-1.414-0.586s-1.024 0.195-1.414 0.586c-0.781 0.781-0.781 2.047 0 2.828z"></path></g></svg></div></div>
+</section><section data-id="6e69d65577e2d07c18b125082dca27aa"><div class="sl-block" data-block-type="text" style="width: 832px; left: 26px; top: 30px; height: auto;" data-name="text-ef6d7c" data-block-id="f5fabf033b93edede66f4d1ed9328437"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10; text-align: left;"><h3>Exercice 1</h3></div></div>
+
+<div class="sl-block" data-block-type="text" style="height: auto; width: 819.43428px; left: 26px; top: 148.5px;" data-name="text-51adf9" data-block-id="e38db31b58f62d6a1319f5389be0bb4e"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12; font-size: 80%; text-align: left;"><p>On suppose 1s de transit pour chaque message</p></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 643.43428px; left: 26px; top: 219.103687px;" data-name="text-935546" data-block-id="172233a9e2d9ada4c91a948cfbeca026"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13; font-size: 80%; text-align: left;">
+<p>Cinq processus, formant un anneau dans le sens suivant</p>
+
+<ul>
+	<li>
+<code>A</code>, avec aptitude initiale de 2</li>
+	<li>
+<code>B</code>, avec aptitude initiale de 5</li>
+	<li>
+<code>C</code>, avec aptitude initiale de 1</li>
+	<li>
+<code>D</code>, avec aptitude initiale de 1</li>
+	<li>
+<code>E</code>, avec aptitude initiale de 7</li>
+</ul>
+
+<p> </p>
+
+<p>Une première élection a déjà eu lieu : <code>E</code> est l'élu.</p>
+
+<p>Les événements suivants ont lieu</p>
+
+<ul>
+	<li>
+<code>T=1</code> : l'aptitude de <code>C</code> devient 8</li>
+	<li>
+<code>T=1</code> : l'aptitude de <code>D</code> devient 2</li>
+</ul>
+</div></div>
+<div class="sl-block" data-block-type="shape" data-name="shape-01ac25" style="width: 40px; height: 40px; left: 696.542093px; top: 308.103687px;" data-block-id="c509234bae0340d373fc36a1b3fa7483"><div class="sl-block-content" data-shape-type="circle" data-shape-fill-color="rgb(255, 255, 255)" data-shape-stretch="true" style="z-index: 16;" data-shape-stroke-color="#000000" data-shape-stroke-width="3px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 40 40"><defs><clippath id="shape-mask-122-1699641524544"><ellipse rx="20" ry="20" cx="20" cy="20" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6"></ellipse></clippath></defs><ellipse rx="20" ry="20" cx="20" cy="20" class="shape-element" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6" clip-path="url(#shape-mask-122-1699641524544)"></ellipse></svg></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 30.943877px; left: 702.070153px; top: 311.603687px;" data-name="text-43993d" data-block-id="884a2b37f62c4e86955a454031358b38"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 18; font-size: 80%; text-align: center; color: rgb(68, 68, 68);"><p><code>A</code></p></div></div>
+<div class="sl-block sl-block-group" data-block-type="group" data-name="group-abcb76" style="height: auto;" data-block-id="d7ede22273f8acccabf68e10693c2e0d"><div class="sl-block-content sl-block-group-content" style="transform-origin: 852.028px 423.604px 0px; z-index: 19;">
+<div class="sl-block" data-block-type="shape" style="width: 40px; height: 40px; left: 832.028061px; top: 403.603687px;" data-name="shape-14bdf0" data-origin-id="b18e68f56eacc6c0d994447f9bf17c2c" data-block-id="d476e25de661d9cbed193a84c17b3540"><div class="sl-block-content" data-shape-type="circle" data-shape-fill-color="rgb(255, 255, 255)" data-shape-stretch="true" style="z-index: 20;" data-shape-stroke-color="#000000" data-shape-stroke-width="3px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 40 40"><defs><clippath id="shape-mask-123-1699641524559"><ellipse rx="20" ry="20" cx="20" cy="20" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6"></ellipse></clippath></defs><ellipse rx="20" ry="20" cx="20" cy="20" class="shape-element" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6" clip-path="url(#shape-mask-123-1699641524559)"></ellipse></svg></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 30.943877px; left: 836.556122px; top: 407.103687px;" data-name="text-0ff63d" data-origin-id="8178555216e38f1bc9979b7fafe82e1d" data-block-id="d138823d536f750949de45762ac43af7"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 21; font-size: 80%; text-align: center; color: rgb(68, 68, 68);"><p><code>B</code></p></div></div>
+</div></div>
+<div class="sl-block sl-block-group" data-block-type="group" style="height: auto;" data-name="group-03bd1d" data-block-id="824286ead088ba8616c3047f4b4000b9"><div class="sl-block-content sl-block-group-content" style="transform-origin: 590.042px 423.604px 0px; z-index: 22;">
+<div class="sl-block" data-block-type="shape" style="width: 40px; height: 40px; left: 570.042093px; top: 403.603687px;" data-origin-id="06fe4a4c94ac530bbd83c2c6785ef15d" data-name="shape-b02b96" data-block-id="76cde1cdd52a0e36512392b5666c895b"><div class="sl-block-content" data-shape-type="circle" data-shape-fill-color="rgb(255, 255, 255)" data-shape-stretch="true" style="z-index: 23;" data-shape-stroke-color="#000000" data-shape-stroke-width="3px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 40 40"><defs><clippath id="shape-mask-124-1699641524563"><ellipse rx="20" ry="20" cx="20" cy="20" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6"></ellipse></clippath></defs><ellipse rx="20" ry="20" cx="20" cy="20" class="shape-element" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6" clip-path="url(#shape-mask-124-1699641524563)"></ellipse></svg></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 30.943877px; left: 574.570154px; top: 407.103687px;" data-origin-id="c720971c3073d95ab2f489aead74b4fe" data-name="text-e450c5" data-block-id="2d52598a917555a6e96f113a65af856e"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 24; font-size: 80%; text-align: center; color: rgb(68, 68, 68);"><p><code>E</code></p></div></div>
+</div></div>
+<div class="sl-block sl-block-group" data-block-type="group" style="height: auto;" data-name="group-fb4334" data-block-id="f5d50ae5077220d3660f8e90f6cab6a3"><div class="sl-block-content sl-block-group-content" style="transform-origin: 800.056px 577.729px 0px; z-index: 25;">
+<div class="sl-block" data-block-type="shape" style="width: 40px; height: 40px; left: 780.056122px; top: 557.728687px;" data-origin-id="8365360e9e6b46359e5b67d3133ef9ec" data-name="shape-6ff6d5" data-block-id="52d7cc498cceda98448425c46a1b6708"><div class="sl-block-content" data-shape-type="circle" data-shape-fill-color="rgb(255, 255, 255)" data-shape-stretch="true" style="z-index: 26;" data-shape-stroke-color="#000000" data-shape-stroke-width="3px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 40 40"><defs><clippath id="shape-mask-125-1699641524566"><ellipse rx="20" ry="20" cx="20" cy="20" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6"></ellipse></clippath></defs><ellipse rx="20" ry="20" cx="20" cy="20" class="shape-element" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6" clip-path="url(#shape-mask-125-1699641524566)"></ellipse></svg></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 30.943877px; left: 784.584183px; top: 561.228687px;" data-origin-id="d14b3657fe785e6d9df937b4ea071b58" data-name="text-7bd3d6" data-block-id="5c4f2989a3b333a0a2dcf3d19d40cfed"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 27; font-size: 80%; text-align: center; color: rgb(68, 68, 68);"><p><code>C</code></p></div></div>
+</div></div>
+<div class="sl-block sl-block-group" data-block-type="group" style="height: auto;" data-name="group-adef94" data-block-id="3afacaf2bfcfc0c432a2e3db014d3af3"><div class="sl-block-content sl-block-group-content" style="transform-origin: 632.556px 577.729px 0px; z-index: 28;">
+<div class="sl-block" data-block-type="shape" style="width: 40px; height: 40px; left: 612.556123px; top: 557.728687px;" data-origin-id="d06d49b9ea70fb285995c0525af255d2" data-name="shape-607656" data-block-id="c272b0805be479fb2d33b7dd634ad4f4"><div class="sl-block-content" data-shape-type="circle" data-shape-fill-color="rgb(255, 255, 255)" data-shape-stretch="true" style="z-index: 29;" data-shape-stroke-color="#000000" data-shape-stroke-width="3px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 40 40"><defs><clippath id="shape-mask-126-1699641524569"><ellipse rx="20" ry="20" cx="20" cy="20" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6"></ellipse></clippath></defs><ellipse rx="20" ry="20" cx="20" cy="20" class="shape-element" fill="rgb(255, 255, 255)" stroke="#000000" stroke-width="6" clip-path="url(#shape-mask-126-1699641524569)"></ellipse></svg></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 30.943877px; left: 617.084184px; top: 561.228687px;" data-origin-id="2a7542e550ac60522d7cf69468e956ab" data-name="text-c88c1c" data-block-id="16d65248f70e676ce44e91db3aee588f"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 30; font-size: 80%; text-align: center; color: rgb(68, 68, 68);"><p><code>D</code></p></div></div>
+</div></div>
+<div class="sl-block" data-block-type="shape" style="width: 283.5px; height: 283.5px; left: 577.556123px; top: 328.103687px;" data-name="shape-c96816" data-block-id="34b5d071e1725928c1235ee8c36dfb21"><div class="sl-block-content" data-shape-type="circle" data-shape-fill-color="rgba(0, 0, 0, 0)" data-shape-stretch="true" style="z-index: 14;" data-shape-stroke-color="#000000" data-shape-stroke-width="3px"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="0 0 284 284"><defs><clippath id="shape-mask-127-1699641524580"><ellipse rx="141.75" ry="141.75" cx="141.75" cy="141.75" fill="rgba(0, 0, 0, 0)" stroke="#000000" stroke-width="6"></ellipse></clippath></defs><ellipse rx="141.75" ry="141.75" cx="141.75" cy="141.75" class="shape-element" fill="rgba(0, 0, 0, 0)" stroke="#000000" stroke-width="6" clip-path="url(#shape-mask-127-1699641524580)"></ellipse></svg></div></div></section><section data-id="d85924514c05e2dc00f029d3a57b3de7">
+
+<div class="sl-block" data-block-type="text" style="height: auto; width: 819.43428px; left: 26px; top: 260.5px;" data-name="text-51adf9" data-block-id="34146557c174116116186a6dc664d1fa"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 10; font-size: 80%; text-align: left;"><p>Que se passe-t-il en cas de panne d'un processus ?</p></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 819.43428px; left: 26px; top: 299.5px;" data-block-id="ab32304ef31fc282cb5c2200579b4220" data-name="text-175ba8"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11; font-size: 80%; text-align: left;"><ul>
+	<li>Pensez bien à chaque état dans lequel un processus peut se trouver (en élection ou non, phase d'annonce ou de résultat, élu ou non)</li>
+</ul></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 819.43428px; left: 26px; top: 408.5px;" data-block-id="71a0ff5e60626cc23053fbb98ff16acd" data-name="text-e8b9bb"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12; font-size: 80%; text-align: left;"><p>Réfléchissez à des solutions pour chaque problème.</p></div></div>
+<div class="sl-block" data-block-type="text" style="width: 832px; left: 26px; top: 30px; height: auto;" data-name="text-ef6d7c" data-block-id="6e2a0ee5532908eee55ebe9fff07f01b"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 13; text-align: left;"><h3>Exercice 2</h3></div></div></section></section><section data-id="b899bf3e9baef640229f3c85f0f1cff1" class="stack"><section data-id="bfc1dcee2c71acbbb00243f31278b310">
+<div class="sl-block" data-block-type="shape" style="width: 41.5px; height: 41.5px; left: 44.625px; top: 329.25px;" data-name="shape-dcfd9f" data-block-id="e5ad8ebba395e8ecd74b3a779405c7ce"><div class="sl-block-content" data-shape-type="symbol-thin-arrow-down" data-shape-fill-color="rgb(170, 170, 170)" data-shape-stretch="true" style="z-index: 10;"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="100%" preserveaspectratio="none" viewbox="4.000251770019531 1.9999980926513672 23.999500274658203 27.999752044677734"><g class="shape-element" fill="rgb(170, 170, 170)" data-viewbox="4.000251770019531 1.9999980926513672 23.999500274658203 27.999752044677734"><path d="M4.586 19.414l10 10c0.781 0.781 2.047 0.781 2.828 0l10-10c0.781-0.781 0.781-2.047 0-2.828s-2.047-0.781-2.828 0l-6.586 6.586v-19.172c0-1.105-0.895-2-2-2s-2 0.895-2 2v19.172l-6.586-6.586c-0.391-0.39-0.902-0.586-1.414-0.586s-1.024 0.195-1.414 0.586c-0.781 0.781-0.781 2.047 0 2.828z"></path></g></svg></div></div>
+<div class="sl-block" data-block-type="text" style="width: 806px; left: 109.375px; top: 313px; height: auto;" data-name="text-701913" data-block-id="a273e08b607b07604a82440294044fd6"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 12;"><h2 style="text-align:left">Exercice</h2></div></div></section><section data-id="6470707c956b68379f3c6762e17a6a32"><div class="sl-block" data-block-type="text" style="width: 832px; left: 33px; top: 30px; height: auto;" data-name="text-ef6d7c" data-block-id="377a82ffeb8a361063fcd87093187ef5"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 11; text-align: left;"><h3>Exercice</h3></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 819.434px; left: 34px; top: 114px;" data-name="text-51adf9" data-block-id="e9ced5f760aa96beb4eaf5078c7132b0"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12; font-size: 80%; text-align: left;"><p>On suppose 1s de transit pour chaque message</p></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 903.434px; left: 34px; top: 246px;" data-name="text-935546" data-block-id="0ebcc66310ce68311962bd04121afb3c"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13; font-size: 80%; text-align: left;">
+<p>Cinq processus, formant un anneau dans le sens suivant</p>
+
+<ul>
+	<li>
+<code>A</code>, avec aptitude initiale de 2</li>
+	<li>
+<code>B</code>, avec aptitude initiale de 5</li>
+	<li>
+<code>C</code>, avec aptitude initiale de 1</li>
+	<li>
+<code>D</code>, avec aptitude initiale de 1</li>
+	<li>
+<code>E</code>, avec aptitude initiale de 7</li>
+</ul>
+
+<p> </p>
+
+<p>Une première élection a déjà eu lieu : <code>E</code> est l'élu.</p>
+
+<p>Les événements suivants ont lieu au bout d'une seconde :</p>
+
+<ul>
+	<li>
+L'aptitude de <code>C</code> devient 8, puis <code>C</code> tombe immédiatement en panne.</li>
+	<li>
+L'aptitude de <code>D</code> devient 2.</li>
+</ul>
+</div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 819.434px; left: 34px; top: 175px;" data-block-id="92f6885427398c27db1e5895e8d235e5" data-name="text-acf06e"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 14; font-size: 80%; text-align: left;"><p>On suppose donc que les timeouts durent 2s</p></div></div></section><section data-id="63a2efe13f9c6d091f8878dba618718d"><div class="sl-block" data-block-type="text" style="width: 832px; left: 33px; top: 30px; height: auto;" data-name="text-ef6d7c" data-block-id="37acd1953fec53d87a16a2c242493d7a"><div class="sl-block-content" data-placeholder-tag="h1" data-placeholder-text="Title Text" style="z-index: 10; text-align: left;"><h3>Exercice</h3></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 819.434px; left: 33px; top: 141px;" data-name="text-51adf9" data-block-id="434f78e0ae2d53175031d55784391d1e"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 11; font-size: 80%; text-align: left;"><p>L'algorithme décrit aujourd'hui offre-t-il une garantie d'élection de la plus haute aptitude <strong><em>un jour</em></strong>, ou <strong><em>immédiatement</em></strong> ?</p></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 903.434px; left: 33px; top: 263px;" data-name="text-935546" data-block-id="c76fb4b69605a39bcfc842a12eb222bf"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 12; font-size: 80%; text-align: left;"><p>Garantie d'élection de la plus haute aptitude...</p></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 514.434px; left: 69px; top: 301.5px;" data-block-id="4cb338e6d09069d4b37d8f0b250112be" data-name="text-d93595"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 13; font-size: 80%; text-align: left;"><p>... <strong>un jour</strong> :</p></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 390.717px; left: 69px; top: 339.5px;" data-block-id="e8ff9a08c18030f64daafe02b738a272" data-name="text-ba136f"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 14; font-size: 80%; text-align: left;"><p>Après une durée suffisamment grande sans changement d'aptitude ni panne, tous les processus corrects ont comme élu le processus à la plus haute aptitude.</p></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 409.434px; left: 491.001px; top: 301.5px;" data-block-id="f1e28072a6f516a3665304fee6d15dee" data-name="text-d0853c"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 15; font-size: 80%; text-align: left;"><p>... <strong>immédiatement</strong> :</p></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 390.717px; left: 491.001px; top: 339.5px;" data-block-id="ea246b12ebf6f88654a00cc1d3d8054d" data-name="text-f4aa6a"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 16; font-size: 80%; text-align: left;"><p>Lorsqu'une élection se termine sur un processus <code>p</code>, celui-ci a comme élu le processus à la plus haute aptitude.</p></div></div>
+<div class="sl-block" data-block-type="text" style="height: auto; width: 903.434px; left: 33px; top: 541.5px;" data-block-id="2fdc66be47997fee9d66051858d6ff68" data-name="text-c859d8"><div class="sl-block-content" data-placeholder-tag="p" data-placeholder-text="Text" style="z-index: 17; font-size: 80%; text-align: left;">
+<p>Si la garantie est immédiate, démontrez-le ;</p>
+
+<p>Sinon, donnez-en un contre-exemple.</p>
+</div></div></section></section>
+			</div>
+		</div>
+
+		<script>
+			var SLConfig = {"deck": {"id":3222408,"slug":"exercices-s06","title":"SDR - S06 - Exercices","description":"","width":960,"height":700,"margin":0.05,"visibility":"all","published_at":"2024-07-05T12:45:52.393Z","sanitize_messages":null,"thumbnail_url":"https://s3.amazonaws.com/media-p.slid.es/thumbnails/e621bf5b53de1ddff2a4f237b60e0f97/thumb.jpg?1720185149","view_count":0,"user":{"id":2460573,"username":"olivierlmr","name":null,"description":null,"thumbnail_url":"https://www.gravatar.com/avatar/01e3813de0c4d967d7cbfb536916652f?s=140\u0026d=https%3A%2F%2Fstatic.slid.es%2Fimages%2Fdefault-profile-picture.png","account_type":"lite","team_id":null,"settings":{"id":57053917,"present_controls":false,"present_upsizing":true,"present_pointer":false,"present_notes":false,"default_deck_tag_id":null}},"background_transition":"slide","transition":"slide","theme_id":null,"theme_font":"montserrat","theme_color":"white-blue","auto_slide_interval":0,"comments_enabled":false,"forking_enabled":true,"rolling_links":false,"center":false,"shuffle":false,"should_loop":false,"share_notes":true,"slide_number":true,"slide_count":37,"rtl":false,"version":2,"collaborative":false,"deck_user_editor_limit":1,"data_updated_at":1763393812453,"font_typekit":null,"font_google":null,"time_limit":null,"navigation_mode":"default","upsizing_enabled":true,"language":"en","notes":{}}};
+
+
+			// Use local fonts
+			SLConfig.fonts_url = 'lib/fonts/';
+		</script>
+
+		<script src="lib/reveal.js"></script>
+		<script src="lib/reveal-plugins.js"></script>
+		<script src="lib/offline.js"></script>
+
+		<!-- Initialize the presentation -->
+		<!-- Fixed after export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/notes/notes.js"></script>
+    <script src="/slides/script.js"></script>
+    <script>
+			Reveal.initialize({
+				width: 960,
+				height: 700,
+				margin: 0.05,
+				
+
+				hash: true,
+				controls: true,
+				progress: true,
+				mouseWheel: false,
+				showNotes: true,
+				slideNumber: true,
+				fragmentInURL: true,
+
+				autoSlide: 0,
+				autoSlideStoppable: true,
+
+				autoAnimateMatcher: SL.deck.AutoAnimate.matcher,
+
+				scrollActivationWidth: null,
+
+				center: false,
+				shuffle: false,
+				loop: false,
+				rtl: false,
+				navigationMode: "default",
+
+				transition: "slide",
+				backgroundTransition: "slide",
+
+				highlight: {
+					escapeHTML: false
+				},
+
+				plugins: [ RevealZoom, RevealNotes, RevealMarkdown, RevealHighlight ]
+			});
+		</script>
+
+		
+
+
+	</body>
+</html>
