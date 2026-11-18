@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Labo 3 - Synchroniseur tolérant aux pannes</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/labos/style.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+    <main>
+<header id="title-block-header">
+    <nav>
+        <a href="/"><i class="fa fa-angle-left"></i> Back</a>
+      </nav>
+<h1 class="title">Labo 3 - Synchroniseur tolérant aux pannes</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#informations-générales"
+id="toc-informations-générales">Informations Générales</a></li>
+<li><a href="#le-fil-rouge-du-semestre"
+id="toc-le-fil-rouge-du-semestre">Le fil rouge du semestre</a></li>
+<li><a href="#les-suppositions" id="toc-les-suppositions">Les
+suppositions</a></li>
+<li><a href="#le-synchroniseur" id="toc-le-synchroniseur">Le
+synchroniseur</a></li>
+<li><a href="#contraintes-sur-votre-solution"
+id="toc-contraintes-sur-votre-solution">Contraintes sur votre
+solution</a></li>
+<li><a href="#linterface-avec-loutillage"
+id="toc-linterface-avec-loutillage">L’interface avec
+l’outillage</a></li>
+<li><a href="#une-contrainte-technique"
+id="toc-une-contrainte-technique">Une contrainte technique</a></li>
+<li><a href="#évaluation" id="toc-évaluation">Évaluation</a></li>
+</ul>
+</nav>
+<h2 id="informations-générales">Informations Générales</h2>
+<ul>
+<li><p><strong>Lien vers le labo sur Roster</strong> : communiqué en
+séance.</p></li>
+<li><p><strong>Groupes de deux ou seul.e</strong>. Vous êtes libres de
+changer par rapport au labo 2.</p></li>
+<li><p><strong>Langage</strong> : libre. Boilerplate fournis en Python,
+Java, Go et C++, mais tout autre langage capable de lire et écrire des
+lignes sur <code>stdin</code>/<code>stdout</code> convient
+aussi.</p></li>
+<li><p><strong>Prérequis</strong> : Installation de
+<strong>Rust</strong> (<code>rustup</code>), pour les outils
+d’évaluation.</p></li>
+<li><p><strong>Plagiat</strong> : lors de l’évaluation de vos rendus,
+nous utiliserons des outils de détection de plagiat (entre groupes, mais
+aussi avec les rendus des années précédentes et la solution officielle).
+En cas de suspicion, vous y serez confronté.e.s, et l’incident pourra
+être rapporté au responsable de la filière, avec un risque d’échec
+immédiat au cours.</p></li>
+<li><p><strong>IA générative</strong> : <strong>le moyen d’arriver au
+rendu est entièrement libre.</strong> En revanche, nous attendons un
+ownership complet de votre rendu. Vous devez posséder et savoir défendre
+tous les choix architecturaux et algorithmiques de votre solution
+(pourquoi ces choix, pourquoi pas d’autres), ainsi que réfléchir sur la
+base de votre solution (comment vous approcheriez telle ou telle
+nouvelle contrainte).</p>
+<p>Dans cette optique, chaque fin de labo sera suivie d’un <em>quiz
+individuel</em> qui testera précisément cette contrainte.</p></li>
+</ul>
+<p>Notez enfin que l’objectif étant pour vous d’apprendre, vous serez
+toujours légitimes et bienvenu.e.s à nous poser des questions : sur la
+théorie, sur vos idées, sur vos blocages. Si vous vous sentez perdu.e.s
+ou coincé.e.s, c’est qu’il faut nous demander.</p>
+<h2 id="le-fil-rouge-du-semestre">Le fil rouge du semestre</h2>
+<p>Rappelez-vous le <a
+href="https://sdr-classroom.github.io/labos/1-diffusion-fiable-et-mutex.html#le-fil-rouge-du-semestre">fil
+rouge du semestre</a>. Au labo 2, vous avez élu un leader dans un monde
+où les pannes sont possibles. Ce labo est la troisième étape :
+<strong>utiliser le leader pour synchroniser les processus.</strong> Au
+labo 4, cette synchronisation servira à atteindre le consensus.</p>
+<p><strong>Ce labo s’appuie sur les deux précédents, mais n’en dépend
+pas.</strong> Votre couche utilise l’élection du labo 2, et peut
+utiliser la diffusion fiable du labo 1. Le repo qu’on vous remet
+contient les nôtres, et c’est sur elles que votre rendu est évalué ; un
+labo 1 ou 2 raté ne vous coûte rien ici. Vous pouvez aussi les remplacer
+par les vôtres, telles quelles ou améliorées, mais cela ne rapporte
+aucun point.</p>
+<hr />
+<h2 id="les-suppositions">Les suppositions</h2>
+<ul>
+<li><strong>Réseau</strong> : le réseau est un graphe pleinement
+connecté ; tout processus peut envoyer un message à tout autre
+processus.</li>
+<li><strong>Messages</strong> : aucune perte, duplication ou
+réordonnancement.</li>
+<li><strong>Processus</strong> : leur nombre est variable, et le code
+que nous vous fournissons vous y donne accès. Si vous utilisez un
+langage pour lequel nous ne proposons pas de code de départ,
+référez-vous à <code>LAYERS.md</code>, dans le repo qu’on vous
+remet.</li>
+<li><strong>Pannes</strong> <strong>permanentes</strong> : un processus
+qui tombe en panne ne redémarre jamais. <strong>Moins de la moitié des
+processus</strong> peuvent tomber en panne.</li>
+<li><strong>Réseau partiellement synchrone</strong> : une borne sur la
+durée de transit des messages existe mais vous est inconnue.</li>
+<li><strong>Diffusion fiable</strong> : la couche fournie garantit que
+si un processus correct délivre un message, tous les processus corrects
+le délivrent.</li>
+<li><strong>Élection</strong> : la couche fournie garantit qu’un jour,
+<code>leader()</code> retourne le même processus correct chez tous les
+processus corrects. Avant ce jour, elle peut retourner n’importe quel
+processus, et pas forcément le même partout.</li>
+</ul>
+<hr />
+<h2 id="le-synchroniseur">Le synchroniseur</h2>
+<p>Vous avez vu en cours ce qu’est un algorithme synchrone : les
+processus avancent par <strong>battements</strong>. Dans chaque
+battement, un processus peut envoyer <strong>au plus un message à chaque
+autre processus</strong>, éventuellement un message différent à chacun,
+éventuellement aucun ; il reçoit ceux qui lui ont été envoyés dans ce
+battement, et s’en sert au battement suivant.</p>
+<p>Vous implémenterez un synchroniseur : une couche qui fait avancer les
+battements <code>0, 1, 2, …</code> pour la couche du dessus. Au début de
+chaque battement <code>k</code>, votre couche délivre à la couche du
+dessus les messages envoyés pour le battement <code>k − 1</code>, et
+envoie ceux qu’elle lui retourne pour le battement <code>k</code>.</p>
+<p>Les synchroniseurs alpha et beta vus en cours ne tolèrent aucune
+panne : même une panne bloque les battements pour toujours. Le vôtre
+doit continuer d’avancer malgré les pannes. Vous verrez vite que, par
+conséquent, certains messages risquent nécessairement de ne pas être
+reçus dans le bon battement ; ils doivent alors être ignorés et sont
+perdus. C’est le prix à payer de la tolérance aux pannes.</p>
+<p>Votre couche doit garantir les propriétés suivantes :</p>
+<ul>
+<li><strong>Intégrité</strong> - un message est délivré à la couche du
+dessus au plus une fois, seulement s’il a été envoyé, et lors du passage
+au battement qui suit le battement dans lequel il a été envoyé.</li>
+<li><strong>Ordre</strong> - chaque processus passe par les battements
+<code>0, 1, 2, …</code> dans l’ordre, sans en sauter ni en répéter
+aucun.</li>
+<li><strong>Progrès</strong> - tout processus correct passe par tous les
+battements.</li>
+<li><strong>Synchronie</strong> - un jour, tout message envoyé par un
+processus correct à un processus correct est délivré lors du passage au
+battement suivant.</li>
+</ul>
+<p>Notez que parce que la Synchronie est “un jour”, des messages peuvent
+être perdus avant un certain battement, notamment pendant que le réseau
+est lent ou que l’élection ne s’est pas encore stabilisée. C’est
+seulement une fois le réseau et l’élection stabilisées qu’aucun message
+ne doit plus l’être.</p>
+<hr />
+<h2 id="contraintes-sur-votre-solution">Contraintes sur votre
+solution</h2>
+<p>Les propriétés ci-dessus disent ce qu’est un synchroniseur correct.
+Elles ne suffisent pas pour que votre solution soit acceptée ; nous
+exigeons en plus les contraintes suivantes.</p>
+<ol type="1">
+<li>Votre solution doit être telle que <strong>c’est un élu qui a la
+responsabilité de décider quand passer au battement
+suivant</strong>.</li>
+<li>Sur un réseau calme, avec ou sans pannes, <strong>la durée des
+battements cesse de croître</strong>.</li>
+</ol>
+<p>Enfin, <strong>la durée initiale d’un battement, comme celle de tout
+délai de suspicion de panne, ne doit pas dépasser 400 unités de
+temps.</strong></p>
+<p>Pour votre information, un ordre de grandeur : sur un réseau calme et
+rapide, un message met <strong>une vingtaine d’unités de temps</strong>
+à arriver. D’autres réseaux peuvent être plus lents, ou connaitre des
+pics de délai. La borne sur la durée de transit reste, quoi qu’il
+arrive, inconnue.</p>
+<p>Notez aussi qu’un processus ne remet pas tous ses messages au réseau
+au même instant : ils partent l’un après l’autre, et écrire à tous les
+autres peut prendre jusqu’à une centaine d’unités de temps.</p>
+<p><strong>Un indice</strong> : un message <em>peut</em> arriver après
+la fin du battement auquel il était destiné. Il n’est alors pas délivré,
+mais son arrivée retardée <em>est une information de valeur</em>.</p>
+<hr />
+<h2 id="linterface-avec-loutillage">L’interface avec l’outillage</h2>
+<p>L’outillage est celui des labos 1 et 2 : votre programme est le
+comportement d’<em>un</em> processus, il lit ses événements sur
+<code>stdin</code> et écrit les siens sur <code>stdout</code>, et
+<code>cuelight</code> simule le réseau entre les processus.</p>
+<p>Si vous utilisez notre squelette, vous n’aurez que les points
+suivants à implémenter :</p>
+<ul>
+<li>le constructeur de la couche est appelé une fois, au démarrage du
+processus. Il reçoit le nœud (<code>node</code>), la diffusion fiable,
+l’élection, et <code>on_pulse</code>. La couche commence aussitôt, mais
+ne doit pas appeler <code>on_pulse</code> depuis le constructeur : à ce
+moment-là, celui qui construit votre couche ne la tient pas encore.</li>
+<li><code>on_leader_change()</code> est appelée, sans argument, chaque
+fois que l’élection se met à nommer un autre processus. L’interface de
+l’élection est celle du labo 2 : c’est la fonction que le point d’entrée
+lui donne à sa construction.</li>
+<li><code>on_pulse(k, received)</code> est une fonction qui vous est
+fournie, et que <strong>vous</strong> devez appeler au début de chaque
+battement <code>k</code> :
+<ul>
+<li><code>received</code> contient les messages reçus durant le
+battement <code>k − 1</code>, avec leur expéditeur (vide pour
+<code>k = 0</code>) ;</li>
+<li>elle retourne les messages à envoyer pour le battement
+<code>k</code>, avec leur destinataire, éventuellement aucun. Comme tout
+message, ils peuvent être perdus pour leur battement : votre couche ne
+garantit pas de les délivrer.</li>
+</ul></li>
+</ul>
+<p>C’est par ces appels que nous apprenons quels battements vous
+traversez, et ce que vous délivrez à chacun.</p>
+<hr />
+<h2 id="une-contrainte-technique">Une contrainte technique</h2>
+<p>Elle est la même qu’aux labos 1 et 2, et pour la même raison : au
+labo suivant, nous pourrons remplacer cette couche par notre propre
+implémentation.</p>
+<ol type="1">
+<li><strong>Votre nœud doit être une fonction pure des
+événements.</strong> Pas d’horloge système, pas de threads, pas
+d’aléatoire non initialisé. C’est ce qui rend une exécution rejouable,
+et c’est vérifié avant tout le reste : si votre code ne se rejoue pas à
+l’identique, rien d’autre n’est évalué.</li>
+<li><strong>Aucune opération n’est autorisée à bloquer en attendant une
+réponse.</strong> Votre processus est un gestionnaire d’événements
+mono-thread, et le temps logique n’avance qu’une fois que l’événement
+est traité. Si une de vos fonctions bloque, alors le temps arrête
+d’avancer.</li>
+</ol>
+<p>Concrètement : attendre la fin d’un battement ne veut pas dire
+bloquer. Cela veut dire armer un minuteur, retourner, et décider de la
+suite lorsqu’il se déclenche ou lorsqu’un message arrive.</p>
+<h2 id="évaluation">Évaluation</h2>
+<p>Nous vous fournissons le vérificateur <code>lab3-check</code>, que
+vous construisez vous-même et qui exécute tous les tests fournis avec le
+code. Ces tests sont des scénarios décrivant une séquence de pannes, de
+ralentissements et de changements d’aptitude, donc d’élu. Leur exécution
+dépend d’une graine (seed) : pour chaque graine, les pannes et les
+délais sont différents. <code>lab3-check</code> exécute les 200
+premières graines de chacun ; nous en exécuterons d’autres lors de
+l’évaluation de votre rendu.</p>
+<p>Référez-vous au README de votre repo pour plus de détails sur la
+construction et l’exécution de <code>lab3-check</code>.</p>
+<p>Votre rendu sera évalué sur ces tests, sur la relecture de votre code
+pour la première contrainte, ainsi que sur un quiz individuel juste
+après le rendu. L’objectif sera de vérifier que vous possédez les choix
+architecturaux, logiques et algorithmiques de votre solution, et que
+vous avez compris leurs enjeux. Le quiz sera donné sur Opendidac, d’une
+durée de 30 minutes max et sans accès à votre code.</p>
+<p>Votre note finale sera égale à <code>min(labo, quiz + 1.5)</code>, où
+<code>labo</code> et <code>quiz</code> sont votre note sur 6 au labo et
+au quiz, respectivement.</p>
+</main>
+</body>
+</html>
