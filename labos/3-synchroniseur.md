@@ -48,7 +48,9 @@ Vous avez vu en cours ce qu'est un algorithme synchrone : les processus avancent
 
 Vous implémenterez un synchroniseur : une couche qui fait avancer les battements `0, 1, 2, …` pour la couche du dessus. Au début de chaque battement `k`, votre couche délivre à la couche du dessus les messages envoyés pour le battement `k − 1`, et envoie ceux qu'elle lui retourne pour le battement `k`.
 
-Les synchroniseurs alpha et beta vus en cours ne tolèrent aucune panne : même une panne bloque les battements pour toujours. Le vôtre doit continuer d'avancer malgré les pannes. Vous verrez vite que, par conséquent, certains messages risquent nécessairement de ne pas être reçus dans le bon battement ; ils doivent alors être ignorés et sont perdus. C'est le prix à payer de la tolérance aux pannes.
+Les synchroniseurs alpha et beta vus en cours ne tolèrent aucune panne : même une panne bloque les battements pour toujours. Le vôtre doit continuer d'avancer malgré les pannes. Vous verrez vite que, par conséquent, certains messages, au début, risquent nécessairement de ne pas être reçus dans le bon battement ; ils doivent alors être ignorés et sont perdus. C'est le prix à payer de la tolérance aux pannes.
+
+<img src="./imgs/3-battement.svg" alt="Un battement vu du processus Q : les messages reçus pendant le battement k − 1 lui sont délivrés au début de k ; un message envoyé pour k − 1 qui arrive pendant k n'est jamais délivré.">
 
 Votre couche doit garantir les propriétés suivantes :
 
@@ -92,6 +94,8 @@ Si vous utilisez notre squelette, vous n'aurez que les points suivants à implé
 
 C'est par ces appels que nous apprenons quels battements vous traversez, et ce que vous délivrez à chacun.
 
+<img src="./imgs/3-interface.svg" alt="Les interfaces de votre synchroniseur : au-dessus, la couche applicative ; en dessous, l'élection, la diffusion fiable et le nœud cuelight, avec les fonctions appelées dans chaque sens.">
+
 ---
 
 ## Une contrainte technique
@@ -110,5 +114,7 @@ Nous vous fournissons le vérificateur `lab3-check`, que vous construisez vous-m
 Référez-vous au README de votre repo pour plus de détails sur la construction et l'exécution de `lab3-check`.
 
 Votre rendu sera évalué sur ces tests, sur la relecture de votre code pour la première contrainte, ainsi que sur un quiz individuel juste après le rendu. L'objectif sera de vérifier que vous possédez les choix architecturaux, logiques et algorithmiques de votre solution, et que vous avez compris leurs enjeux. Le quiz sera donné sur Opendidac, d'une durée de 30 minutes max et sans accès à votre code.
+
+Vous ajouterez à votre README une section décrivant votre utilisation de l'IA : ce qu'elle a fait, quelles responsabilités vous avez gardées et lesquelles vous lui avez déléguées, etc. Elle est demandée par souci de transparence, et ne sera pas un critère d'évaluation.
 
 Votre note finale sera égale à `min(labo, quiz + 1.5)`, où `labo` et `quiz` sont votre note sur 6 au labo et au quiz, respectivement.

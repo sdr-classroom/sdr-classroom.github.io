@@ -152,9 +152,10 @@ envoie ceux qu’elle lui retourne pour le battement <code>k</code>.</p>
 <p>Les synchroniseurs alpha et beta vus en cours ne tolèrent aucune
 panne : même une panne bloque les battements pour toujours. Le vôtre
 doit continuer d’avancer malgré les pannes. Vous verrez vite que, par
-conséquent, certains messages risquent nécessairement de ne pas être
-reçus dans le bon battement ; ils doivent alors être ignorés et sont
-perdus. C’est le prix à payer de la tolérance aux pannes.</p>
+conséquent, certains messages, au début, risquent nécessairement de ne
+pas être reçus dans le bon battement ; ils doivent alors être ignorés et
+sont perdus. C’est le prix à payer de la tolérance aux pannes.</p>
+<p><img src="./imgs/3-battement.svg" alt="Un battement vu du processus Q : les messages reçus pendant le battement k − 1 lui sont délivrés au début de k ; un message envoyé pour k − 1 qui arrive pendant k n'est jamais délivré."></p>
 <p>Votre couche doit garantir les propriétés suivantes :</p>
 <ul>
 <li><strong>Intégrité</strong> - un message est délivré à la couche du
@@ -234,6 +235,7 @@ garantit pas de les délivrer.</li>
 </ul>
 <p>C’est par ces appels que nous apprenons quels battements vous
 traversez, et ce que vous délivrez à chacun.</p>
+<p><img src="./imgs/3-interface.svg" alt="Les interfaces de votre synchroniseur : au-dessus, la couche applicative ; en dessous, l'élection, la diffusion fiable et le nœud cuelight, avec les fonctions appelées dans chaque sens."></p>
 <hr />
 <h2 id="une-contrainte-technique">Une contrainte technique</h2>
 <p>Elle est la même qu’aux labos 1 et 2, et pour la même raison : au
@@ -271,6 +273,10 @@ après le rendu. L’objectif sera de vérifier que vous possédez les choix
 architecturaux, logiques et algorithmiques de votre solution, et que
 vous avez compris leurs enjeux. Le quiz sera donné sur Opendidac, d’une
 durée de 30 minutes max et sans accès à votre code.</p>
+<p>Vous ajouterez à votre README une section décrivant votre utilisation
+de l’IA : ce qu’elle a fait, quelles responsabilités vous avez gardées
+et lesquelles vous lui avez déléguées, etc. Elle est demandée par souci
+de transparence, et ne sera pas un critère d’évaluation.</p>
 <p>Votre note finale sera égale à <code>min(labo, quiz + 1.5)</code>, où
 <code>labo</code> et <code>quiz</code> sont votre note sur 6 au labo et
 au quiz, respectivement.</p>
